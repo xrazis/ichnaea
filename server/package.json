@@ -1,0 +1,12 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "run": "node index.js"
+  },
+  "author": "Haris Razis",
+  "license": "ISC"
+}
