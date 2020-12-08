@@ -4,9 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "run": "node index.js"
+    "dev": "nodemon ./bin/www",
+    "run": "node ./bin/www"
   },
   "author": "Haris Razis",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.9.0",
+    "chalk": "^4.1.0",
+    "debug": "^2.6.9",
+    "express": "^4.17.1"
+  }
 }
