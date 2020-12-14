@@ -1,8 +1,14 @@
-const express = require('express')
-const app = express()
+const app = require('express')()
+const server = require('http').createServer(app);
+const chalk = require('chalk')
+
+const redis = require('./connections/redis_conn')
+const influx = require('./connections/influx_conn')
+const socket = require('./services/socket')(server)
 
 const measurementRoute = require('./routes/data')
 
 app.use(measurementRoute)
 
-module.exports = app;
+server.listen(3000);
+console.log(chalk.green.bold('Server listening on port 3000!'));

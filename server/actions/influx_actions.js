@@ -1,8 +1,8 @@
 const {Point} = require('@influxdata/influxdb-client');
 const chalk = require('chalk')
 
-const {writeApi, queryApi} = require('../connections/db_conn')
-const {bucket} = require('../config/dev')
+const {writeApi, queryApi} = require('../connections/influx_conn')
+const {bucket} = require('../config/keys')
 
 write = (pointName, uuid, measurement) => {
     const point = new Point(pointName)
