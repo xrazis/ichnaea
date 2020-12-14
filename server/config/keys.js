@@ -5,6 +5,6 @@ module.exports = {
     influx_bucket: '',
     redis_user: '',
     redis_password: '',
-    redis_host: '0.0.0.0',
-    redis_port: '7001'
+    redis_host: 'redis',
+    redis_port: '6379'
 }

@@ -2,21 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="➕ Add .idea config">
-      <change afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/services/socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/influx.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/redis.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/config/keys.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/connections/redis_conn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/services/redis.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/services/socket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/actions/influx_actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/actions/influx_actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/connections/db_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/influx_conn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/config/keys.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/keys.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +45,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="15.4.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.13" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/docker-compose.yml" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -73,9 +64,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/server" />
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.server/Dockerfile">
+  <component name="RunManager" selected="Docker.Server_compose">
     <configuration name="redis.sh" type="ShConfigurationType" temporary="true">
       <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
       <option name="SCRIPT_PATH" value="$PROJECT_DIR$/database/redis.sh" />
@@ -89,19 +81,10 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="server: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="Server_compose" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="sourceFilePath" value="server/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="server/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
-        <settings>
-          <option name="buildOnly" value="true" />
-          <option name="sourceFilePath" value="server/Dockerfile" />
         </settings>
       </deployment>
       <method v="2" />
@@ -117,18 +100,15 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.server: Compose Deployment" />
+      <item itemvalue="Docker.Server_compose" />
       <item itemvalue="npm.run client" />
       <item itemvalue="npm.run server" />
       <item itemvalue="npm.dev server" />
       <item itemvalue="npm.dev client" />
       <item itemvalue="Shell Script.redis.sh" />
-      <item itemvalue="Docker.server/Dockerfile" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.server: Compose Deployment" />
-        <item itemvalue="Docker.server/Dockerfile" />
         <item itemvalue="Shell Script.redis.sh" />
       </list>
     </recent_temporary>
@@ -149,6 +129,7 @@
       <workItem from="1607799462544" duration="4751000" />
       <workItem from="1607859056050" duration="4042000" />
       <workItem from="1607880047378" duration="8064000" />
+      <workItem from="1607929943703" duration="6226000" />
     </task>
     <task id="LOCAL-00001" summary="📜 Update README.md">
       <created>1607333101556</created>

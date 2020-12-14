@@ -35,7 +35,7 @@ query = (timeFrame, filter) => {
         .then(async (result) => {
         })
         .catch(() => {
-            return [{Error: 'Error occured'}];
+            return [{Error: 'Error occurred'}];
         });
 }
 

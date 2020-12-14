@@ -10,5 +10,5 @@ const measurementRoute = require('./routes/data')
 
 app.use(measurementRoute)
 
-server.listen(3000);
-console.log(chalk.green.bold('Server listening on port 3000!'));
+server.listen(6000);
+console.log(chalk.green.bold('Server listening on port 6000!'));
