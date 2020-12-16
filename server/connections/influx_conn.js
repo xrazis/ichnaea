@@ -8,7 +8,7 @@ const client = new InfluxDB({
     token: influx_token,
 });
 
-const writeApi = client.getWriteApi(
+const write = client.getWriteApi(
     influx_org,
     influx_bucket
 );
@@ -16,4 +16,4 @@ const writeApi = client.getWriteApi(
 const queryApi = client.getQueryApi(influx_org);
 console.log(chalk.greenBright.bold('Connected to influx!'))
 
-module.exports = {writeApi, queryApi}
+module.exports = {writeApi: write, queryApi}

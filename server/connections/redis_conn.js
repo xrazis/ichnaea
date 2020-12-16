@@ -1,14 +1,18 @@
 const redis = require('redis');
 const chalk = require('chalk');
 
-const {redis_user, redis_password, redis_host, redis_port} = require('../config/keys')
+const {redis_host, redis_port} = require('../config/keys')
 
-const client = redis.createClient(`redis://${redis_host}:${redis_port}`);
+const pub = redis.createClient(`redis://${redis_host}:${redis_port}`);
+const sub = pub.duplicate();
 
-client.on('error', function (error) {
+pub.on('error', (error) => {
     console.error(error);
 });
 
-console.log(chalk.greenBright.bold('Connected to redis!'))
+pub.on('ready', () => {
+    pub.flush;
+    console.log(chalk.greenBright.bold('Connected to redis!'))
+})
 
-module.exports = {client}
+module.exports = {pub, sub}
