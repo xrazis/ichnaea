@@ -1,9 +1,9 @@
 const redis = require('redis');
 const chalk = require('chalk');
 
-const {redis_host, redis_port} = require('../config/keys')
+const {redis_uri} = require('../config/keys')
 
-const pub = redis.createClient(`redis://${redis_host}:${redis_port}`);
+const pub = redis.createClient(redis_uri);
 const sub = pub.duplicate();
 
 pub.on('error', (error) => {

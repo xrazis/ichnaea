@@ -1,0 +1,71 @@
+version: "3.9"
+services:
+  redis:
+    image: "redis"
+    container_name: "redis"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - backend
+  influx:
+    image: "influxdb"
+    container_name: "influx"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - backend
+  mongo:
+    image: "mongo"
+    container_name: "mongo"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - backend
+  backend:
+    build: ./server
+    container_name: "backend"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - "6000:6000"
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - redis
+      - influx
+      - mongo
+  frontend:
+    build: ./web
+    container_name: "frontend"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - "6001:6001"
+    networks:
+      - frontend
+    depends_on:
+      - backend
+networks:
+  backend:
+  frontend:

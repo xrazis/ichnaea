@@ -1,10 +1,10 @@
 const {InfluxDB} = require('@influxdata/influxdb-client')
 const chalk = require('chalk')
 
-const {influx_url, influx_token, influx_org, influx_bucket} = require('../config/keys')
+const {influx_uri, influx_token, influx_org, influx_bucket} = require('../config/keys')
 
 const client = new InfluxDB({
-    url: influx_url,
+    url: influx_uri,
     token: influx_token,
 });
 
@@ -14,6 +14,7 @@ const write = client.getWriteApi(
 );
 
 const queryApi = client.getQueryApi(influx_org);
+
 console.log(chalk.greenBright.bold('Connected to influx!'))
 
-module.exports = {writeApi: write, queryApi}
+module.exports = {write, queryApi}
