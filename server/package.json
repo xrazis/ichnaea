@@ -15,7 +15,10 @@
     "chalk": "^4.1.0",
     "debug": "^2.6.9",
     "express": "^4.17.1",
+    "express-validator": "^6.8.0",
+    "passport": "^0.4.1",
     "redis": "^3.0.2",
-    "socket.io": "^3.0.4"
+    "socket.io": "^3.0.4",
+    "socket.io-redis": "^6.0.1"
   }
 }
