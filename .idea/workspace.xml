@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="➕ Add .idea config">
-      <change afterPath="$PROJECT_DIR$/server/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/docker-compose.yml" afterDir="false" />
+    <list default="true" id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/actions/influx_actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/actions/influx_actions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/config/keys.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/keys.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/connections/influx_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/influx_conn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/connections/redis_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/redis_conn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/redis.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/redis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/services/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/socket.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +58,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="vcs.Subversion.SSH" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -68,27 +72,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Docker.Server_compose">
-    <configuration name="redis.sh" type="ShConfigurationType" temporary="true">
-      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/database/redis.sh" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/database" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="/usr/bin/zsh" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server_compose" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="server/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/client/package.json" />
       <command value="run" />
@@ -105,15 +88,12 @@
       <item itemvalue="npm.run server" />
       <item itemvalue="npm.dev server" />
       <item itemvalue="npm.dev client" />
-      <item itemvalue="Shell Script.redis.sh" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Shell Script.redis.sh" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="" />
@@ -129,7 +109,11 @@
       <workItem from="1607799462544" duration="4751000" />
       <workItem from="1607859056050" duration="4042000" />
       <workItem from="1607880047378" duration="8064000" />
-      <workItem from="1607929943703" duration="6226000" />
+      <workItem from="1607929943703" duration="6396000" />
+      <workItem from="1607946537993" duration="1938000" />
+      <workItem from="1607959467413" duration="7534000" />
+      <workItem from="1608036003572" duration="51000" />
+      <workItem from="1608036062915" duration="6996000" />
     </task>
     <task id="LOCAL-00001" summary="📜 Update README.md">
       <created>1607333101556</created>
@@ -187,7 +171,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607444787471</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="➕ Add docker-compose">
+      <created>1607937746078</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607937746078</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -216,7 +207,8 @@
     <MESSAGE value="➕ Add bin" />
     <MESSAGE value="➕ Add packages" />
     <MESSAGE value="➕ Add influx actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="➕ Add influx actions" />
+    <MESSAGE value="➕ Add docker-compose" />
+    <option name="LAST_COMMIT_MESSAGE" value="➕ Add docker-compose" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
