@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "run": "node index.js"
+    "start": "node index.js"
   },
   "author": "Haris Razis",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.0",
     "socket.io-client": "^3.0.4"
   }
 }
