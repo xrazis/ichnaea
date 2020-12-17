@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "run": "node index.js"
+    "start": "node index.js"
   },
   "author": "Haris Razis",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "debug": "^2.6.9",
     "express": "^4.17.1",
     "express-validator": "^6.8.0",
+    "mongoose": "^5.11.8",
     "passport": "^0.4.1",
     "redis": "^3.0.2",
     "socket.io": "^3.0.4",
