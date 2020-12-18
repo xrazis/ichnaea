@@ -1,8 +1,7 @@
 module.exports = {
-    influx_uri: 'http://influx:8086',
-    influx_token: '',
-    influx_org: '',
-    influx_bucket: '',
+    influx_url: 'http://influx:8086',
+    influx_org: 'xrazis',
+    influx_bucket: 'db0',
     redis_user: '',
     redis_password: '',
     redis_uri: 'redis://redis:6379',
