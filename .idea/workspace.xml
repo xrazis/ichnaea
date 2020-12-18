@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Server_compose.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Server_compose.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/config/keys.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/keys.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/connections/influx_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/influx_conn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +114,8 @@
       <workItem from="1608199795160" duration="221000" />
       <workItem from="1608205337913" duration="1669000" />
       <workItem from="1608214880121" duration="7608000" />
-      <workItem from="1608281705559" duration="3966000" />
+      <workItem from="1608281705559" duration="4406000" />
+      <workItem from="1608288996468" duration="516000" />
     </task>
     <task id="LOCAL-00001" summary="📜 Update README.md">
       <created>1607333101556</created>
