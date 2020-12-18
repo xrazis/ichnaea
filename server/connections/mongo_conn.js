@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const chalk = require('chalk')
 const {mongo_uri} = require('../config/keys');
 
+require('../models/User');
+
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_uri, {
     useNewUrlParser: true,
