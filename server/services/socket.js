@@ -2,7 +2,7 @@ const socket = require('socket.io');
 const chalk = require('chalk');
 
 const {pub, sub} = require('../connections/redis_conn')
-const {write, closeWrite, query} = require('../actions/influx_actions')
+const {iWrite, closeWrite, iQuery} = require('../actions/influx_actions')
 
 module.exports = (server) => {
     // noinspection JSValidateTypes
@@ -19,7 +19,7 @@ module.exports = (server) => {
             const {measurement, pointName} = data;
 
             pub.publish('data', measurement);
-            write(socket.id, measurement, pointName)
+            iWrite(pointName, socket.id, measurement)
         })
     });
 }

@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const {writeApi, queryApi} = require('../connections/influx_conn')
 const {bucket} = require('../config/keys')
 
-write = (pointName, uuid, measurement) => {
+iWrite = (pointName, uuid, measurement) => {
     const point = new Point(pointName)
         .tag('client', uuid)
         .floatField('value', measurement);
@@ -26,7 +26,7 @@ closeWrite = () => {
         });
 }
 
-query = (timeFrame, filter) => {
+iPoint = (timeFrame, filter) => {
     const query = `from(bucket: "${bucket}") |> range(start: -${timeFrame}) |> group(columns: ["client"])
       |> filter(fn: (r) => r._measurement == "${filter}")`;
 
@@ -39,4 +39,4 @@ query = (timeFrame, filter) => {
         });
 }
 
-module.exports = {write, closeWrite, query}
+module.exports = {iWrite, closeWrite, iPoint}
