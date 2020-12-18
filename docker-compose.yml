@@ -1,36 +1,30 @@
 version: "3.9"
 services:
   redis:
-    image: "redis"
+    image: redis:latest
     container_name: "redis"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
     networks:
       - backend
   influx:
-    image: "influxdb"
+    image: influxdb:latest
     container_name: "influx"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    environment:
+      - INFLUXDB_DB=db0
     networks:
       - backend
+      - monitor
+  grafana:
+    image: grafana/grafana:latest
+    container_name: "grafana"
+    ports:
+      - "3000:3000"
+    networks:
+      - monitor
+    depends_on:
+      - influx
   mongo:
-    image: "mongo"
+    image: mongo:latest
     container_name: "mongo"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
     networks:
       - backend
   backend:
@@ -66,6 +60,14 @@ services:
       - frontend
     depends_on:
       - backend
+  test_client:
+    build: ./client
+    container_name: "test_client"
+    networks:
+      - backend
+    depends_on:
+      - backend
 networks:
   backend:
   frontend:
+  monitor:
