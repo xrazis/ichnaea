@@ -3,15 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="80e06aae-4dff-458a-b9ec-91597c82e21b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Server_compose.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Server_compose.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/config/keys.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/config/keys.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/connections/influx_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/influx_conn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/connections/redis_conn.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/connections/redis_conn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/services/redis.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/redis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/services/socket.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/services/socket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/User.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +46,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="15.4.0" />
     <property name="javascript.nodejs.core.library.typings.version" value="14.14.13" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/server/docker-compose.yml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/client" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -58,17 +55,19 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="vcs.Subversion.SSH" />
+    <property name="settings.editor.selected.configurable" value="Docker" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client" />
+      <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/server" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/server" />
     </key>
   </component>
   <component name="RunManager" selected="Docker.Server_compose">
@@ -114,6 +113,12 @@
       <workItem from="1607959467413" duration="7534000" />
       <workItem from="1608036003572" duration="51000" />
       <workItem from="1608036062915" duration="6996000" />
+      <workItem from="1608103894068" duration="7021000" />
+      <workItem from="1608113416217" duration="1073000" />
+      <workItem from="1608199795160" duration="221000" />
+      <workItem from="1608205337913" duration="1669000" />
+      <workItem from="1608214880121" duration="7608000" />
+      <workItem from="1608281705559" duration="3966000" />
     </task>
     <task id="LOCAL-00001" summary="📜 Update README.md">
       <created>1607333101556</created>
