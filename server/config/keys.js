@@ -1,4 +1,5 @@
 module.exports = {
+    session_secret: 'very secret this is',
     influx_url: 'http://influx:8086',
     influx_org: 'xrazis',
     influx_bucket: 'db0',
