@@ -104,3 +104,6 @@ dist
 .tern-port
 
 .idea/workspace.xml
+
+.DS_Store
+/dist
