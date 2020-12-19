@@ -55,7 +55,7 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - "6001:6001"
+      - "8080:8080"
     networks:
       - frontend
     depends_on:
