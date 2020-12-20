@@ -5,7 +5,6 @@ const {pub, sub} = require('../connections/redis_conn')
 const {iWrite, closeWrite, iQuery} = require('../actions/influx_actions')
 
 module.exports = (server) => {
-    // noinspection JSValidateTypes
     const io = socket(server)
 
     io.on('connection', socket => {
