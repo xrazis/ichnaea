@@ -22,9 +22,9 @@ export default createStore({
     actions: {
         login({commit}, user: { username: string, password: string }) {
             return new Promise((resolve, reject) => {
-                axios({url: 'http://backend:6000/api/auth/login', data: {user}, method: 'POST'})
+                axios({url: 'http://localhost:8000/auth/login', data: {user}, method: 'GET'})
                     .then((resp: AxiosResponse) => {
-                        commit("auth_success", user.username);
+                        commit("auth_success", user);
                         resolve(resp)
                     })
                     .catch((err: Error) => {
@@ -35,7 +35,6 @@ export default createStore({
         },
         logout({commit}) {
             return new Promise((resolve, reject) => {
-                let user = null;
                 commit("logout");
                 resolve()
             })

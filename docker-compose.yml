@@ -37,7 +37,7 @@ services:
         max_attempts: 3
         window: 120s
     ports:
-      - "6000:6000"
+      - "8000:8000"
     networks:
       - backend
       - frontend

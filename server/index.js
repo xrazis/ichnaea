@@ -1,16 +1,19 @@
 const app = require('express')()
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
-const passport = require('./services/passport');
 const chalk = require('chalk')
 const cors = require('cors')
+
 require('./services/socket')(server);
+require('./connections/mongo_conn');
 
 const dataRoute = require('./routes/data')
-const authRoute = require('./routes/data')
+const authRoute = require('./routes/auth')
+
+const passport = require('./services/passport');
 const {session_secret} = require('./config/keys');
 
-//allow for all requests for development.
+//allow all requests for development.
 app.use(cors())
 
 app.use(bodyParser.urlencoded({
@@ -28,8 +31,9 @@ app.use(passport.initialize(undefined));
 app.use(passport.session(undefined));
 
 app.use(dataRoute)
-app.use('/api', authRoute)
+app.use(authRoute)
 
-server.listen(6000, () => {
-    console.log(chalk.green.bold('Server listening on port 6000!'));
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
+    console.log(chalk.green.bold(`Server listening on port ${PORT}!`));
 });
