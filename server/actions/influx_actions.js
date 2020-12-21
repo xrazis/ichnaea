@@ -10,7 +10,6 @@ iWrite = (pointName, uuid, measurement) => {
         .floatField('value', measurement);
     writeApi.writePoint(point);
     writeApi.flush().then(() => {
-        console.log(chalk.gray('Flushed!'))
     });
 }
 
