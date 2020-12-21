@@ -17,4 +17,8 @@ router.get('/auth/current_user', (req, res) => {
     res.send(req.user);
 });
 
+router.get('/auth/works', (req, res) => {
+    res.send('Become powerful you have, the dark side in you I sense. Yrsssss.');
+});
+
 module.exports = router;
