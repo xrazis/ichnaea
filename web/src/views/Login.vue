@@ -53,10 +53,9 @@ export default class Login extends Vue {
   private password = '';
 
   private login() {
-    let email = this.username
-    let password = this.password
+    let user = {username: this.username, password: this.password}
 
-    this.$store.dispatch('login', {email, password})
+    this.$store.dispatch('login', user)
         .then(() => this.$router.push('/dashboard'))
         .catch((err: Error) => {
           console.log(err)

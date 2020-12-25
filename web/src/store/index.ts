@@ -1,5 +1,6 @@
 import {createStore} from 'vuex'
 import axios, {AxiosResponse} from "axios";
+import qs from 'qs'
 
 export default createStore({
     state: {
@@ -22,7 +23,7 @@ export default createStore({
     actions: {
         login({commit}, user: { username: string, password: string }) {
             return new Promise((resolve, reject) => {
-                axios({url: 'http://localhost:8000/auth/login', data: {user}, method: 'GET'})
+                axios({method: 'post', url: 'http://localhost:8000/auth/login', data: qs.stringify({user})})
                     .then((resp: AxiosResponse) => {
                         commit("auth_success", user);
                         resolve(resp)
