@@ -3,6 +3,7 @@ const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
 const chalk = require('chalk')
 const cors = require('cors')
+const history = require('connect-history-api-fallback');
 
 require('./services/socket')(server);
 require('./connections/mongo_conn');
@@ -36,6 +37,10 @@ app.use(passport.session(undefined));
 
 app.use(dataRoute)
 app.use(authRoute)
+
+app.use(history({
+    verbose: true
+}));
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => console.log(chalk.green.bold(`Server listening on port ${PORT}!`)));
