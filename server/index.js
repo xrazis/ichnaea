@@ -13,8 +13,12 @@ const authRoute = require('./routes/auth')
 const passport = require('./services/passport');
 const {session_secret} = require('./config/keys');
 
-//allow all requests for development.
-app.use(cors())
+app.use(cors(
+    {
+        origin: ['http://localhost:8080'],
+        credentials: true
+    }
+));
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -34,6 +38,4 @@ app.use(dataRoute)
 app.use(authRoute)
 
 const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => {
-    console.log(chalk.green.bold(`Server listening on port ${PORT}!`));
-});
+server.listen(PORT, () => console.log(chalk.green.bold(`Server listening on port ${PORT}!`)));
