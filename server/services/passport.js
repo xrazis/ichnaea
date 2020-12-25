@@ -16,12 +16,15 @@ passport.deserializeUser(function (id, done) {
 });
 
 passport.use('local', new LocalStrategy(
-    {usernameField: 'email'},
-    (email, password, done) => {
-        User.findOne({email: email})
+    {
+        usernameField: 'username',
+        passwordField: 'password'
+    },
+    (username, password, done) => {
+        User.findOne({username: username})
             .then(user => {
                 if (!user) {
-                    const newUser = new User({email, password});
+                    const newUser = new User({username, password});
                     bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) throw err;
