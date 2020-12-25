@@ -1,8 +1,8 @@
 const express = require('express'),
     router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello World')
+router.get('/yoda', (req, res) => {
+    res.send('Become powerful you have, the dark side in you I sense. Yrsssss.');
 })
 
 module.exports = router;
