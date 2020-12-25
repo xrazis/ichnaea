@@ -38,6 +38,9 @@ services:
         window: 120s
     ports:
       - "8000:8000"
+    volumes:
+      - ./server:/usr/src/app/server
+      - /usr/src/app/server/node_modules
     networks:
       - backend
       - frontend
@@ -56,6 +59,9 @@ services:
         window: 120s
     ports:
       - "8080:8080"
+    volumes:
+      - ./web:/usr/src/app/web
+      - /usr/src/app/web/node_modules
     networks:
       - frontend
     depends_on:
