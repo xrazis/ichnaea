@@ -23,7 +23,11 @@ export default createStore({
     actions: {
         login({commit}, user: { username: string, password: string }) {
             return new Promise((resolve, reject) => {
-                axios({method: 'post', url: 'http://localhost:8000/auth/login', data: qs.stringify({user})})
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/auth/login',
+                    data: qs.stringify({...user})
+                })
                     .then((resp: AxiosResponse) => {
                         commit("auth_success", user);
                         resolve(resp)
@@ -43,6 +47,6 @@ export default createStore({
     },
     modules: {},
     getters: {
-        isLoggedIn: state => !!state.status,
+        isLoggedIn: state => state.status,
     }
 })

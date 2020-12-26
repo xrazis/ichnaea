@@ -2,23 +2,28 @@ const express = require('express');
 const passport = require('passport')
 const router = express.Router();
 
-router.get('/auth/login', passport.authenticate('local'),
-    (req, res) => {
-        res.redirect('/dashboard');
+router.post('/auth/login',
+    (req, res, next) => {
+        passport.authenticate('local', {}, (err, user, info) => {
+            if (err)
+                return res.status(400).json({errors: err});
+            if (!user)
+                return res.status(400).json({errors: info});
+
+            req.logIn(user, () => {
+                return res.status(200).json({success: `logged in ${user.id}`});
+            });
+        })(req, res, next);
     }
 );
 
-router.get('/auth/logout', (req, res) => {
+router.post('/auth/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
 
 router.get('/auth/current_user', (req, res) => {
     res.send(req.user);
-});
-
-router.get('/auth/works', (req, res) => {
-    res.send('Become powerful you have, the dark side in you I sense. Yrsssss.');
 });
 
 module.exports = router;

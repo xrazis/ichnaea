@@ -9,7 +9,7 @@
         <form @submit.prevent="login">
           <div class="field">
             <p class="control has-icons-left has-icons-right">
-              <input class="input" placeholder="Username" type="text" v-model="username">
+              <input v-model="username" class="input" placeholder="Username" type="text">
               <span class="icon is-small is-left">
       <i class="fas fa-user"></i>
     </span> <span class="icon is-small is-right">
@@ -18,14 +18,14 @@
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" placeholder="Password" type="password" v-model="password">
+              <input v-model="password" class="input" placeholder="Password" type="password">
               <span class="icon is-small is-left">
       <i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control">
-              <button type="submit" class="button is-success">
+              <button class="button is-success" type="submit">
                 Login
               </button>
             </p>
