@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk')
 const cors = require('cors')
 const history = require('connect-history-api-fallback');
+const rateLimit = require('express-rate-limit');
 
 require('./services/socket')(server);
 require('./connections/mongo_conn');
@@ -20,6 +21,11 @@ app.use(cors(
         credentials: true
     }
 ));
+
+app.use(rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+}));
 
 app.use(bodyParser.urlencoded({
     extended: true
