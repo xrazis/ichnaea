@@ -1,4 +1,5 @@
 import {createStore} from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 import axios, {AxiosResponse} from "axios";
 import qs from 'qs'
 
@@ -40,13 +41,43 @@ export default createStore({
         },
         logout({commit}) {
             return new Promise((resolve, reject) => {
-                commit("logout");
-                resolve()
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/auth/logout'
+                })
+                    .then((resp: AxiosResponse) => {
+                        commit("logout");
+                        resolve(resp)
+                    })
+                    .catch((err: Error) => {
+                        commit("logout");
+                        commit('auth_error')
+                        reject(err)
+                    })
             })
         },
+        getUser({commit}) {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: 'http://localhost:8000/auth/current_user'
+                })
+                    .then((resp: AxiosResponse) => {
+                        console.log(resp)
+                        commit("auth_success", resp.data);
+                        resolve(resp)
+                    })
+                    .catch((err: Error) => {
+                        console.log(err)
+                        commit('auth_error')
+                        reject(err)
+                    })
+            })
+        }
     },
     modules: {},
     getters: {
         isLoggedIn: state => state.status,
-    }
+    },
+    plugins: [createPersistedState()]
 })
