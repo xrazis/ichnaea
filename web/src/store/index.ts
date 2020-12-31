@@ -26,7 +26,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/auth/login',
+                    url: '/auth/login',
                     data: qs.stringify({...user})
                 })
                     .then((resp: AxiosResponse) => {
@@ -43,7 +43,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/auth/logout'
+                    url: '/auth/logout'
                 })
                     .then((resp: AxiosResponse) => {
                         commit("logout");
@@ -56,19 +56,17 @@ export default createStore({
                     })
             })
         },
-        getUser({commit}) {
+        getCurrentUser({commit}) {
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: 'http://localhost:8000/auth/current_user'
+                    url: '/auth/current_user'
                 })
                     .then((resp: AxiosResponse) => {
-                        console.log(resp)
                         commit("auth_success", resp.data);
                         resolve(resp)
                     })
                     .catch((err: Error) => {
-                        console.log(err)
                         commit('auth_error')
                         reject(err)
                     })

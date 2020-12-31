@@ -48,5 +48,16 @@ import ShapeDividerTop from '@/components/ShapeDividerTop.vue';
 })
 
 export default class Home extends Vue {
+  mounted() {
+    this.getCurrentUser();
+  }
+
+  private getCurrentUser() {
+    this.$store.dispatch('getCurrentUser')
+        .then(() => this.$router.push('/dashboard'))
+        .catch((err: any) => {
+          this.$router.push('/')
+        })
+  }
 }
 </script>
