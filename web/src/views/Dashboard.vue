@@ -32,6 +32,10 @@ export default class Dashboard extends Vue {
 
       console.log(('Reconnecting...'));
     });
+
+    this.socket.on('console', (data: {}) => {
+      console.log(data);
+    })
   }
 }
 </script>

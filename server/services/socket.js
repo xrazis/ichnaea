@@ -15,10 +15,16 @@ module.exports = (server) => {
         });
 
         socket.on('data', (data) => {
-            const {measurement, pointName} = data;
+            pub.publish('console', JSON.stringify(data));
+        });
 
-            pub.publish('data', measurement);
+        sub.on('message', (channel, data) => {
+            const {measurement, pointName} = JSON.parse(data);
+
+            io.emit('console', {measurement})
             iWrite(pointName, socket.id, measurement)
-        })
+        });
+
+        sub.subscribe('console')
     });
 }
