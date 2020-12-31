@@ -4,15 +4,34 @@
 
 <script lang="ts">
 import {Vue} from 'vue-class-component';
+import {io} from 'socket.io-client'
+
 
 export default class Dashboard extends Vue {
-  mounted() {
-    this.$store.dispatch('getUser')
-        .then(() => this.$router.push('/dashboard'))
-        .catch((err: Error) => {
-          console.log(err)
-          this.$router.push('/login')
-        })
+  private socket!: any;
+
+  created() {
+    this.io()
+  }
+
+  private io() {
+    this.socket = io('/')
+
+    this.socket.on('connect', () => {
+      console.log(('Connected to server!'));
+    });
+
+    this.socket.on('disconnect', (reason: string) => {
+      console.log(('Lost connection!'));
+
+      if (reason === 'io server disconnect') this.socket.connect();
+
+      if (reason === 'io client disconnect') {
+        console.log(('Server kicked you!'))
+      }
+
+      console.log(('Reconnecting...'));
+    });
   }
 }
 </script>
