@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.0",
+    "getmac": "^5.17.0",
+    "nodemon": "^2.0.6",
     "socket.io-client": "^3.0.4"
   }
 }

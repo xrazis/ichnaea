@@ -1,4 +1,3 @@
 require('./services/socket')
 
-
-console.log('hello world')
+console.log('Client running...')

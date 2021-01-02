@@ -19,6 +19,7 @@ export default class Dashboard extends Vue {
 
     this.socket.on('connect', () => {
       console.log(('Connected to server!'));
+      this.socket.emit('subscribe', 'web');
     });
 
     this.socket.on('disconnect', (reason: string) => {

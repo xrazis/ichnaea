@@ -1,11 +1,11 @@
 FROM node:latest
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/client
 
 COPY package*.json ./
 
 RUN npm install
-COPY . .
 
 EXPOSE 6000
-CMD [ "npm", "start" ]
+
+CMD [ "npm", "run", "dev" ]
