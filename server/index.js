@@ -6,11 +6,12 @@ const cors = require('cors')
 const history = require('connect-history-api-fallback');
 const rateLimit = require('express-rate-limit');
 
-require('./services/socket')(server);
 require('./connections/mongo_conn');
+require('./services/socket')(server);
 
 const dataRoute = require('./routes/data')
 const authRoute = require('./routes/auth')
+const athletesRoute = require('./routes/athletes')
 
 const passport = require('./services/passport');
 const {session_secret} = require('./config/keys');
@@ -43,6 +44,7 @@ app.use(passport.session(undefined));
 
 app.use(dataRoute)
 app.use(authRoute)
+app.use(athletesRoute)
 
 app.use(history({
     verbose: true
