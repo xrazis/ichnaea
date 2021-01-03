@@ -107,3 +107,4 @@ dist
 
 .DS_Store
 /dist
+./mongo_example_swarmlab.js
