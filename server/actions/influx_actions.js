@@ -2,7 +2,6 @@ const {Point} = require('@influxdata/influxdb-client');
 const chalk = require('chalk')
 
 const {writeApi, queryApi} = require('../connections/influx_conn')
-const {bucket} = require('../config/keys')
 
 iWrite = (pointName, uuid, measurement) => {
     const point = new Point(pointName)
@@ -25,17 +24,15 @@ closeWrite = () => {
         });
 }
 
-iPoint = (timeFrame, filter) => {
-    const query = `from(bucket: "${bucket}") |> range(start: -${timeFrame}) |> group(columns: ["client"])
-      |> filter(fn: (r) => r._measurement == "${filter}")`;
-
+iQuery = (query) => {
     return queryApi
         .collectRows(query)
-        .then(async (result) => {
+        .then((result) => {
+            return result;
         })
-        .catch(() => {
+        .catch((err) => {
             return [{Error: 'Error occurred'}];
         });
 }
 
-module.exports = {iWrite, closeWrite, iPoint}
+module.exports = {iWrite, closeWrite, iQuery}

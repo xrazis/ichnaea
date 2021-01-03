@@ -10,6 +10,8 @@ services:
     container_name: "influx"
     environment:
       - INFLUXDB_DB=db0
+    volumes:
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf
     networks:
       - backend
       - monitor

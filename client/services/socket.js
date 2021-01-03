@@ -30,6 +30,6 @@ socket.on('closeConn', () => {
 });
 
 setInterval(() => {
-    socket.emit('data', {measurement: 123, pointName: 'hey-ho'});
+    socket.emit('data', {measurement: 5, mac, pointName: 'leg-measurement'});
 }, 3 * 1000);
 

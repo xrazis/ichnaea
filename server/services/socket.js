@@ -3,9 +3,8 @@ const redisAdapter = require('socket.io-redis');
 const mongoose = require('mongoose');
 const chalk = require('chalk');
 
-const {pub, sub} = require('../connections/redis_conn')
 const {saveAthlete} = require('../actions/mongo_actions')
-const {iWrite, closeWrite, iQuery} = require('../actions/influx_actions')
+const {iWrite} = require('../actions/influx_actions')
 const Athlete = mongoose.model('Athlete');
 
 module.exports = (server) => {
@@ -38,10 +37,10 @@ module.exports = (server) => {
         });
 
         socket.on('data', (data) => {
-            const {measurement, pointName} = data;
+            const {measurement, pointName, mac} = data;
 
             io.emit('console', {measurement})
-            iWrite(pointName, socket.id, measurement)
+            iWrite(pointName, mac, measurement)
         });
 
     });
