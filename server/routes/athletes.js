@@ -5,7 +5,7 @@ const {requireAuth} = require('../middlewares/middleware');
 
 const Athlete = mongoose.model('Athlete');
 
-router.get('/api/athletes',  async (req, res) => {
+router.get('/api/athletes', requireAuth, async (req, res) => {
     const athletes = await Athlete.find();
     res.send(athletes);
 });

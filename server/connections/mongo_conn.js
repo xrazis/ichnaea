@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const {mongo_uri} = require('../config/keys');
 
 require('../models/User');
+require('../models/Athlete');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongo_uri, {
