@@ -10,15 +10,6 @@ router.get('/api/athletes', requireAuth, async (req, res) => {
     res.send(athletes);
 });
 
-//add a new athlete
-router.get('/api/athletes/new', requireAuth, (req, res) => {
-
-});
-
-//add a new athlete
-router.post('/api/athletes', requireAuth, (req, res) => {
-});
-
 router.get('/api/athletes/:id', requireAuth, async (req, res) => {
     const athlete = await Athlete.findById(req.params.id);
     res.send(athlete)
