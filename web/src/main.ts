@@ -8,6 +8,6 @@ import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = '/';
 
 createApp(App).use(store).use(router).mount('#app')
