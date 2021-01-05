@@ -55,6 +55,18 @@ export default class Login extends Vue {
   private username = '';
   private password = '';
 
+  mounted() {
+    this.getCurrentUser();
+  }
+
+  private getCurrentUser() {
+    this.$store.dispatch('getCurrentUser')
+        .then(() => this.$router.push('/dashboard'))
+        .catch((err: any) => {
+          this.$router.push('/')
+        })
+  }
+
   private login() {
     let user = {username: this.username, password: this.password}
 
