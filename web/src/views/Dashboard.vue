@@ -1,11 +1,20 @@
 <template>
-
+  <Navbar/>
+  <Hero/>
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {Options, Vue} from 'vue-class-component';
 import {io} from 'socket.io-client'
+import Navbar from '@/components/Navbar.vue'
+import Hero from '@/components/Hero.vue'
 
+@Options({
+  components: {
+    Navbar,
+    Hero
+  }
+})
 
 export default class Dashboard extends Vue {
   private socket!: any;
@@ -19,7 +28,6 @@ export default class Dashboard extends Vue {
 
     this.socket.on('connect', () => {
       console.log(('Connected to server!'));
-      this.socket.emit('subscribe', 'web');
     });
 
     this.socket.on('disconnect', (reason: string) => {
@@ -35,12 +43,10 @@ export default class Dashboard extends Vue {
     });
 
     this.socket.on('console', (data: {}) => {
-      console.log(data);
     })
   }
 }
 </script>
-
 
 <style scoped>
 
