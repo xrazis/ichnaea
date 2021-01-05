@@ -11,7 +11,7 @@ router.post('/auth/login',
                 return res.status(400).json({errors: info});
 
             req.logIn(user, () => {
-                return res.status(200).json({success: `logged in ${user.id}`});
+                return res.status(200).json({user: req.user});
             });
         })(req, res, next);
     }
