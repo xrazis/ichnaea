@@ -1,18 +1,23 @@
 <template>
   <Navbar/>
-  <Hero/>
+  <Sidebar/>
+  <div class="content">
+    <Tile/>
+  </div>
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {io} from 'socket.io-client'
 import Navbar from '@/components/Navbar.vue'
-import Hero from '@/components/Hero.vue'
+import Sidebar from '@/components/Sidebar.vue'
+import Tile from '@/components/Tile.vue'
 
 @Options({
   components: {
     Navbar,
-    Hero
+    Sidebar,
+    Tile,
   }
 })
 
@@ -27,19 +32,15 @@ export default class Dashboard extends Vue {
     this.socket = io('/')
 
     this.socket.on('connect', () => {
-      console.log(('Connected to server!'));
     });
 
     this.socket.on('disconnect', (reason: string) => {
-      console.log(('Lost connection!'));
 
       if (reason === 'io server disconnect') this.socket.connect();
 
       if (reason === 'io client disconnect') {
-        console.log(('Server kicked you!'))
       }
 
-      console.log(('Reconnecting...'));
     });
 
     this.socket.on('console', (data: {}) => {
@@ -49,5 +50,12 @@ export default class Dashboard extends Vue {
 </script>
 
 <style scoped>
-
+@media (min-width: 572px) {
+  .content {
+    position: relative;
+    margin-top: 7vh;
+    margin-left: 17rem;
+    margin-right: 2rem;
+  }
+}
 </style>

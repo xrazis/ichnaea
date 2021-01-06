@@ -1,11 +1,10 @@
 <template>
-  <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/" >
-        <img src="../assets/undraw_server_q2pb.svg" width="60" height="150" />
+      <a class="navbar-item" href="/">
+        <img src="../assets/undraw_server_q2pb.svg" width="60" height="150"/>
         <h3 class="is-size-4">Ichnaea</h3>
       </a>
-
       <a
           role="button"
           class="navbar-burger burger"
@@ -18,10 +17,24 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
+        <a class="navbar-item">
+                    <span class="icon mr-1">
+                        <i class="fa fa-user"></i>
+                    </span>
+          <span>{{ username }}</span>
+        </a>
+        <a class="navbar-item has-text-danger mr-2" @click="logout">
+                    <span class="icon mr-1">
+                        <i class="fa fa-sign-out-alt"></i>
+                    </span>
+          <span>Logout</span>
+        </a>
         <a class="navbar-item" href="https://github.com/xrazis/ichnaea" target="_blank">
+          <span class="icon mr-1">
+                        <i class="fas fa-book"></i>
+                    </span>
           Documentation
         </a>
       </div>
@@ -32,9 +45,25 @@
 import {Vue} from "vue-class-component";
 
 export default class Navbar extends Vue {
+  private username = '';
+
+  mounted() {
+    this.username = this.$store.getters.user.username
+  }
+
+  private logout() {
+    this.$store.dispatch('logout')
+        .then(() => this.$router.push('/'))
+        .catch((err: any) => {
+          console.log(err)
+          this.$router.push('/')
+        })
+  }
 }
 </script>
 
 <style scoped>
-
+.navbar {
+  height: 5vh;
+}
 </style>

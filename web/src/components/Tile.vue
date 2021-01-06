@@ -1,0 +1,67 @@
+<template>
+  <div class="tile">
+    <article class="tile is-child notification has-background-primary-dark has-text-white">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item ">
+            <span class="icon is-large">
+               <i class="fa fa-3x fa-user-circle"/>
+            </span>
+            <p class="is-size-4 is-bold">&nbspWhats up, {{ user.username }}</p>
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item has-text-centered">
+            <p class="is-size-6 is-bold">Last login on {{ date }}</p>
+          </div>
+        </div>
+      </nav>
+      <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Your Athletes</p>
+            <p class="title">3,456</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Live Athletes</p>
+            <p class="title">123</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Followers</p>
+            <p class="title">456K</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Likes</p>
+            <p class="title">789</p>
+          </div>
+        </div>
+      </nav>
+    </article>
+  </div>
+</template>
+
+<script lang="ts">
+import {Vue} from 'vue-class-component';
+
+interface User {
+  username: string,
+  lastLogin: string
+}
+
+export default class Tile extends Vue {
+  private user!: User;
+  private date!: string;
+
+  created() {
+    this.user = this.$store.getters.user
+    this.date = new Date(this.user.lastLogin).toLocaleString()
+  }
+
+}
+</script>
