@@ -23,6 +23,9 @@ router.post('/auth/logout', (req, res) => {
 });
 
 router.get('/auth/current_user', (req, res) => {
+    if (!req.user)
+        return res.status(404).json({errors: 'No current user!'})
+
     res.send(req.user);
 });
 

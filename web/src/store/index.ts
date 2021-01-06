@@ -63,11 +63,6 @@ export default createStore({
                     url: '/auth/current_user'
                 })
                     .then((resp: AxiosResponse) => {
-                        if (resp.data === "") {
-                            commit('auth_error')
-                            return
-                        }
-
                         commit("auth_success", resp.data);
                         resolve(resp)
                     })
@@ -81,7 +76,7 @@ export default createStore({
     modules: {},
     getters: {
         isLoggedIn: state => state.status,
-        user: state => state.user
+        user: state => state.user,
     },
     plugins: [createPersistedState()]
 })

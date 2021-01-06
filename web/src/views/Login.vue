@@ -63,7 +63,7 @@ export default class Login extends Vue {
     this.$store.dispatch('getCurrentUser')
         .then(() => this.$router.push('/dashboard'))
         .catch((err: any) => {
-          this.$router.push('/')
+          this.$router.push('/login')
         })
   }
 
@@ -73,7 +73,6 @@ export default class Login extends Vue {
     this.$store.dispatch('login', user)
         .then(() => this.$router.push('/dashboard'))
         .catch((err: any) => {
-          console.log(err)
           this.msg = err.response.data.errors.message || err.message || 'Something went wrong!'
           this.$router.push('/login')
         })
