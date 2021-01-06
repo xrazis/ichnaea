@@ -24,7 +24,8 @@ passport.use('local', new LocalStrategy(
         User.findOne({username: username})
             .then(user => {
                 if (!user) {
-                    const newUser = new User({username, password});
+                    const lastLogin = Date.now()
+                    const newUser = new User({username, password, lastLogin});
                     bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) throw err;
@@ -44,6 +45,8 @@ passport.use('local', new LocalStrategy(
                         if (err) throw err;
 
                         if (isMatch) {
+                            const lastLogin = Date.now()
+                            User.updateOne(user._id, lastLogin)
                             return done(null, user);
                         } else {
                             return done(null, false, {message: 'Wrong password'});
