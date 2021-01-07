@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory, RouteRecordRaw} from 'vue-router'
-import Home from '../views/Home.vue'
 import store from '../store/index'
+import Home from '../views/Home.vue'
+import Login from "@/views/Login.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -11,15 +12,27 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import('../views/Login.vue'),
+        component: Login
     },
     {
-        path: '/dashboard',
+        path: '/:username/dashboard',
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue'),
+        children: [
+            {
+                path: '',
+                name: 'DashboardHome',
+                component: () => import('../views/DashboardHome.vue')
+            },
+            {
+                path: 'profile',
+                name: 'Profile',
+                component: () => import('../views/Profile.vue')
+            }
+        ],
         meta: {
             requiresAuth: true
-        }
+        },
     }
 ]
 

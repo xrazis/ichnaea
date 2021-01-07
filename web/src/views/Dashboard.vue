@@ -2,8 +2,9 @@
   <Navbar/>
   <Sidebar/>
   <div class="content">
-    <Tile/>
+    <router-view></router-view>
   </div>
+  <Footer/>
 </template>
 
 <script lang="ts">
@@ -11,13 +12,13 @@ import {Options, Vue} from 'vue-class-component';
 import {io} from 'socket.io-client'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
-import Tile from '@/components/Tile.vue'
+import Footer from '@/components/Footer.vue'
 
 @Options({
   components: {
     Navbar,
     Sidebar,
-    Tile,
+    Footer
   }
 })
 
@@ -32,15 +33,13 @@ export default class Dashboard extends Vue {
     this.socket = io('/')
 
     this.socket.on('connect', () => {
+      this.$store.commit("serverConnected", true);
     });
 
     this.socket.on('disconnect', (reason: string) => {
+      this.$store.commit("serverConnected", false);
 
       if (reason === 'io server disconnect') this.socket.connect();
-
-      if (reason === 'io client disconnect') {
-      }
-
     });
 
     this.socket.on('console', (data: {}) => {

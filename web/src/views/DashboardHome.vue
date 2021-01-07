@@ -1,4 +1,5 @@
 <template>
+  <h1 class="title is-2">Home</h1>
   <div class="tile">
     <article class="tile is-child notification has-background-primary-dark has-text-white">
       <nav class="level">
@@ -31,8 +32,9 @@
         </div>
         <div class="level-item has-text-centered">
           <div>
-            <p class="heading">Followers</p>
-            <p class="title">456K</p>
+            <p class="heading">Server</p>
+            <p class="title" v-if="this.$store.getters.serverStatus">Connected</p>
+            <p class="title" v-else>Disconnected</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
@@ -54,7 +56,7 @@ interface User {
   lastLogin: string
 }
 
-export default class Tile extends Vue {
+export default class DashboardHome extends Vue {
   private user!: User;
   private date!: string;
 

@@ -6,24 +6,40 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a>
+          <router-link :to="{ name: 'DashboardHome', params: { username: $route.params.username }}">
+            <a>
           <span class="icon-text">
             <span class="icon">
                <i class="fas fa-digital-tachograph"/>
             </span>
               <span>&nbsp;Dashboard</span>
           </span>
-          </a>
+            </a>
+          </router-link>
         </li>
         <li>
-          <a>
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+            <a>
+          <span class="icon-text">
+            <span class="icon">
+               <i class="fas fa-user"/>
+            </span>
+              <span>&nbsp;Profile</span>
+          </span>
+            </a>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+            <a>
           <span class="icon-text">
             <span class="icon">
                <i class="fas fa-users"/>
             </span>
               <span>&nbsp;Athletes</span>
           </span>
-          </a>
+            </a>
+          </router-link>
         </li>
       </ul>
       <p class="menu-label">
@@ -31,24 +47,28 @@
       </p>
       <ul class="menu-list">
         <li>
-          <a>
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+            <a>
           <span class="icon-text">
             <span class="icon">
                <i class="fas fa-table"/>
             </span>
               <span>&nbsp;Tables</span>
           </span>
-          </a>
+            </a>
+          </router-link>
         </li>
         <li>
-          <a>
+          <router-link :to="{ name: 'Profile', params: { username:  $route.params.username }}">
+            <a>
           <span class="icon-text">
             <span class="icon">
                <i class="fas fa-chart-area"/>
             </span>
               <span>&nbsp;Charts</span>
           </span>
-          </a>
+            </a>
+          </router-link>
         </li>
       </ul>
     </div>
