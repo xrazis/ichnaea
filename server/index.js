@@ -10,6 +10,7 @@ require('./services/socket')(server);
 
 const dataRoute = require('./routes/data')
 const authRoute = require('./routes/auth')
+const userRoute = require('./routes/user')
 const athletesRoute = require('./routes/athletes')
 
 const passport = require('./services/passport');
@@ -42,6 +43,7 @@ app.use(passport.session(undefined));
 
 app.use(dataRoute)
 app.use(authRoute)
+app.use(userRoute)
 app.use(athletesRoute)
 
 const PORT = process.env.PORT || 8000;

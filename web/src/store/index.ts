@@ -80,12 +80,12 @@ export default createStore({
         updateUser({commit}, user) {
             return new Promise((resolve, reject) => {
                 axios({
-                    method: 'post',
-                    url: '/api/user',
+                    method: 'put',
+                    url: `/api/user/${user._id}`,
                     data: qs.stringify({...user})
                 })
                     .then((resp: AxiosResponse) => {
-                        commit("auth_success", resp.data.user);
+                        commit("auth_success", resp.data);
                         resolve(resp)
                     })
                     .catch((err: Error) => {

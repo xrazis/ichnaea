@@ -22,7 +22,7 @@
               </p>
             </div>
             <div class="field">
-              <p c lass="control">
+              <p class="control">
                 <button class="button is-info is-rounded is-medium" type="submit">
                   Login
                 </button>
