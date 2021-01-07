@@ -25,7 +25,8 @@ passport.use('local', new LocalStrategy(
             .then(user => {
                 if (!user) {
                     const lastLogin = Date.now()
-                    const newUser = new User({username, password, lastLogin});
+                    const registered = lastLogin
+                    const newUser = new User({username, password, registered, lastLogin});
                     bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) throw err;

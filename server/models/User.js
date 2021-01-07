@@ -5,7 +5,7 @@ const userSchema = new Schema({
     username: String,
     email: String,
     password: String,
-    registered: String,
+    registered: Date,
     lastLogin: Date
 });
 
