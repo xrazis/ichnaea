@@ -5,21 +5,26 @@ import qs from 'qs'
 
 export default createStore({
     state: {
-        status: false,
-        user: {}
+        userStatus: false,
+        user: {},
+        serverStatus: false
     },
     mutations: {
         auth_success(state, user) {
-            state.status = true
+            state.userStatus = true
             state.user = user
         },
         auth_error(state) {
-            state.status = false
+            state.userStatus = false
         },
         logout(state) {
-            state.status = false
+            state.userStatus = false
+            state.serverStatus = false
             state.user = {}
         },
+        serverConnected(state, status) {
+            state.serverStatus = status
+        }
     },
     actions: {
         login({commit}, user: { username: string, password: string }) {
@@ -71,12 +76,29 @@ export default createStore({
                         reject(err)
                     })
             })
+        },
+        updateUser({commit}, user) {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'post',
+                    url: '/api/user',
+                    data: qs.stringify({...user})
+                })
+                    .then((resp: AxiosResponse) => {
+                        commit("auth_success", resp.data.user);
+                        resolve(resp)
+                    })
+                    .catch((err: Error) => {
+                        reject(err)
+                    })
+            })
         }
     },
     modules: {},
     getters: {
-        isLoggedIn: state => state.status,
+        isLoggedIn: state => state.userStatus,
         user: state => state.user,
+        serverStatus: state => state.serverStatus
     },
     plugins: [createPersistedState()]
 })
