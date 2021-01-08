@@ -33,7 +33,7 @@
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Server</p>
-            <p class="title" v-if="this.$store.getters.serverStatus">Connected</p>
+            <p class="title" v-if="this.$store.getters.currentStatus">Connected</p>
             <p class="title" v-else>Disconnected</p>
           </div>
         </div>
@@ -50,18 +50,14 @@
 
 <script lang="ts">
 import {Vue} from 'vue-class-component';
-
-interface User {
-  username: string,
-  lastLogin: string
-}
+import {UserInterface} from "@/store/modules/user";
 
 export default class DashboardHome extends Vue {
-  private user!: User;
-  private date!: string;
+  private user = <UserInterface>{};
+  private date: string = '';
 
   created() {
-    this.user = this.$store.getters.user
+    this.user = this.$store.getters.currentUser
     this.date = new Date(this.user.lastLogin).toLocaleString()
   }
 

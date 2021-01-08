@@ -26,7 +26,7 @@
                     <span class="icon mr-1 has-text-white">
                         <i class="fa fa-user"></i>
                     </span>
-            <span class="has-text-white">{{ username }}</span>
+            <span class="has-text-white">{{ user.username }}</span>
           </router-link>
         </a>
         <a class="navbar-item has-text-danger mr-2" @click="logout">
@@ -47,12 +47,13 @@
 </template>
 <script lang="ts">
 import {Vue} from "vue-class-component";
+import {UserInterface} from "@/store/modules/user";
 
 export default class Navbar extends Vue {
-  private username = '';
+  private user = <UserInterface>{};
 
   created() {
-    this.username = this.$store.getters.user.username
+    this.user = this.$store.getters.currentUser
   }
 
   private logout() {

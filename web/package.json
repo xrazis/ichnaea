@@ -19,6 +19,8 @@
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
+    "vuex-class": "^0.3.2",
+    "vuex-module-decorators": "^1.0.1",
     "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {

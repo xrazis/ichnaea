@@ -83,25 +83,21 @@
 
 <script lang="ts">
 import {Vue} from "vue-class-component";
+import {UserInterface} from "@/store/modules/user";
 
-interface User {
-  _id: string,
-  username: string,
-  email: string,
-  registered: string,
-  currentPassword: string,
+interface UpdatedUser extends UserInterface {
   newPassword: string,
   repeatNewPassword: string,
 }
 
 export default class Profile extends Vue {
+  private user = <UpdatedUser>{};
+  private date: string = '';
   private msgSuccess = '';
   private msgError = '';
-  private user!: User;
-  private date!: string;
 
   created() {
-    this.user = this.$store.getters.user
+    this.user = this.$store.getters.currentUser
     this.date = new Date(this.user.registered).toLocaleString()
   }
 
@@ -115,7 +111,7 @@ export default class Profile extends Vue {
       _id: this.user._id,
       username: this.user.username,
       email: this.user.email,
-      password: this.user.currentPassword,
+      password: this.user.password,
       newPassword: this.user.newPassword,
       repeatNewPassword: this.user.repeatNewPassword
     }
