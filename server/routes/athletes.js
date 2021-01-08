@@ -21,8 +21,17 @@ router.get('/api/athletes/:id/edit', requireAuth, async (req, res) => {
 });
 
 router.put('/api/athletes/:id', requireAuth, async (req, res) => {
-    const {id, user} = req.params
-    await Athlete.findByIdAndUpdate(id, user)
+    const {name, _trainer} = req.body
+    const updateAthlete = {name, _trainer}
+
+    if (name || _trainer)
+        await Athlete.findByIdAndUpdate(req.params.id, updateAthlete, {}, (err, athlete) => {
+            if (err)
+                return res.status(400).json({errors: 'Something went wrong!0'});
+
+            res.send(athlete)
+        })
+
 });
 
 router.delete('/api/athlete/:id', requireAuth, async (req, res) => {

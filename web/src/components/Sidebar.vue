@@ -30,7 +30,7 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+          <router-link :to="{ name: 'Athletes', params: { username: $route.params.username }}">
             <a>
           <span class="icon-text">
             <span class="icon">

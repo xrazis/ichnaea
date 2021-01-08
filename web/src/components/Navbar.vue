@@ -22,7 +22,7 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item">
-          <router-link :to="{ name: 'Profile', params: { username: username }}">
+          <router-link :to="{ name: 'Profile', params: { username: user.username }}">
                     <span class="icon mr-1 has-text-white">
                         <i class="fa fa-user"></i>
                     </span>

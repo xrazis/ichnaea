@@ -13,15 +13,15 @@ export interface UserInterface {
 
 @Module
 export default class User extends VuexModule {
-    private user = <UserInterface>{}
-    private userStatus = false
+    private user = <UserInterface>{};
+    private userStatus = false;
 
     get currentUser() {
-        return this.user
+        return this.user;
     }
 
     get isLoggedIn() {
-        return this.userStatus
+        return this.userStatus;
     }
 
     @Mutation
@@ -37,8 +37,8 @@ export default class User extends VuexModule {
 
     @Mutation
     private auth_logout() {
-        this.user = <UserInterface>{}
-        this.userStatus = false
+        this.user = <UserInterface>{};
+        this.userStatus = false;
     }
 
     @Action
@@ -68,7 +68,7 @@ export default class User extends VuexModule {
                 url: '/auth/logout'
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit("auth_logout");
+                    this.context.commit('auth_logout');
                     resolve(resp)
                 })
                 .catch((err: Error) => {
@@ -85,7 +85,7 @@ export default class User extends VuexModule {
                 url: '/auth/current_user'
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit("auth_success", resp.data);
+                    this.context.commit('auth_success', resp.data);
                     resolve(resp)
                 })
                 .catch((err: Error) => {
@@ -104,7 +104,23 @@ export default class User extends VuexModule {
                 data: qs.stringify({...user})
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit("auth_success", resp.data);
+                    this.context.commit('auth_success', resp.data);
+                    resolve(resp)
+                })
+                .catch((err: Error) => {
+                    reject(err)
+                })
+        })
+    }
+
+    @Action
+    private specificUser(user: UserInterface) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'GET',
+                url: `/api/user/${user._id}`
+            })
+                .then((resp: AxiosResponse) => {
                     resolve(resp)
                 })
                 .catch((err: Error) => {
