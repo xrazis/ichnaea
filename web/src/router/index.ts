@@ -41,6 +41,31 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'Athlete',
                 component: () => import('../views/Athlete.vue')
             },
+            {
+                path: 'athletes/:id/table',
+                name: 'Table',
+                component: () => import('../views/Table.vue')
+            },
+            {
+                path: 'athletes/:id/chart',
+                name: 'Chart',
+                component: () => import('../views/Chart.vue')
+            },
+            {
+                path: 'guide',
+                name: 'Guide',
+                component: () => import('../views/DashboardHome.vue')
+            },
+            {
+                path: 'ticket',
+                name: 'Ticket',
+                component: () => import('../views/DashboardHome.vue')
+            },
+            {
+                path: 'docs',
+                name: 'Docs',
+                component: () => import('../views/DashboardHome.vue')
+            },
         ],
         meta: {
             requiresAuth: true
