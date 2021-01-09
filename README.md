@@ -37,6 +37,12 @@ Returns current user.
 
 ## API
 
+### User
+
+**PUT** `/api/user/{user._id}`
+
+Updates a user matching the given _id.
+
 ### Athletes
 
 **GET** `/api/athletes`
@@ -47,9 +53,9 @@ Returns an array of athletes objects.
 
 Returns an athlete object for a given _id.
 
-**GET** || **PUT** `/api/athlete/{user._id}/edit`
+**PUT** `/api/athlete/{user._id}`
 
-Edits an athlete matching the given _id.
+Updates an athlete matching the given _id.
 
 **DELETE** `/api/athlete/{user._id}`
 
