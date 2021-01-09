@@ -16,6 +16,7 @@ export default class Athletes extends VuexModule {
     private athlete = <AthleteInterface>{};
     private trainer = <UserInterface>{};
     private athletes = [<AthleteInterface>{}];
+    private err = <Error>{}
 
     get currentAthlete() {
         return this.athlete;
@@ -27,6 +28,10 @@ export default class Athletes extends VuexModule {
 
     get currentAthletes() {
         return this.athletes;
+    }
+
+    get getErrAthlete() {
+        return this.err
     }
 
     @Mutation
@@ -48,6 +53,11 @@ export default class Athletes extends VuexModule {
         this.athlete = <AthleteInterface>{};
         this.trainer = <UserInterface>{}
         this.athletes = [<AthleteInterface>{}];
+    }
+
+    @Mutation
+    private update_error(err: Error) {
+        this.err = err
     }
 
     @Action
@@ -77,6 +87,7 @@ export default class Athletes extends VuexModule {
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('save_athlete', resp.data)
+                    resolve(resp)
                 })
                 .catch((err: Error) => {
                     reject(err)

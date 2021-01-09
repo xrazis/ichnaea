@@ -15,6 +15,7 @@ export interface UserInterface {
 export default class User extends VuexModule {
     private user = <UserInterface>{};
     private userStatus = false;
+    private err = <Error>{};
 
     get currentUser() {
         return this.user;
@@ -24,6 +25,10 @@ export default class User extends VuexModule {
         return this.userStatus;
     }
 
+    get getErrUser() {
+        return this.err
+    }
+
     @Mutation
     private auth_success(user: UserInterface) {
         this.user = user;
@@ -31,14 +36,20 @@ export default class User extends VuexModule {
     }
 
     @Mutation
-    private auth_error() {
+    private auth_error(err: Error) {
         this.userStatus = false;
+        this.err = err
     }
 
     @Mutation
     private auth_logout() {
         this.user = <UserInterface>{};
         this.userStatus = false;
+    }
+
+    @Mutation
+    private update_error(err: Error) {
+        this.err = err
     }
 
     @Action
@@ -54,7 +65,7 @@ export default class User extends VuexModule {
                     resolve(resp)
                 })
                 .catch((err: Error) => {
-                    this.context.commit('auth_error')
+                    this.context.commit('auth_error', err)
                     reject(err)
                 })
         })
@@ -95,7 +106,7 @@ export default class User extends VuexModule {
                 })
         })
     }
-    
+
     @Action
     private specificUser(id: string) {
         return new Promise((resolve, reject) => {
@@ -125,6 +136,7 @@ export default class User extends VuexModule {
                     resolve(resp)
                 })
                 .catch((err: Error) => {
+                    this.context.commit('update_error', err)
                     reject(err)
                 })
         })

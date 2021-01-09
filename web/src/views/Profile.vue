@@ -8,7 +8,7 @@
           <div class="field">
             <label class="label">Username</label>
             <div class="control">
-              <input class="input" type="text" v-model="user.username">
+              <input v-model="user.username" class="input" type="text">
             </div>
           </div>
           <div class="field">
@@ -21,7 +21,7 @@
           <div class="field">
             <label class="label">Email</label>
             <div class="control">
-              <input class="input" type="email" v-model="user.email">
+              <input v-model="user.email" class="input" type="email">
             </div>
           </div>
         </div>
@@ -31,26 +31,20 @@
           <p class="title">Change Password</p>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="Current Password" v-model="user.currentPassword">
-              <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
+              <input v-model="user.currentPassword" class="input" placeholder="Current Password" type="password">
+              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="New Password" v-model="user.newPassword">
-              <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
+              <input v-model="user.newPassword" class="input" placeholder="New Password" type="password">
+              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input class="input" type="password" placeholder="Confirm Password" v-model="user.repeatNewPassword">
-              <span class="icon is-small is-left">
-      <i class="fas fa-lock"></i>
-    </span>
+              <input v-model="user.repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
+              <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
@@ -60,13 +54,13 @@
               </button>
             </p>
           </div>
-          <div class="notification is-danger has-text-centered mt-5" v-if="msgError">
+          <div v-if="msgError" class="notification is-danger has-text-centered mt-5">
             <b>{{ msgError }}</b>
           </div>
-          <div class="notification is-success has-text-centered mt-5" v-else-if="msgSuccess">
+          <div v-else-if="msgSuccess" class="notification is-success has-text-centered mt-5">
             <b>{{ msgSuccess }}</b>
           </div>
-          <div class="notification is-primary is-light mt-5" v-else>
+          <div v-else class="notification is-primary is-light mt-5">
             <p>According to the traditional advice—which is still good—a strong password:</p>
             <ul>
               <li>Has 12 Characters, Minimum</li>
@@ -92,7 +86,7 @@ interface UpdatedUser extends UserInterface {
 
 export default class Profile extends Vue {
   private user = <UpdatedUser>{};
-  private date: string = '';
+  private date = '';
   private msgSuccess = '';
   private msgError = '';
 
@@ -117,21 +111,9 @@ export default class Profile extends Vue {
     }
 
     this.$store.dispatch('updateUser', user)
-        .then(() => {
-          this.msgSuccess = 'User updated!';
-          this.$router.push({
-            name: 'Profile',
-            params: {username: this.user.username}
-          })
-        })
-        .catch((err: any) => {
-              this.msgError = err.data.errors.message || err.message || 'Something went wrong!';
-              this.$router.push({
-                name: 'Profile',
-                params: {username: this.user.username}
-              })
-            }
-        )
+        .then(() => this.msgSuccess = 'User updated!')
+        .catch(() => this.msgError = this.$store.getters.getErrUser.response.data.errors.message ||
+            'Something went wrong!')
   }
 }
 
