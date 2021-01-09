@@ -22,11 +22,13 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item">
-          <router-link :to="{ name: 'Profile', params: { username: user.username }}">
-                    <span class="icon mr-1 has-text-white">
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+            <div class="icon-text">
+                    <span class="icon mr-1  has-text-white">
                         <i class="fa fa-user"></i>
                     </span>
-            <span class="has-text-white">{{ user.username }}</span>
+              <span class="has-text-white">{{ user.username }}</span>
+            </div>
           </router-link>
         </a>
         <a class="navbar-item has-text-danger mr-2" @click="logout">
@@ -34,12 +36,6 @@
                         <i class="fa fa-sign-out-alt"></i>
                     </span>
           <span>Logout</span>
-        </a>
-        <a class="navbar-item" href="https://github.com/xrazis/ichnaea" target="_blank">
-          <span class="icon mr-1">
-                        <i class="fas fa-book"></i>
-                    </span>
-          Documentation
         </a>
       </div>
     </div>

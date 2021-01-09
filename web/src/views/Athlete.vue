@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title is-2">Athletes/{{ athlete.name }}</h1>
+  <h1 class="title is-2">/athletes/{{ athlete.name }}</h1>
   <div class="tile is-ancestor">
     <div class="tile is-6 is-vertical is-parent">
       <form @submit="update">
@@ -55,7 +55,7 @@
             <p>It seems that this athlete has no trainer attached to him!</p>
             <p>By adopting an athlete you can edit his personal details and view his performance stats.</p>
           </ul>
-          <button class="button is-large is-rounded is-primary is-light" @click="update">update</button>
+          <button class="button is-large is-rounded is-primary is-light" @click="update">Adopt</button>
         </div>
         <div v-else>
           <div class="field">

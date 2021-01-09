@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title is-2">Profile</h1>
+  <h1 class="title is-2">/profile</h1>
   <form @submit="update">
     <div class="tile is-ancestor">
       <div class="tile is-4 is-vertical is-parent">

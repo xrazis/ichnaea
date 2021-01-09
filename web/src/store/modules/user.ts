@@ -69,6 +69,7 @@ export default class User extends VuexModule {
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('auth_logout');
+                    this.context.commit('athlete_logout');
                     resolve(resp)
                 })
                 .catch((err: Error) => {
@@ -114,11 +115,11 @@ export default class User extends VuexModule {
     }
 
     @Action
-    private specificUser(user: UserInterface) {
+    private specificUser(id: string) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
-                url: `/api/user/${user._id}`
+                url: `/api/user/${id}`
             })
                 .then((resp: AxiosResponse) => {
                     resolve(resp)

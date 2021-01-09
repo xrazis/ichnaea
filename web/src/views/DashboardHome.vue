@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title is-2">Home</h1>
+  <h1 class="title is-2">/home</h1>
   <div class="tile">
     <article class="tile is-child notification has-background-primary-dark has-text-white">
       <nav class="level">

@@ -44,6 +44,13 @@ export default class Athletes extends VuexModule {
         this.athletes = athletes;
     }
 
+    @Mutation
+    private auth_logout() {
+        this.athlete = <AthleteInterface>{};
+        this.trainer = <UserInterface>{}
+        this.athletes = [<AthleteInterface>{}];
+    }
+
     @Action
     private getAthletes() {
         return new Promise((resolve, reject) => {

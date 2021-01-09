@@ -6,19 +6,24 @@
       </p>
       <ul class="menu-list">
         <li>
-          <router-link :to="{ name: 'DashboardHome', params: { username: $route.params.username }}">
+          <router-link :to="{ name: 'DashboardHome', params: { username: $route.params.username }}" :class="{
+            'has-background-white':
+           $route.name==='DashboardHome' }">
             <a>
-          <span class="icon-text">
-            <span class="icon">
+          <span class=" icon-text
+          ">
+          <span class="icon">
                <i class="fas fa-digital-tachograph"/>
             </span>
-              <span>&nbsp;Dashboard</span>
+          <span>&nbsp;Dashboard</span>
           </span>
             </a>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}" :class="{
+            'has-background-white':
+           $route.name==='Profile' }">
             <a>
           <span class="icon-text">
             <span class="icon">
@@ -30,7 +35,10 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Athletes', params: { username: $route.params.username }}">
+          <router-link :to="{ name: 'Athletes', params: { username: $route.params.username }}"
+                       :class="{
+            'has-background-white':
+           $route.name==='Athletes' }">
             <a>
           <span class="icon-text">
             <span class="icon">
@@ -47,19 +55,48 @@
       </p>
       <ul class="menu-list">
         <li>
-          <router-link :to="{ name: 'Profile', params: { username: $route.params.username }}">
+          <router-link v-if="$store.getters.currentAthlete._id === ''" :to="{ name: 'Table', params: { id:
+          $store.getters.currentAthlete._id }}" :class="{
+            'has-background-white':
+           $route.name==='Table' }">
             <a>
           <span class="icon-text">
             <span class="icon">
                <i class="fas fa-table"/>
             </span>
-              <span>&nbsp;Tables</span>
+              <span>&nbsp;Table</span>
+          </span>
+            </a>
+          </router-link>
+          <router-link v-else :to="{ name: 'Athletes', params: { id:
+          $route.params.username }}" :class="{
+            'disabled':
+           $store.getters.currentAthlete === '' }">
+            <a>
+          <span class="icon-text">
+            <span class="icon">
+               <i class="fas fa-table"/>
+            </span>
+              <span>&nbsp;Table</span>
           </span>
             </a>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'Profile', params: { username:  $route.params.username }}">
+          <router-link v-if="$store.getters.currentAthlete === ''" :to="{ name: 'Chart', params: { id:
+          $store.getters.currentAthlete._id }}" :class="{
+            'has-background-white':
+           $route.name==='Chart' }">
+            <a>
+          <span class="icon-text">
+            <span class="icon">
+               <i class="fas fa-chart-area"/>
+            </span>
+              <span>&nbsp;Chart</span>
+          </span>
+            </a>
+          </router-link>
+          <router-link v-else :to="{ name: 'Athletes', params: { id:  $route.params.username }}">
             <a>
           <span class="icon-text">
             <span class="icon">
@@ -67,6 +104,53 @@
             </span>
               <span>&nbsp;Charts</span>
           </span>
+            </a>
+          </router-link>
+        </li>
+      </ul>
+      <p class="menu-label">
+        Help
+      </p>
+      <ul class="menu-list">
+        <li>
+          <router-link :to="{ name: 'Guide'}" :class="{
+            'has-background-white':
+           $route.name==='Guide' }">
+            <a>
+          <span class="icon-text">
+            <span class="icon">
+               <i class="fas fa-question-circle"/>
+            </span>
+              <span>&nbsp;Guide</span>
+          </span>
+            </a>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'Ticket'}" :class="{
+            'has-background-white':
+           $route.name==='Ticket' }">
+            <a>
+          <span class="icon-text">
+            <span class="icon">
+               <i class="fas fa-hands-helping"/>
+            </span>
+              <span>&nbsp;Ticket</span>
+          </span>
+            </a>
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'Docs'}" :class="{
+            'has-background-white':
+           $route.name==='Docs' }">
+            <a href="" target="_blank">
+          <span class="icon-text">
+          <span class="icon mr-1">
+                        <i class="fas fa-book"></i>
+                    </span>
+          <span>Docs</span>
+            </span>
             </a>
           </router-link>
         </li>
