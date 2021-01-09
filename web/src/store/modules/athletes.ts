@@ -1,6 +1,5 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import axios, {AxiosResponse} from "axios";
-import qs from 'qs';
 
 import {UserInterface} from "@/store/modules/user";
 
@@ -74,7 +73,7 @@ export default class Athletes extends VuexModule {
             axios({
                 method: 'PUT',
                 url: `/api/athletes/${athlete._id}`,
-                data: qs.stringify({...athlete})
+                data: {...athlete}
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('save_athlete', resp.data)

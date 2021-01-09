@@ -95,17 +95,15 @@ export default class User extends VuexModule {
                 })
         })
     }
-
+    
     @Action
-    private updateUser(user: UserInterface) {
+    private specificUser(id: string) {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'PUT',
-                url: `/api/user/${user._id}`,
-                data: qs.stringify({...user})
+                method: 'GET',
+                url: `/api/user/${id}`
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('auth_success', resp.data);
                     resolve(resp)
                 })
                 .catch((err: Error) => {
@@ -115,13 +113,15 @@ export default class User extends VuexModule {
     }
 
     @Action
-    private specificUser(id: string) {
+    private updateUser(user: UserInterface) {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'GET',
-                url: `/api/user/${id}`
+                method: 'PUT',
+                url: `/api/user/${user._id}`,
+                data: {...user}
             })
                 .then((resp: AxiosResponse) => {
+                    this.context.commit('auth_success', resp.data);
                     resolve(resp)
                 })
                 .catch((err: Error) => {

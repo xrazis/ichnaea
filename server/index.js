@@ -27,8 +27,9 @@ app.use(rateLimit({
     max: 100
 }));
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 
 app.use(
