@@ -1,7 +1,7 @@
 const {Joi} = require('celebrate');
 
 const guid = {
-    params:{
+    params: {
         userId: Joi.string().guid().required()
     }
 }
@@ -14,14 +14,18 @@ const userAuthSchema = {
 };
 
 const userUpdateSchema = {
-    body: {
-        _id: Joi.string().required(),
-        username: Joi.string().required(),
-        email: Joi.any(),
-        password: Joi.string().allow(''),
-        newPassword: Joi.string().allow(''),
+        body: {
+            _id: Joi.string().required(),
+            username: Joi.string().required(),
+            __v: Joi.number().integer(),
+            email: Joi.string().email(),
+            registered: Joi.string(),
+            lastLogin: Joi.string(),
+            password: Joi.string().alphanum().allow(''),
+            newPassword: Joi.string().alphanum().allow(''),
+        }
     }
-};
+;
 
 const athleteUpdateSchema = {
     body: {
