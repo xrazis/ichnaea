@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tr v-for="(athlete, index) in myAthletes" :key="index">
-          <td class="is-family-monospace" v-if="athlete.name">
+          <td v-if="athlete.name" class="is-family-monospace">
             <span v-if="athlete.socketID">Online</span>
             <span v-else>Offline</span>
           </td>
@@ -141,7 +141,6 @@ export default class Athletes extends Vue {
   private msg = ''
 
   mounted() {
-    this.myAthletes = [<AthleteInterface>{}]
     this.$store.dispatch('getAthletes')
         .then((res: any) => {
           this.athletes = res.data;
@@ -159,11 +158,10 @@ export default class Athletes extends Vue {
   }
 
   private removeMyAthlete(athlete: AthleteInterface, index: number) {
-    athlete._trainer = ''
+    athlete._trainer = undefined
     this.$store.dispatch('updateAthlete', athlete)
         .then(() => this.myAthletes.splice(index, 1))
   }
-
 
 }
 </script>

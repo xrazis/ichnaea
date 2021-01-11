@@ -22,14 +22,12 @@ router.put('/api/user/:id',
                 if (isMatch) {
                     const user = {username, email, newPassword}
                     await User.findByIdAndUpdate(req.params.id, user)
-
                     res.send(req.user);
                 }
             });
         } else if (username || email) {
             const user = {username, email}
             await User.findByIdAndUpdate(req.params.id, user)
-
             res.send(req.user);
         }
 

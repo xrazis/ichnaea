@@ -29,7 +29,7 @@
               </p>
             </div>
           </form>
-          <div class="m-4" v-if="msg">
+          <div v-if="msg" class="m-4">
             <div class="notification is-danger has-text-centered">
               <b>{{ msg }}</b>
             </div>

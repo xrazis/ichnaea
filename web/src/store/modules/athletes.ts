@@ -8,7 +8,7 @@ export interface AthleteInterface {
     id: string,
     socketID: string,
     name: string,
-    _trainer: string
+    _trainer: string | undefined
 }
 
 @Module
@@ -34,13 +34,13 @@ export default class Athletes extends VuexModule {
         return this.err
     }
 
+    @Mutation save_trainer(trainer: UserInterface) {
+        this.trainer = trainer;
+    }
+
     @Mutation
     private save_athlete(athlete: AthleteInterface) {
         this.athlete = athlete;
-    }
-
-    @Mutation save_trainer(trainer: UserInterface) {
-        this.trainer = trainer;
     }
 
     @Mutation

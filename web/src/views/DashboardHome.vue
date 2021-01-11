@@ -25,16 +25,17 @@
         <div class="tile is-parent is-vertical">
           <article class="tile is-child box">
             <p class="title">System status</p>
-            <p class="subtitle">All systems operational</p>
+            <p v-if="this.$store.getters.currentServerStatus" class="subtitle">All systems operational</p>
+            <p v-else class="subtitle">Something does not seem right</p>
           </article>
           <article class="tile is-child box">
-            <p class="title">...tiles</p>
+            <p class="title">App Info</p>
             <p class="subtitle">Bottom tile</p>
           </article>
         </div>
         <div class="tile is-parent">
           <article class="tile is-child box">
-            <figure class="image is-4by3">
+            <figure class="image">
               <img src="../assets/undraw_finish_line_katerina_limpitsouni_xy20.svg">
             </figure>
           </article>

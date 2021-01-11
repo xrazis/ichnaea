@@ -1,19 +1,17 @@
 <template>
-  <nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
+  <nav aria-label="main navigation" class="navbar is-fixed-top is-black" role="navigation">
     <div class="navbar-brand">
       <router-link to="/">
         <a class="navbar-item">
-          <img src="../assets/undraw_server_q2pb.svg" width="60" height="150"/>
+          <img height="150" src="../assets/undraw_server_q2pb.svg" width="60"/>
           <h3 class="is-size-4 has-text-white">Ichnaea</h3>
         </a>
       </router-link>
-      <a
-          role="button"
-          class="navbar-burger burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-      >
+      <a aria-expanded="false"
+         aria-label="menu"
+         class="navbar-burger burger"
+         data-target="navbarBasicExample"
+         role="button">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>

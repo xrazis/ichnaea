@@ -4,7 +4,7 @@ import {Module, Mutation, VuexModule} from 'vuex-module-decorators'
 export default class Backend extends VuexModule {
     private serverStatus = false
 
-    get currentStatus() {
+    get currentServerStatus() {
         return this.serverStatus
     }
 
