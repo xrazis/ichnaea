@@ -52,6 +52,11 @@ export default class User extends VuexModule {
         this.err = err
     }
 
+    @Mutation
+    private update_user(user: UserInterface) {
+        this.user = user
+    }
+
     @Action
     private login(user: UserInterface) {
         return new Promise((resolve, reject) => {
@@ -132,7 +137,8 @@ export default class User extends VuexModule {
                 data: {...user}
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('auth_success', resp.data);
+                    console.log(resp.data)
+                    this.context.commit('update_user', resp.data);
                     resolve(resp)
                 })
                 .catch((err: Error) => {

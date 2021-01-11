@@ -73,7 +73,7 @@ export default class Login extends Vue {
     this.$store.dispatch('login', user)
         .then(() => this.$router.push({name: 'Dashboard', params: {username: this.username}}))
         .catch(() => {
-          this.msg = this.$store.getters.getErr.response.data.errors.message || 'Something went wrong!'
+          this.msg = this.$store.getters.getErrUser.response.data.errors.message || 'Something went wrong!'
         })
   }
 }

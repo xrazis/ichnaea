@@ -1,6 +1,6 @@
 <template>
   <h1 class="title is-2">/profile</h1>
-  <form @submit="update">
+  <form @submit.prevent="update">
     <div class="tile is-ancestor">
       <div class="tile is-4 is-vertical is-parent">
         <div class="tile is-child box">
@@ -31,25 +31,25 @@
           <p class="title">Change Password</p>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.currentPassword" class="input" placeholder="Current Password" type="password">
+              <input v-model="currentPassword" class="input" placeholder="Current Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.newPassword" class="input" placeholder="New Password" type="password">
+              <input v-model="newPassword" class="input" placeholder="New Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
+              <input v-model="repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control">
-              <button class="button is-primary is-rounded" type="submit">
+              <button class="button is-primary is-rounded">
                 Update
               </button>
             </p>
@@ -66,7 +66,7 @@
               <li>Has 12 Characters, Minimum</li>
               <li>Includes Numbers, Symbols, Capital Letters, and Lower-Case Letters</li>
               <li>Isn’t a Dictionary Word or Combination of Dictionary Words</li>
-              <li>Doesn’t Rely on Obvious Substitutions</li>
+              <li>Doesn't Rely on Obvious Substitutions</li>
             </ul>
           </div>
         </div>
@@ -87,30 +87,26 @@ interface UpdatedUser extends UserInterface {
 export default class Profile extends Vue {
   private user = <UpdatedUser>{};
   private date = '';
+  private currentPassword = '';
+  private newPassword = '';
+  private repeatNewPassword = '';
   private msgSuccess = '';
   private msgError = '';
 
-  created() {
+  mounted() {
     this.user = this.$store.getters.currentUser
     this.date = new Date(this.user.registered).toLocaleString()
   }
 
   private update() {
-    if (this.user.newPassword != this.user.repeatNewPassword) {
+    if (this.newPassword != this.repeatNewPassword) {
       this.msgError = 'Passwords do not match!'
       return
     }
 
-    let user = {
-      _id: this.user._id,
-      username: this.user.username,
-      email: this.user.email,
-      password: this.user.password,
-      newPassword: this.user.newPassword,
-      repeatNewPassword: this.user.repeatNewPassword
-    }
+    Object.assign(this.user, {password: this.currentPassword, newPassword: this.newPassword})
 
-    this.$store.dispatch('updateUser', user)
+    this.$store.dispatch('updateUser', this.user)
         .then(() => this.msgSuccess = 'User updated!')
         .catch(() => this.msgError = this.$store.getters.getErrUser.response.data.errors.message ||
             'Something went wrong!')
