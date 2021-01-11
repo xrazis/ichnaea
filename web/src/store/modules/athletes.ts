@@ -8,7 +8,7 @@ export interface AthleteInterface {
     id: string,
     socketID: string,
     name: string,
-    _trainer: UserInterface
+    _trainer: string
 }
 
 @Module

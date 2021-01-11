@@ -1,5 +1,30 @@
 <template>
   <h1 class="title is-2">/athletes/{{ athlete.name }}</h1>
+  <div class="tile mb-5">
+    <article class="tile is-child box">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item ">
+            <div class="title">Actions</div>
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item has-text-centered">
+            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="saveAthlete(athlete)">
+          <span class="icon is-medium has-background-primary has-text-white mr-1">
+          <i class="fa fa-lg fa-table"></i>
+        </span>
+            </router-link>
+            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="saveAthlete(athlete)">
+          <span class="icon is-medium has-background-primary has-text-white mr-1">
+          <i class="fa fa-lg fa-chart-area"></i>
+        </span>
+            </router-link>
+          </div>
+        </div>
+      </nav>
+    </article>
+  </div>
   <div class="tile is-ancestor">
     <div class="tile is-6 is-vertical is-parent">
       <form @submit="update">
@@ -10,10 +35,6 @@
             <div class="control">
               <input v-model="athlete.name" class="input" type="text">
             </div>
-          </div>
-          <div class="field">
-            <label class="label">ID</label>
-            <p>{{ athlete.id }}</p>
           </div>
           <div class="field">
             <label class="label">Client Status</label>
@@ -50,12 +71,25 @@
     <div class="tile is-parent">
       <div class="tile is-child box">
         <p class="title">Trainer Status</p>
-        <div v-if="!athlete._trainer" class="notification is-warning is-light mt-5">
-          <ul>
-            <p>It seems that this athlete has no trainer attached to him!</p>
-            <p>By adopting an athlete you can edit his personal details and view his performance stats.</p>
-          </ul>
-          <button class="button is-large is-rounded is-primary is-light" @click="update">Adopt</button>
+        <div v-if="!athlete._trainer">
+          <div class="notification is-primary is-light mt-5">
+            <ul>
+              <p>It seems that this athlete has no trainer attached to him!</p>
+              <p>By adopting an athlete you can edit his personal details and view his performance stats.</p>
+              <p>Enter the client id displayed in the clients terminal to adopt him!</p>
+            </ul>
+          </div>
+          <div class="field">
+            <label class="label">Athlete ID</label>
+            <div class="control">
+              <input v-model="clientID" class="input" type="text">
+            </div>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-medium is-rounded is-primary" @click="update('adopt')">Adopt</button>
+            </p>
+          </div>
         </div>
         <div v-else>
           <div class="field">
@@ -88,6 +122,7 @@ export default class Athlete extends Vue {
   private trainerLogin = '';
   private msgError = ''
   private msgSuccess = ''
+  private clientID = ''
 
   mounted() {
     this.athlete = this.$store.getters.currentAthlete
@@ -106,9 +141,20 @@ export default class Athlete extends Vue {
     }
   }
 
-  private update() {
+  private update(action: string) {
+    if (action === 'adopt' && this.clientID === '') {
+      this.msgError = 'Please give a valid athlete ID!';
+      return;
+    }
+
+    if (this.clientID != '' && this.clientID != this.athlete.id) {
+      this.msgError = 'Athlete ID does not match with current athlete!';
+      return;
+    }
+
     const user = {_trainer: this.$store.getters.currentUser._id}
     Object.assign(this.athlete, user)
+
     this.$store.dispatch('updateAthlete', this.athlete)
         .then((res: any) => {
           this.msgSuccess = 'Athlete updated'

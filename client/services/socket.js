@@ -6,6 +6,11 @@ const getMAC = require('getmac').default
 const socket = io(server_url);
 const mac = getMAC();
 
+console.log(chalk.green(`
+    ID: ${mac}
+    Use this ID, to adopt the athlete on the user dashboard.
+`))
+
 socket.on('connect', () => {
     console.log(chalk.green('Connected to server!'));
 

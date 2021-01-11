@@ -39,7 +39,15 @@ router.put('/api/athletes/:id',
         const {name, _trainer} = req.body
         const updateAthlete = {name, _trainer}
 
-        if (name || _trainer)
+        if (_trainer === '') {
+            updateAthlete._trainer = undefined
+            await Athlete.findByIdAndUpdate(req.params.id, updateAthlete, {}, (err, athlete) => {
+                if (err)
+                    return res.status(400).json({errors: 'Something went wrong!'});
+
+                return res.send(athlete)
+            })
+        } else if (name || _trainer)
             await Athlete.findByIdAndUpdate(req.params.id, updateAthlete, {}, (err, athlete) => {
                 if (err)
                     return res.status(400).json({errors: 'Something went wrong!'});
