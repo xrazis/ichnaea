@@ -1,7 +1,7 @@
 <template>
   <h1 class="title is-2">/home</h1>
-  <div class="tile">
-    <article class="tile is-child notification has-background-primary-dark has-text-white">
+  <div class="tile mb-5">
+    <article class="tile is-child box">
       <nav class="level">
         <div class="level-left">
           <div class="level-item ">
@@ -17,34 +17,58 @@
           </div>
         </div>
       </nav>
-      <nav class="level">
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Your Athletes</p>
-            <p class="title">3,456</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Live Athletes</p>
-            <p class="title">123</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Server</p>
-            <p class="title" v-if="this.$store.getters.currentStatus">Connected</p>
-            <p class="title" v-else>Disconnected</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Likes</p>
-            <p class="title">789</p>
-          </div>
-        </div>
-      </nav>
     </article>
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-8">
+      <div class="tile">
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child box">
+            <p class="title">System status</p>
+            <p class="subtitle">All systems operational</p>
+          </article>
+          <article class="tile is-child box">
+            <p class="title">...tiles</p>
+            <p class="subtitle">Bottom tile</p>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <figure class="image is-4by3">
+              <img src="../assets/undraw_finish_line_katerina_limpitsouni_xy20.svg">
+            </figure>
+          </article>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child box">
+          <p class="title">Wide tile</p>
+          <p class="subtitle">Aligned with the right tile</p>
+          <div class="content">
+            <!-- Content -->
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child box">
+        <div class="content">
+          <p class="title">Tall tile</p>
+          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut culpa, deserunt
+            distinctio illo ipsa itaque laborum magnam minima minus molestiae nisi odio provident quas repellendus,
+            similique velit veniam voluptatem?</p>
+          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut culpa, deserunt
+            distinctio illo ipsa itaque laborum magnam minima minus molestiae nisi odio provident quas repellendus,
+            similique velit veniam voluptatem?</p>
+          <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut culpa, deserunt
+            distinctio illo ipsa itaque laborum magnam minima minus molestiae nisi odio provident quas repellendus,
+            similique velit veniam voluptatem?</p>
+          <div class="content">
+            <!-- Content -->
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
