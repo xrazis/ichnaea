@@ -1,6 +1,6 @@
 <template>
   <h1 class="title is-2">/profile</h1>
-  <form @submit.prevent="update">
+  <form @submit.prevent="user_update">
     <div class="tile is-ancestor">
       <div class="tile is-4 is-vertical is-parent">
         <div class="tile is-child box">
@@ -94,22 +94,22 @@ export default class Profile extends Vue {
   private msgError = '';
 
   mounted() {
-    this.user = this.$store.getters.currentUser
-    this.date = new Date(this.user.registered).toLocaleString()
+    this.user = this.$store.getters.user_current;
+    this.date = new Date(this.user.registered).toLocaleString();
   }
 
-  private update() {
+  private user_update() {
     if (this.newPassword != this.repeatNewPassword) {
-      this.msgError = 'Passwords do not match!'
-      return
+      this.msgError = 'Passwords do not match!';
+      return;
     }
 
-    Object.assign(this.user, {password: this.currentPassword, newPassword: this.newPassword})
+    Object.assign(this.user, {password: this.currentPassword, newPassword: this.newPassword});
 
-    this.$store.dispatch('updateUser', this.user)
+    this.$store.dispatch('user_update', this.user)
         .then(() => this.msgSuccess = 'User updated!')
-        .catch(() => this.msgError = this.$store.getters.getErrUser.response.data.errors.message ||
-            'Something went wrong!')
+        .catch(() => this.msgError = this.$store.getters.user_err.response.data.errors.message ||
+            'Something went wrong!');
   }
 }
 

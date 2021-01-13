@@ -11,7 +11,7 @@ export default class Chart extends Vue {
   private athlete = <AthleteInterface>{}
 
   mounted() {
-    this.athlete = this.$store.getters.currentAthlete
+    this.athlete = this.$store.getters.athlete_current
   }
 }
 </script>

@@ -9,7 +9,7 @@ const mac = getMAC();
 console.log(chalk.green(`
     ID: ${mac}
     Use this ID, to adopt the athlete on the user dashboard.
-`))
+`));
 
 socket.on('connect', () => {
     console.log(chalk.green('Connected to server!'));
@@ -35,6 +35,5 @@ socket.on('closeConn', () => {
 });
 
 setInterval(() => {
-    socket.emit('data', {measurement: 5, mac, pointName: 'leg-measurement'});
+    socket.emit('data', {measurement: Date.now(), mac, pointName: 'test-measure'});
 }, 3 * 1000);
-

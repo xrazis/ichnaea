@@ -25,7 +25,7 @@
         <div class="tile is-parent is-vertical">
           <article class="tile is-child box">
             <p class="title">System status</p>
-            <p v-if="this.$store.getters.currentServerStatus" class="subtitle">All systems operational</p>
+            <p v-if="this.$store.getters.server_status" class="subtitle">All systems operational</p>
             <p v-else class="subtitle">Something does not seem right</p>
           </article>
           <article class="tile is-child box">
@@ -82,8 +82,8 @@ export default class DashboardHome extends Vue {
   private date: string = '';
 
   created() {
-    this.user = this.$store.getters.currentUser
-    this.date = new Date(this.user.lastLogin).toLocaleString()
+    this.user = this.$store.getters.user_current;
+    this.date = new Date(this.user.lastLogin).toLocaleString();
   }
 
 }

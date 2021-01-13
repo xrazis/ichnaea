@@ -39,7 +39,7 @@ module.exports = (server) => {
         socket.on('data', (data) => {
             const {measurement, pointName, mac} = data;
 
-            io.emit('console', {measurement})
+            io.emit('console', {measurement, pointName})
             iWrite(pointName, mac, measurement)
         });
 

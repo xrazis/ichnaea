@@ -34,7 +34,7 @@ const athleteUpdateSchema = {
         socketID: Joi.string().required(),
         name: Joi.string().required(),
         __v: Joi.number().integer(),
-        _trainer: Joi.string().allow(''),
+        _trainer: Joi.string().allow('').default(''),
     }
 }
 

@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <router-link to="/">
         <a class="navbar-item">
-          <img height="150" src="../assets/undraw_server_q2pb.svg" width="60"/>
+          <img height="150" src="../assets/undraw_data_trends_b0wg.svg" width="60"/>
           <h3 class="is-size-4 has-text-white">Ichnaea</h3>
         </a>
       </router-link>
@@ -47,16 +47,13 @@ export default class Navbar extends Vue {
   private user = <UserInterface>{};
 
   created() {
-    this.user = this.$store.getters.currentUser
+    this.user = this.$store.getters.user_current
   }
 
   private logout() {
     this.$store.dispatch('logout')
         .then(() => this.$router.push('/'))
-        .catch((err: any) => {
-          console.log(err)
-          this.$router.push('/')
-        })
+        .catch(() => this.$router.push('/'));
   }
 }
 </script>

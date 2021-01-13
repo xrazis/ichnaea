@@ -80,13 +80,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (store.getters.isLoggedIn) {
-            next()
-            return
+        if (store.getters.user_loggedIn) {
+            next();
+            return;
         }
-        next('/login')
+        next('/login');
     } else {
-        next()
+        next();
     }
 })
 

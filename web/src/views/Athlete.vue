@@ -10,12 +10,12 @@
         </div>
         <div class="level-right">
           <div class="level-item has-text-centered">
-            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="saveAthlete(athlete)">
+            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="athlete_save(athlete)">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-table"></i>
         </span>
             </router-link>
-            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="saveAthlete(athlete)">
+            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="athlete_save(athlete)">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-chart-area"></i>
         </span>
@@ -27,7 +27,7 @@
   </div>
   <div class="tile is-ancestor">
     <div class="tile is-6 is-vertical is-parent">
-      <form @submit="update">
+      <form @submit="athlete_update">
         <div class="tile is-child box">
           <p class="title">Personal Details</p>
           <div class="field">
@@ -87,7 +87,7 @@
           </div>
           <div class="field">
             <p class="control">
-              <button class="button is-medium is-rounded is-primary" @click="update('adopt')">Adopt</button>
+              <button class="button is-medium is-rounded is-primary" @click="athlete_update('adopt')">Adopt</button>
             </p>
           </div>
         </div>
@@ -117,31 +117,32 @@ import {AthleteInterface} from "@/store/modules/athletes";
 import {UserInterface} from "@/store/modules/user";
 
 export default class Athlete extends Vue {
-  private athlete = <AthleteInterface>{}
-  private trainer = <UserInterface>{}
+  private athlete = <AthleteInterface>{};
+  private trainer = <UserInterface>{};
   private trainerLogin = '';
-  private msgError = ''
-  private msgSuccess = ''
-  private clientID = ''
+  private msgError = '';
+  private msgSuccess = '';
+  private clientID = '';
 
   mounted() {
-    this.athlete = this.$store.getters.currentAthlete
+    this.athlete = this.$store.getters.athlete_current;
 
-    if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.currentUser._id)) {
-      this.$store.dispatch('specificUser', this.athlete._trainer)
+    if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.user_current._id)) {
+      this.$store.dispatch('user_getOne', this.athlete._trainer)
           .then((res: any) => this.trainer === res.data)
-          .catch((err: any) => this.msgError = err.response.data.errors.message || err.message || 'Something went wrong!')
-    } else if (this.athlete._trainer === this.$store.getters.currentUser._id) {
-      this.trainer = this.$store.getters.currentUser
+          .catch((err: any) => this.msgError = err.response.data.errors.message || err.message ||
+              'Something went wrong!');
+    } else if (this.athlete._trainer === this.$store.getters.user_current._id) {
+      this.trainer = this.$store.getters.user_current;
     }
 
     if (this.trainer) {
-      this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString()
-      this.$store.dispatch('saveTrainer', this.trainer)
+      this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString();
+      this.$store.dispatch('athlete_saveLocalTrainer', this.trainer);
     }
   }
 
-  private update(action: string) {
+  private athlete_update(action: string) {
     if (action === 'adopt' && this.clientID === '') {
       this.msgError = 'Please give a valid athlete ID!';
       return;
@@ -152,16 +153,19 @@ export default class Athlete extends Vue {
       return;
     }
 
-    const user = {_trainer: this.$store.getters.currentUser._id}
-    Object.assign(this.athlete, user)
+    if (action === 'adopt') {
+      Object.assign(this.athlete, {_trainer: this.$store.getters.user_current._id});
+    } else {
+      Object.assign(this.athlete, {_trainer: ''});
+    }
 
-    this.$store.dispatch('updateAthlete', this.athlete)
+    this.$store.dispatch('athlete_update', this.athlete)
         .then((res: any) => {
           this.msgSuccess = 'Athlete updated'
           this.athlete = res.data;
         })
-        .catch(() => this.msgError = this.$store.getters.getErrAthlete.response.data.errors.message ||
-            'Something went wrong!')
+        .catch(() => this.msgError = this.$store.getters.athlete_err.response.data.errors.message ||
+            'Something went wrong!');
   }
 }
 </script>

@@ -16,30 +16,30 @@ export default class Athletes extends VuexModule {
     private athlete = <AthleteInterface>{};
     private trainer = <UserInterface>{};
     private athletes = [<AthleteInterface>{}];
-    private err = <Error>{}
+    private err = <Error>{};
 
-    get currentAthlete() {
+    get athlete_current() {
         return this.athlete;
     }
 
-    get currentTrainer() {
+    get athlete_trainer() {
         return this.trainer;
     }
 
-    get currentAthletes() {
+    get athlete_currents() {
         return this.athletes;
     }
 
-    get getErrAthlete() {
-        return this.err
+    get athlete_err() {
+        return this.err;
     }
 
-    @Mutation save_trainer(trainer: UserInterface) {
+    @Mutation api_trainer(trainer: UserInterface) {
         this.trainer = trainer;
     }
 
     @Mutation
-    private save_athlete(athlete: AthleteInterface) {
+    private api_athlete(athlete: AthleteInterface) {
         this.athlete = athlete;
     }
 
@@ -49,36 +49,36 @@ export default class Athletes extends VuexModule {
     }
 
     @Mutation
-    private auth_logout() {
+    private athletes_logout() {
         this.athlete = <AthleteInterface>{};
-        this.trainer = <UserInterface>{}
+        this.trainer = <UserInterface>{};
         this.athletes = [<AthleteInterface>{}];
     }
 
     @Mutation
-    private update_error(err: Error) {
-        this.err = err
+    private update_err(err: Error) {
+        this.err = err;
     }
 
     @Action
-    private getAthletes() {
+    private athlete_getAll() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
                 url: '/api/athletes'
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('api_athletes', resp.data)
-                    resolve(resp)
+                    this.context.commit('api_athletes', resp.data);
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
     @Action
-    private updateAthlete(athlete: AthleteInterface) {
+    private athlete_update(athlete: AthleteInterface) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
@@ -86,22 +86,22 @@ export default class Athletes extends VuexModule {
                 data: {...athlete}
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('save_athlete', resp.data)
-                    resolve(resp)
+                    this.context.commit('api_athlete', resp.data);
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
     @Action
-    private saveTrainer(trainer: UserInterface) {
-        this.context.commit('save_trainer', trainer)
+    private athlete_saveLocalTrainer(trainer: UserInterface) {
+        this.context.commit('api_trainer', trainer);
     }
 
     @Action
-    private saveAthlete(athlete: AthleteInterface) {
-        this.context.commit('save_athlete', athlete)
+    private athlete_saveLocal(athlete: AthleteInterface) {
+        this.context.commit('api_athlete', athlete);
     }
 }

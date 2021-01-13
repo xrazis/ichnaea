@@ -17,16 +17,16 @@ export default class User extends VuexModule {
     private userStatus = false;
     private err = <Error>{};
 
-    get currentUser() {
+    get user_current() {
         return this.user;
     }
 
-    get isLoggedIn() {
+    get user_loggedIn() {
         return this.userStatus;
     }
 
-    get getErrUser() {
-        return this.err
+    get user_err() {
+        return this.err;
     }
 
     @Mutation
@@ -38,7 +38,7 @@ export default class User extends VuexModule {
     @Mutation
     private auth_error(err: Error) {
         this.userStatus = false;
-        this.err = err
+        this.err = err;
     }
 
     @Mutation
@@ -48,17 +48,17 @@ export default class User extends VuexModule {
     }
 
     @Mutation
-    private update_error(err: Error) {
-        this.err = err
+    private update_err(err: Error) {
+        this.err = err;
     }
 
     @Mutation
     private update_user(user: UserInterface) {
-        this.user = user
+        this.user = user;
     }
 
     @Action
-    private login(user: UserInterface) {
+    private user_login(user: UserInterface) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'POST',
@@ -66,18 +66,18 @@ export default class User extends VuexModule {
                 data: qs.stringify({...user})
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('auth_success', resp.data.user)
-                    resolve(resp)
+                    this.context.commit('auth_success', resp.data.user);
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    this.context.commit('auth_error', err)
-                    reject(err)
-                })
-        })
+                    this.context.commit('auth_error', err);
+                    reject(err);
+                });
+        });
     }
 
     @Action
-    private logout() {
+    private user_logout() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'POST',
@@ -86,16 +86,16 @@ export default class User extends VuexModule {
                 .then((resp: AxiosResponse) => {
                     this.context.commit('auth_logout');
                     this.context.commit('athlete_logout');
-                    resolve(resp)
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
     @Action
-    private getCurrentUser() {
+    private user_currentSession() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
@@ -103,33 +103,18 @@ export default class User extends VuexModule {
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('auth_success', resp.data);
-                    resolve(resp)
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
                     this.context.commit('auth_error')
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
-    @Action
-    private specificUser(id: string) {
-        return new Promise((resolve, reject) => {
-            axios({
-                method: 'GET',
-                url: `/api/user/${id}`
-            })
-                .then((resp: AxiosResponse) => {
-                    resolve(resp)
-                })
-                .catch((err: Error) => {
-                    reject(err)
-                })
-        })
-    }
 
     @Action
-    private updateUser(user: UserInterface) {
+    private user_update(user: UserInterface) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
@@ -137,15 +122,30 @@ export default class User extends VuexModule {
                 data: {...user}
             })
                 .then((resp: AxiosResponse) => {
-                    console.log(resp.data)
                     this.context.commit('update_user', resp.data);
-                    resolve(resp)
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    this.context.commit('update_error', err)
-                    reject(err)
-                })
-        })
+                    this.context.commit('update_err', err)
+                    reject(err);
+                });
+        });
     }
-}
 
+    @Action
+    private user_getOne(id: string) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'GET',
+                url: `/api/user/${id}`
+            })
+                .then((resp: AxiosResponse) => {
+                    resolve(resp);
+                })
+                .catch((err: Error) => {
+                    reject(err);
+                });
+        });
+    }
+
+}

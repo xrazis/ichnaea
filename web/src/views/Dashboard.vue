@@ -13,6 +13,7 @@ import {io} from 'socket.io-client'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Footer from '@/components/Footer.vue'
+import {AthleteData} from "@/store/modules/backend";
 
 @Options({
   components: {
@@ -26,24 +27,29 @@ export default class Dashboard extends Vue {
   private socket!: any;
 
   created() {
-    this.io()
+    this.io();
+  }
+
+  beforeUnmount() {
+    this.socket.close()
   }
 
   private io() {
-    this.socket = io('/')
+    this.socket = io('/');
 
     this.socket.on('connect', () => {
-      this.$store.commit("serverConnected", true);
+      this.$store.commit("socket_connection", true);
     });
 
     this.socket.on('disconnect', (reason: string) => {
-      this.$store.commit("serverConnected", false);
+      this.$store.commit("socket_connection", false);
 
       if (reason === 'io server disconnect') this.socket.connect();
     });
 
-    this.socket.on('console', (data: {}) => {
-    })
+    this.socket.on('console', (data: AthleteData) => {
+      this.$store.dispatch('server_saveLiveData', data);
+    });
   }
 }
 </script>

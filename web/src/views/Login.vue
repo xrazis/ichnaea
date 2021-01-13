@@ -4,7 +4,7 @@
       <div class="columns">
         <div class="column is-4 is-offset-4">
           <h1 class="is-size-1">Login</h1>
-          <form @submit.prevent="login">
+          <form @submit.prevent="user_login">
             <div class="field">
               <p class="control has-icons-left has-icons-right">
                 <input v-model="username" class="input" placeholder="Username" type="text">
@@ -56,25 +56,22 @@ export default class Login extends Vue {
   private password = '';
 
   mounted() {
-    this.getCurrentUser();
+    this.currentSession();
   }
 
-  private getCurrentUser() {
-    this.$store.dispatch('getCurrentUser')
+  private currentSession() {
+    this.$store.dispatch('user_currentSession')
         .then((res: any) => this.$router.push({name: 'Dashboard', params: {username: res.data.username}}))
         .catch(() => {
-          this.$router.push('/login')
-        })
+        });
   }
 
-  private login() {
-    let user = {username: this.username, password: this.password}
-
-    this.$store.dispatch('login', user)
+  private user_login() {
+    this.$store.dispatch('user_login', {username: this.username, password: this.password})
         .then(() => this.$router.push({name: 'Dashboard', params: {username: this.username}}))
         .catch(() => {
-          this.msg = this.$store.getters.getErrUser.response.data.errors.message || 'Something went wrong!'
-        })
+          this.msg = this.$store.getters.user_err.response.data.errors.message || 'Something went wrong!'
+        });
   }
 }
 </script>
