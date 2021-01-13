@@ -154,7 +154,7 @@ export default class Athletes extends Vue {
   }
 
   private athlete_save(athlete: AthleteInterface) {
-    this.$store.dispatch('athlete_saveLocal', athlete);
+    this.$store.commit('api_athlete', athlete);
   }
 
   private athlete_delete(athlete: AthleteInterface, index: number) {

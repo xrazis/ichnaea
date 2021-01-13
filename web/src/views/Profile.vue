@@ -31,25 +31,25 @@
           <p class="title">Change Password</p>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="currentPassword" class="input" placeholder="Current Password" type="password">
+              <input v-model="user.password" class="input" placeholder="Current Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="newPassword" class="input" placeholder="New Password" type="password">
+              <input v-model="user.newPassword" class="input" placeholder="New Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
+              <input v-model="user.repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control">
-              <button class="button is-primary is-rounded">
+              <button class="button is-primary is-rounded" type="submit">
                 Update
               </button>
             </p>
@@ -79,17 +79,9 @@
 import {Vue} from "vue-class-component";
 import {UserInterface} from "@/store/modules/user";
 
-interface UpdatedUser extends UserInterface {
-  newPassword: string,
-  repeatNewPassword: string,
-}
-
 export default class Profile extends Vue {
-  private user = <UpdatedUser>{};
+  private user = <UserInterface>{};
   private date = '';
-  private currentPassword = '';
-  private newPassword = '';
-  private repeatNewPassword = '';
   private msgSuccess = '';
   private msgError = '';
 
@@ -99,14 +91,12 @@ export default class Profile extends Vue {
   }
 
   private user_update() {
-    if (this.newPassword != this.repeatNewPassword) {
+    if (this.user.newPassword != this.user.repeatNewPassword) {
       this.msgError = 'Passwords do not match!';
       return;
     }
 
-    Object.assign(this.user, {password: this.currentPassword, newPassword: this.newPassword});
-
-    this.$store.dispatch('user_update', this.user)
+    this.$store.dispatch('user_update')
         .then(() => this.msgSuccess = 'User updated!')
         .catch(() => this.msgError = this.$store.getters.user_err.response.data.errors.message ||
             'Something went wrong!');

@@ -87,7 +87,7 @@
           </div>
           <div class="field">
             <p class="control">
-              <button class="button is-medium is-rounded is-primary" @click="athlete_update('adopt')">Adopt</button>
+              <button class="button is-medium is-rounded is-primary" @click="athlete_adopt">Adopt</button>
             </p>
           </div>
         </div>
@@ -138,30 +138,25 @@ export default class Athlete extends Vue {
 
     if (this.trainer) {
       this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString();
-      this.$store.dispatch('athlete_saveLocalTrainer', this.trainer);
+      this.$store.commit('api_trainer', this.trainer);
     }
   }
 
-  private athlete_update(action: string) {
-    if (action === 'adopt' && this.clientID === '') {
-      this.msgError = 'Please give a valid athlete ID!';
-      return;
-    }
-
+  private athlete_adopt() {
     if (this.clientID != '' && this.clientID != this.athlete.id) {
       this.msgError = 'Athlete ID does not match with current athlete!';
       return;
     }
 
-    if (action === 'adopt') {
-      Object.assign(this.athlete, {_trainer: this.$store.getters.user_current._id});
-    } else {
-      Object.assign(this.athlete, {_trainer: ''});
-    }
+    this.athlete_update();
+  }
 
-    this.$store.dispatch('athlete_update', this.athlete)
+  private athlete_update() {
+    this.$store.commit('athlete_addTrainer', this.$store.getters.user_current);
+
+    this.$store.dispatch('athlete_update')
         .then((res: any) => {
-          this.msgSuccess = 'Athlete updated'
+          this.msgSuccess = 'Athlete updated';
           this.athlete = res.data;
         })
         .catch(() => this.msgError = this.$store.getters.athlete_err.response.data.errors.message ||

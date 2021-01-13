@@ -60,6 +60,13 @@ export default class Athletes extends VuexModule {
         this.err = err;
     }
 
+    @Mutation
+    private athlete_addTrainer(trainer: UserInterface) {
+        this.trainer = trainer;
+        this.athlete._trainer = this.trainer._id;
+    }
+
+
     @Action
     private athlete_getAll() {
         return new Promise((resolve, reject) => {
@@ -78,12 +85,12 @@ export default class Athletes extends VuexModule {
     }
 
     @Action
-    private athlete_update(athlete: AthleteInterface) {
+    private athlete_update() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
-                url: `/api/athletes/${athlete._id}`,
-                data: {...athlete}
+                url: `/api/athletes/${this.athlete._id}`,
+                data: {...this.athlete}
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('api_athlete', resp.data);
@@ -93,11 +100,6 @@ export default class Athletes extends VuexModule {
                     reject(err);
                 });
         });
-    }
-
-    @Action
-    private athlete_saveLocalTrainer(trainer: UserInterface) {
-        this.context.commit('api_trainer', trainer);
     }
 
     @Action

@@ -6,7 +6,9 @@ export interface UserInterface {
     _id: string,
     username: string,
     email: string,
-    password: string,
+    password: string | undefined,
+    newPassword: string | undefined,
+    repeatNewPassword: string | undefined,
     registered: Date,
     lastLogin: Date,
 }
@@ -32,6 +34,7 @@ export default class User extends VuexModule {
     @Mutation
     private auth_success(user: UserInterface) {
         this.user = user;
+        delete this.user['password'];
         this.userStatus = true;
     }
 
@@ -55,6 +58,7 @@ export default class User extends VuexModule {
     @Mutation
     private update_user(user: UserInterface) {
         this.user = user;
+        delete this.user['password'];
     }
 
     @Action
@@ -106,7 +110,7 @@ export default class User extends VuexModule {
                     resolve(resp);
                 })
                 .catch((err: Error) => {
-                    this.context.commit('auth_error')
+                    this.context.commit('auth_error');
                     reject(err);
                 });
         });
@@ -114,19 +118,19 @@ export default class User extends VuexModule {
 
 
     @Action
-    private user_update(user: UserInterface) {
+    private user_update() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
-                url: `/api/user/${user._id}`,
-                data: {...user}
+                url: `/api/user/${this.user._id}`,
+                data: {...this.user}
             })
                 .then((resp: AxiosResponse) => {
                     this.context.commit('update_user', resp.data);
                     resolve(resp);
                 })
                 .catch((err: Error) => {
-                    this.context.commit('update_err', err)
+                    this.context.commit('update_err', err);
                     reject(err);
                 });
         });

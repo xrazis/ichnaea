@@ -36,12 +36,11 @@ export default class Backend extends VuexModule {
 
     @Mutation
     private server_logout() {
-        this.liveAthData = []
+        this.liveAthData = [];
     }
 
     @Action
     private server_saveLiveData(data: AthleteData) {
-        console.log(this.liveAthData);
         this.context.commit('server_queueData', data);
         if (this.liveAthData.length > 15)
             this.context.commit('server_dequeueData');
@@ -55,10 +54,10 @@ export default class Backend extends VuexModule {
                 url: `/api/data/`
             })
                 .then((resp: AxiosResponse) => {
-                    resolve(resp)
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    reject(err)
+                    reject(err);
                 });
         });
     }
@@ -71,10 +70,10 @@ export default class Backend extends VuexModule {
                 url: `/api/data/${id}`
             })
                 .then((resp: AxiosResponse) => {
-                    resolve(resp)
+                    resolve(resp);
                 })
                 .catch((err: Error) => {
-                    reject(err)
+                    reject(err);
                 });
         });
     }
