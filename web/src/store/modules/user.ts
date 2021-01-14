@@ -116,7 +116,6 @@ export default class User extends VuexModule {
         });
     }
 
-
     @Action
     private user_update() {
         return new Promise((resolve, reject) => {

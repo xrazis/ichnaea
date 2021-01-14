@@ -34,9 +34,10 @@ router.put('/api/athletes/:id',
 
             res.send(athlete);
         });
-    });
+    }
+);
 
-router.delete('/api/athlete/:id',
+router.delete('/api/athletes/:id',
     requireAuth,
     celebrate(guid),
     async (req, res) => {

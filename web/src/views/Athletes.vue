@@ -157,10 +157,13 @@ export default class Athletes extends Vue {
     this.$store.commit('api_athlete', athlete);
   }
 
-  private athlete_delete(athlete: AthleteInterface, index: number) {
-    athlete._trainer = undefined;
-    this.$store.dispatch('athlete_update', athlete)
-        .then(() => this.myAthletes.splice(index, 1));
+  private athlete_delete(index: number) {
+    this.$store.commit('athlete_deleteTrainer');
+    this.$store.dispatch('athlete_update')
+        .then(() => {
+          this.myAthletes.splice(index, 1);
+          this.$router.go(0);
+        });
   }
 
 }

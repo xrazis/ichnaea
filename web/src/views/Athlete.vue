@@ -30,11 +30,15 @@
       <form @submit="athlete_update">
         <div class="tile is-child box">
           <p class="title">Personal Details</p>
-          <div class="field">
+          <div v-if="useristrainer" class="field">
             <label class="label">Name</label>
             <div class="control">
               <input v-model="athlete.name" class="input" type="text">
             </div>
+          </div>
+          <div v-else class="field">
+            <label class="label">Name</label>
+            <p>{{ athlete.name }}</p>
           </div>
           <div class="field">
             <label class="label">Client Status</label>
@@ -58,7 +62,7 @@
               </li>
             </ul>
           </div>
-          <div class="field">
+          <div v-if="useristrainer" class="field">
             <p class="control">
               <button class="button is-primary is-rounded" type="submit">
                 Update
@@ -119,6 +123,7 @@ import {UserInterface} from "@/store/modules/user";
 export default class Athlete extends Vue {
   private athlete = <AthleteInterface>{};
   private trainer = <UserInterface>{};
+  private useristrainer = false;
   private trainerLogin = '';
   private msgError = '';
   private msgSuccess = '';
@@ -129,16 +134,16 @@ export default class Athlete extends Vue {
 
     if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.user_current._id)) {
       this.$store.dispatch('user_getOne', this.athlete._trainer)
-          .then((res: any) => this.trainer === res.data)
+          .then((res: any) => this.trainer = res.data)
           .catch((err: any) => this.msgError = err.response.data.errors.message || err.message ||
               'Something went wrong!');
     } else if (this.athlete._trainer === this.$store.getters.user_current._id) {
       this.trainer = this.$store.getters.user_current;
+      this.useristrainer = true;
     }
 
     if (this.trainer) {
       this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString();
-      this.$store.commit('api_trainer', this.trainer);
     }
   }
 
@@ -148,16 +153,16 @@ export default class Athlete extends Vue {
       return;
     }
 
+    this.$store.commit('athlete_addTrainer', this.$store.getters.user_current._id);
     this.athlete_update();
   }
 
   private athlete_update() {
-    this.$store.commit('athlete_addTrainer', this.$store.getters.user_current);
-
     this.$store.dispatch('athlete_update')
         .then((res: any) => {
           this.msgSuccess = 'Athlete updated';
           this.athlete = res.data;
+          this.$router.go(0);
         })
         .catch(() => this.msgError = this.$store.getters.athlete_err.response.data.errors.message ||
             'Something went wrong!');

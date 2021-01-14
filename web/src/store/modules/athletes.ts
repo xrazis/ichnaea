@@ -1,8 +1,6 @@
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import axios, {AxiosResponse} from "axios";
 
-import {UserInterface} from "@/store/modules/user";
-
 export interface AthleteInterface {
     _id: string,
     id: string,
@@ -14,7 +12,6 @@ export interface AthleteInterface {
 @Module
 export default class Athletes extends VuexModule {
     private athlete = <AthleteInterface>{};
-    private trainer = <UserInterface>{};
     private athletes = [<AthleteInterface>{}];
     private err = <Error>{};
 
@@ -22,20 +19,8 @@ export default class Athletes extends VuexModule {
         return this.athlete;
     }
 
-    get athlete_trainer() {
-        return this.trainer;
-    }
-
-    get athlete_currents() {
-        return this.athletes;
-    }
-
     get athlete_err() {
         return this.err;
-    }
-
-    @Mutation api_trainer(trainer: UserInterface) {
-        this.trainer = trainer;
     }
 
     @Mutation
@@ -51,7 +36,6 @@ export default class Athletes extends VuexModule {
     @Mutation
     private athletes_logout() {
         this.athlete = <AthleteInterface>{};
-        this.trainer = <UserInterface>{};
         this.athletes = [<AthleteInterface>{}];
     }
 
@@ -61,11 +45,14 @@ export default class Athletes extends VuexModule {
     }
 
     @Mutation
-    private athlete_addTrainer(trainer: UserInterface) {
-        this.trainer = trainer;
-        this.athlete._trainer = this.trainer._id;
+    private athlete_addTrainer(trainerId: string) {
+        this.athlete._trainer = trainerId;
     }
 
+    @Mutation
+    private athlete_deleteTrainer() {
+        delete this.athlete['_trainer'];
+    }
 
     @Action
     private athlete_getAll() {
