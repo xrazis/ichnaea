@@ -19,35 +19,28 @@ router.get('/api/athletes/:id',
     celebrate(guid),
     async (req, res) => {
         const athlete = await Athlete.findById(req.params.id);
-        res.send(athlete)
-    });
-
-router.get('/api/athletes/:id/edit',
-    requireAuth,
-    celebrate(guid),
-    async (req, res) => {
-        const athlete = await Athlete.findById(req.params.id)
-        res.send(athlete)
+        res.send(athlete);
     });
 
 router.put('/api/athletes/:id',
     requireAuth,
     celebrate(athleteUpdateSchema, guid),
     async (req, res) => {
-        const {name, _trainer} = req.body
-        await Athlete.findByIdAndUpdate(req.params.id, {name, _trainer}, {}, (err, athlete) => {
+        const {name, _trainer} = req.body;
+
+        await Athlete.findByIdAndUpdate(req.params.id, {name, _trainer}, {new: true}, (err, athlete) => {
             if (err)
                 return res.status(400).json({errors: 'Something went wrong!'});
 
-            res.send(athlete)
-        })
+            res.send(athlete);
+        });
     });
 
 router.delete('/api/athlete/:id',
     requireAuth,
     celebrate(guid),
     async (req, res) => {
-        await Athlete.findByIdAndDelete(req.params.id)
+        await Athlete.findByIdAndDelete(req.params.id);
     });
 
 module.exports = router;

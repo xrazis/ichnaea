@@ -14,23 +14,30 @@ router.put('/api/user/:id',
     async (req, res) => {
         const {username, email, password, newPassword} = req.body
 
-        if (password && newPassword) {
-            bcrypt.compare(password, req.user.password, async (err, isMatch) => {
+        bcrypt.compare(password, req.user.password, async (err, isMatch) => {
                 if (err)
-                    return res.status(400).json({errors: 'Current password is wrong!'});
-
+                    return res.status(400).json({errors: 'Password is wrong!'});
                 if (isMatch) {
-                    const user = {username, email, newPassword}
-                    await User.findByIdAndUpdate(req.params.id, user)
+                    if (newPassword) {
+                        await User.findByIdAndUpdate(req.params.id, {
+                            username,
+                            email,
+                            newPassword
+                        }, {new: true}, (err, user) => {
+                            req.user = user;
+                        });
+                    } else {
+                        await User.findByIdAndUpdate(req.params.id, {
+                            username,
+                            email
+                        }, {new: true}, (err, user) => {
+                            req.user = user;
+                        });
+                    }
                     res.send(req.user);
                 }
-            });
-        } else if (username || email) {
-            const user = {username, email}
-            await User.findByIdAndUpdate(req.params.id, user)
-            res.send(req.user);
-        }
-
+            }
+        );
     });
 
 module.exports = router;

@@ -4,7 +4,7 @@ const guid = {
     params: {
         userId: Joi.string().guid().required()
     }
-}
+};
 
 const userAuthSchema = {
     body: {
@@ -14,18 +14,17 @@ const userAuthSchema = {
 };
 
 const userUpdateSchema = {
-        body: {
-            _id: Joi.string().required(),
-            username: Joi.string().required(),
-            __v: Joi.number().integer(),
-            email: Joi.string().email(),
-            registered: Joi.string(),
-            lastLogin: Joi.string(),
-            password: Joi.string().alphanum().allow(''),
-            newPassword: Joi.string().alphanum().allow(''),
-        }
+    body: {
+        _id: Joi.string().required(),
+        username: Joi.string().required(),
+        registered: Joi.string().required(),
+        lastLogin: Joi.string().required(),
+        __v: Joi.number().integer().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().alphanum().required(),
+        newPassword: Joi.string().alphanum().optional(),
     }
-;
+};
 
 const athleteUpdateSchema = {
     body: {
@@ -36,6 +35,6 @@ const athleteUpdateSchema = {
         __v: Joi.number().integer(),
         _trainer: Joi.string().allow('').default(''),
     }
-}
+};
 
 module.exports = {guid, userAuthSchema, userUpdateSchema, athleteUpdateSchema}
