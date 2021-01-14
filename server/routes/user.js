@@ -8,12 +8,19 @@ const {requireAuth} = require('../middlewares/middleware');
 const User = mongoose.model('User')
 const {userUpdateSchema, guid} = require('../schemas/joi');
 
+router.get('/api/user/:id',
+    requireAuth,
+    async (req, res) => {
+        const user = await User.findById(req.params.id);
+        user.password = '';
+        res.send(user);
+    });
+
 router.put('/api/user/:id',
     requireAuth,
     celebrate(userUpdateSchema, guid),
     async (req, res) => {
         const {username, email, password, newPassword} = req.body
-
         bcrypt.compare(password, req.user.password, async (err, isMatch) => {
                 if (err)
                     return res.status(400).json({errors: 'Password is wrong!'});
