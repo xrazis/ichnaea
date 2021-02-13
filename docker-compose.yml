@@ -31,12 +31,6 @@ services:
   backend:
     build: ./server
     container_name: "backend"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
     ports:
       - "8000:8000"
     volumes:
@@ -52,12 +46,6 @@ services:
   frontend:
     build: ./web
     container_name: "frontend"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
     ports:
       - "8080:8080"
     volumes:
