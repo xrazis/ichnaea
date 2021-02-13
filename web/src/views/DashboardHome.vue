@@ -25,12 +25,13 @@
         <div class="tile is-parent is-vertical">
           <article class="tile is-child box">
             <p class="title">System status</p>
-            <p v-if="this.$store.getters.server_status" class="subtitle">All systems operational</p>
-            <p v-else class="subtitle">Something does not seem right</p>
+            <p v-if="this.$store.getters.server_status" class="subtitle"><i class="fas fa-check-circle"></i> All
+              systems operational</p>
+            <p v-else class="subtitle"><i class="fas fa-times-circle"></i> Something does not seem right</p>
           </article>
           <article class="tile is-child box">
             <p class="title">App Info</p>
-            <p class="subtitle">Bottom tile</p>
+            <p class="subtitle"><i class="fas fa-code-branch"></i> Dashboard version 1.0.0</p>
           </article>
         </div>
         <div class="tile is-parent">
@@ -43,18 +44,19 @@
       </div>
       <div class="tile is-parent">
         <article class="tile is-child box">
-          <p class="title">Wide tile</p>
-          <p class="subtitle">Aligned with the right tile</p>
-          <div class="content">
-            <!-- Content -->
-          </div>
+          <p class="title">Who was Ichnaea? </p>
+          <p class="subtitle">
+            In Greek mythology, Ichnaea, "the tracker" was an epithet that could be applied to
+            Themis or to Nemesis. Ichnaea was also the goddess of tracing and tracking. She was one of the female Titans
+            who possessed an oracle at Ichnae in Thessaly. This apps name derives from the latter.
+          </p>
         </article>
       </div>
     </div>
     <div class="tile is-parent">
       <article class="tile is-child box">
         <div class="content">
-          <p class="title">Tall tile</p>
+          <p class="title">Live Updates</p>
           <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda aut culpa, deserunt
             distinctio illo ipsa itaque laborum magnam minima minus molestiae nisi odio provident quas repellendus,
             similique velit veniam voluptatem?</p>

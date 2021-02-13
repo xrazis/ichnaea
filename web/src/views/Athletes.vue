@@ -106,16 +106,6 @@
             <span class="icon mr-1"><i class="fa fa-times"></i></span>
           </td>
           <td>
-            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="athlete_save(athlete)">
-          <span class="icon is-medium has-background-primary has-text-white mr-1">
-          <i class="fa fa-lg fa-table"></i>
-        </span>
-            </router-link>
-            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="athlete_save(athlete)">
-          <span class="icon is-medium has-background-primary has-text-white mr-1">
-          <i class="fa fa-lg fa-chart-area"></i>
-        </span>
-            </router-link>
             <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}" @click="athlete_save(athlete)">
           <span class="icon is-medium has-background-warning has-text-white mr-1">
           <i class="fa fa-lg fa-user-edit"></i>
