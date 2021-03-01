@@ -15,7 +15,7 @@ passport.deserializeUser(function (id, done) {
     });
 });
 
-passport.use('local', new LocalStrategy(
+passport.use('local_register', new LocalStrategy(
     {
         usernameField: 'username',
         passwordField: 'password'
@@ -24,9 +24,11 @@ passport.use('local', new LocalStrategy(
         User.findOne({username: username})
             .then(user => {
                 if (!user) {
-                    const lastLogin = Date.now()
-                    const registered = lastLogin
-                    const newUser = new User({username, password, registered, lastLogin});
+                    const lastLogin = Date.now();
+                    const registered = lastLogin;
+                    const email = '';
+
+                    const newUser = new User({username, password, registered, lastLogin, email});
                     bcrypt.genSalt(10, (err, salt) => {
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) throw err;
@@ -41,6 +43,26 @@ passport.use('local', new LocalStrategy(
                                 });
                         });
                     });
+                } else {
+                    return done(null, false, {message: 'Username already exists!'});
+                }
+            })
+            .catch(err => {
+                return done(null, false, {message: err});
+            });
+    }));
+
+
+passport.use('local_login', new LocalStrategy(
+    {
+        usernameField: 'username',
+        passwordField: 'password'
+    },
+    (username, password, done) => {
+        User.findOne({username: username})
+            .then(user => {
+                if (!user) {
+                    return done(null, false, {message: 'User does not exist!'});
                 } else {
                     bcrypt.compare(password, user.password, (err, isMatch) => {
                         if (err) throw err;
@@ -58,7 +80,7 @@ passport.use('local', new LocalStrategy(
             .catch(err => {
                 return done(null, false, {message: err});
             });
-    })
-);
+    }));
+
 
 module.exports = passport;

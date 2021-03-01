@@ -6,6 +6,14 @@ const guid = {
     }
 };
 
+const userRegSchema = {
+    body: {
+        username: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
+    }
+};
+
 const userAuthSchema = {
     body: {
         username: Joi.string().required(),
@@ -37,4 +45,4 @@ const athleteUpdateSchema = {
     }
 };
 
-module.exports = {guid, userAuthSchema, userUpdateSchema, athleteUpdateSchema}
+module.exports = {guid, userRegSchema, userAuthSchema, userUpdateSchema, athleteUpdateSchema}

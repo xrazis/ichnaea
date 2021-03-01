@@ -3,20 +3,22 @@ const passport = require('passport')
 const router = express.Router();
 const {celebrate} = require('celebrate');
 
-const {userAuthSchema} = require('../schemas/joi')
+const {userRegSchema, userAuthSchema} = require('../schemas/joi');
+const {passportCheck} = require('../helpers/api');
+
+router.post('/auth/register',
+    celebrate(userRegSchema),
+    (req, res, next) => {
+        passport.authenticate('local_register', {}, (err, user, info) => {
+            passportCheck(req, res, err, user, info, 1);
+        })(req, res, next);
+    });
 
 router.post('/auth/login',
     celebrate(userAuthSchema),
     (req, res, next) => {
-        passport.authenticate('local', {}, (err, user, info) => {
-            if (err)
-                return res.status(400).json({errors: err});
-            if (!user)
-                return res.status(400).json({errors: info});
-
-            req.logIn(user, () => {
-                return res.status(200).json({user: req.user});
-            });
+        passport.authenticate('local_login', {}, (err, user, info) => {
+            passportCheck(req, res, err, user, info, 0);
         })(req, res, next);
     });
 
