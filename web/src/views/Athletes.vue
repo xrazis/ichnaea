@@ -69,7 +69,8 @@
       <p class="subtitle">All athletes are displayed on this table.</p>
       <div class="control">
         <label>
-          <input class="input is-focused" placeholder="Search Athletes" type="text">
+          <input v-model.trim="searchTerm" class="input is-focused" placeholder="Search Athletes"
+                 type="text">
         </label>
       </div>
     </div>
@@ -77,7 +78,6 @@
     <div class="table-container">
       <table
           class="table is-striped is-large is-hoverable is-fullwidth has-text-centered">
-
         <thead>
         <tr>
           <th><span class="icon mr-1"><i class="fa fa-plug"></i></span>
@@ -91,7 +91,7 @@
         </tr>
         </thead>
 
-        <tr v-for="(athlete, index) in athletes" :key="index">
+        <tr v-for="(athlete, index) in filteredAthletes" :key="index">
           <td class="is-family-monospace">
             <span v-if="athlete.socketID">Online</span>
             <span v-else>Offline</span>
@@ -125,10 +125,20 @@ import {AthleteInterface} from "@/store/modules/athletes";
 import {UserInterface} from "@/store/modules/user";
 
 export default class Athletes extends Vue {
-  private athletes = [<AthleteInterface>{}];
   private myAthletes = [<AthleteInterface>{}];
+  private athletes: Array<AthleteInterface> = [];
   private user = <UserInterface>{};
+  private searchTerm = '';
   private msg = '';
+
+  private get filteredAthletes(): Array<AthleteInterface> {
+    const fAthletes = [];
+    for (const athlete of this.athletes) {
+      if (athlete.name.toLowerCase().includes(this.searchTerm)) fAthletes.push(athlete)
+    }
+
+    return fAthletes;
+  }
 
   mounted() {
     this.$store.dispatch('athlete_getAll')
