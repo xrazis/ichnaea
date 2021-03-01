@@ -37,7 +37,7 @@
         <div class="tile is-parent">
           <article class="tile is-child box">
             <figure class="image">
-              <img src="../assets/undraw_finish_line_katerina_limpitsouni_xy20.svg">
+              <img alt="finish_line" src="../assets/undraw_finish_line_katerina_limpitsouni_xy20.svg">
             </figure>
           </article>
         </div>

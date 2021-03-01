@@ -69,7 +69,7 @@ passport.use('local_login', new LocalStrategy(
 
                         if (isMatch) {
                             const lastLogin = Date.now()
-                            User.updateOne(user._id, lastLogin)
+                            User.updateOne(user._id, {lastLogin: lastLogin})
                             return done(null, user);
                         } else {
                             return done(null, false, {message: 'Wrong password'});

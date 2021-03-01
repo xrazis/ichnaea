@@ -14,7 +14,9 @@
           <div class="field">
             <label class="label">Username</label>
             <div class="control">
-              <input v-model="user.username" class="input" type="text">
+              <label>
+                <input v-model="user.username" class="input" type="text">
+              </label>
             </div>
           </div>
           <div class="field">
@@ -27,7 +29,9 @@
           <div class="field">
             <label class="label">Email</label>
             <div class="control">
-              <input v-model="user.email" class="input" type="email">
+              <label>
+                <input v-model="user.email" class="input" type="email">
+              </label>
             </div>
           </div>
         </div>
@@ -38,13 +42,17 @@
           <p class="title">Change Password</p>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.newPassword" class="input" placeholder="New Password" type="password">
+              <label>
+                <input v-model="user.newPassword" class="input" placeholder="New Password" type="password">
+              </label>
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
+              <label>
+                <input v-model="user.repeatNewPassword" class="input" placeholder="Confirm Password" type="password">
+              </label>
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>
@@ -55,7 +63,9 @@
           <p class="subtitle">Enter your password to save!</p>
           <div class="field">
             <p class="control has-icons-left">
-              <input v-model="user.password" class="input" placeholder="Current Password" type="password">
+              <label>
+                <input v-model="user.password" class="input" placeholder="Current Password" type="password">
+              </label>
               <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
             </p>
           </div>

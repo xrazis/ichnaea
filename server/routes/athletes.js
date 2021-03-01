@@ -42,6 +42,8 @@ router.delete('/api/athletes/:id',
     celebrate(guid),
     async (req, res) => {
         await Athlete.findByIdAndDelete(req.params.id);
+
+        return res.status(200).json({message: 'Deleted!'});
     });
 
 module.exports = router;

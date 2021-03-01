@@ -7,7 +7,9 @@
           <form @submit.prevent="user_register">
             <div class="field">
               <p class="control has-icons-left has-icons-right">
-                <input v-model="username" class="input" placeholder="Username" type="text">
+                <label>
+                  <input v-model="username" class="input" placeholder="Username" type="text">
+                </label>
                 <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -15,7 +17,9 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input v-model="email" class="input" placeholder="Email" type="email">
+                <label>
+                  <input v-model="email" class="input" placeholder="Email" type="email">
+                </label>
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -23,7 +27,9 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input v-model="password" class="input" placeholder="Password" type="password">
+                <label>
+                  <input v-model="password" class="input" placeholder="Password" type="password">
+                </label>
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -31,7 +37,9 @@
             </div>
             <div class="field">
               <p class="control has-icons-left">
-                <input v-model="passwordRepeat" class="input" placeholder="Password Repeat" type="password">
+                <label>
+                  <input v-model="passwordRepeat" class="input" placeholder="Password Repeat" type="password">
+                </label>
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>

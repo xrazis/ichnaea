@@ -13,7 +13,7 @@ module.exports = {
                 await User.updateOne({_id: req.user._id}, {email: req.body.email});
                 req.user.email = req.body.email;
             }
-            
+
             return res.status(200).json({user: req.user});
         });
     }

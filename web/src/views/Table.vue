@@ -5,7 +5,7 @@
 
       <thead>
       <tr>
-        <th v-for="(value, key) in mData[0]">
+        <th v-for="(key) in mData[0]">
           {{ key }}
         </th>
       </tr>
@@ -13,7 +13,7 @@
 
       <tbody>
       <tr v-for="(data, key) in mData" :key="key">
-        <td v-for="(value, key) in data">
+        <td v-for="(value) in data">
           {{ value }}
         </td>
       </tr>

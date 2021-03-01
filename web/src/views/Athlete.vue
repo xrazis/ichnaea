@@ -10,12 +10,12 @@
         </div>
         <div class="level-right">
           <div class="level-item has-text-centered">
-            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Table', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-table"></i>
         </span>
             </router-link>
-            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-chart-area"></i>
         </span>
@@ -30,10 +30,12 @@
       <form @submit="athlete_update">
         <div class="tile is-child box">
           <p class="title">Personal Details</p>
-          <div v-if="useristrainer" class="field">
+          <div v-if="userIsTrainer" class="field">
             <label class="label">Name</label>
             <div class="control">
-              <input v-model="athlete.name" class="input" type="text">
+              <label>
+                <input v-model="athlete.name" class="input" type="text">
+              </label>
             </div>
           </div>
           <div v-else class="field">
@@ -62,7 +64,7 @@
               </li>
             </ul>
           </div>
-          <div v-if="useristrainer" class="field">
+          <div v-if="userIsTrainer" class="field">
             <p class="control">
               <button class="button is-primary is-rounded" type="submit">
                 Update
@@ -86,7 +88,9 @@
           <div class="field">
             <label class="label">Athlete ID</label>
             <div class="control">
-              <input v-model="clientID" class="input" type="text">
+              <label>
+                <input v-model="clientID" class="input" type="text">
+              </label>
             </div>
           </div>
           <div class="field">
@@ -123,7 +127,7 @@ import {UserInterface} from "@/store/modules/user";
 export default class Athlete extends Vue {
   private athlete = <AthleteInterface>{};
   private trainer = <UserInterface>{};
-  private useristrainer = false;
+  private userIsTrainer = false;
   private trainerLogin = '';
   private msgError = '';
   private msgSuccess = '';
@@ -139,7 +143,7 @@ export default class Athlete extends Vue {
               'Something went wrong!');
     } else if (this.athlete._trainer === this.$store.getters.user_current._id) {
       this.trainer = this.$store.getters.user_current;
-      this.useristrainer = true;
+      this.userIsTrainer = true;
     }
 
     if (this.trainer) {

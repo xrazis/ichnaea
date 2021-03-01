@@ -31,7 +31,7 @@ iQuery = (query) => {
             return result;
         })
         .catch((err) => {
-            return [{Error: 'Error occurred'}];
+            return [{Error: `Error occurred: ${err}`}];
         });
 }
 

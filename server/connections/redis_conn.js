@@ -11,7 +11,6 @@ pub.on('error', (error) => {
 });
 
 pub.on('ready', () => {
-    pub.flush;
     console.log(chalk.greenBright.bold('Connected to redis!'))
 })
 

@@ -3,7 +3,7 @@
     <div class="navbar-brand">
       <router-link to="/">
         <a class="navbar-item">
-          <img height="150" src="../assets/undraw_data_trends_b0wg.svg" width="60"/>
+          <img alt="data_trends" height="150" src="../assets/undraw_data_trends_b0wg.svg" width="60"/>
           <h3 class="is-size-4 has-text-white">Ichnaea</h3>
         </a>
       </router-link>

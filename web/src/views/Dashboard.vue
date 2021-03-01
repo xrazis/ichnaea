@@ -7,6 +7,7 @@
   <Footer/>
 </template>
 
+<!--suppress JSUnusedGlobalSymbols -->
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {io} from 'socket.io-client'

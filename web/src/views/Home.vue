@@ -6,7 +6,7 @@
         <div class="columns is-vcentered">
           <div class="column">
             <figure class="image is-fullwidth">
-              <img src="../assets/undraw_fitness_stats_sht6.svg">
+              <img alt="fitness_stats" src="../assets/undraw_fitness_stats_sht6.svg">
             </figure>
           </div>
           <div class="column is-5 is-offset-1 landing-caption">

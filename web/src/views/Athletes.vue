@@ -51,7 +51,7 @@
           <i class="fa fa-lg fa-user-edit"></i>
           </span>
             </router-link>
-            <a @click="athlete_delete(athlete, index)">
+            <a @click="athlete_delete(index)">
           <span class="icon is-medium has-background-danger has-text-white mr-1">
           <i class="fa fa-lg fa-user-times"></i>
         </span>
