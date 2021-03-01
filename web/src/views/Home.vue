@@ -14,7 +14,12 @@
               Unleash your potential with <i>ichnaea</i>
             </h1>
             <p class="subtitle">Metrics and live monitoring for your athletes. <br> The future is IoT.</p>
-            <router-link class="has-text-white" to="/login">
+            <router-link class="has-text-white" to="/register">
+              <button class="button is-primary is-rounded">
+                Register
+              </button>
+            </router-link>
+            <router-link class="ml-2 has-text-white" to="/login">
               <button class="button is-info is-rounded">
                 Login
               </button>
@@ -27,7 +32,7 @@
     <div class="hero-foot">
       <footer class="footer">
         <div class="content has-text-centered">
-          <p>Ichnaea is an IoT solution that collects and analyzes body position data from an athlete in real-time.</p>
+          <p>Ichnaea is an IoT solution that collects and analyzes body position data from athletes in real-time.</p>
           <p>Source code can be found on <a href="https://github.com/xrazis/ichnaea" target="_blank">github</a> and <a
               href="https://git.swarmlab.io:3000/xrazis/ichnaea" target="_blank">swarmlab</a>.</p>
           <p>The thesis document can be found on <a href="" target="_blank">google docs</a>.</p>

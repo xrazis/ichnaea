@@ -62,6 +62,25 @@ export default class User extends VuexModule {
     }
 
     @Action
+    private user_register(user: UserInterface) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'POST',
+                url: '/auth/register',
+                data: qs.stringify({...user})
+            })
+                .then((resp: AxiosResponse) => {
+                    this.context.commit('auth_success', resp.data.user);
+                    resolve(resp);
+                })
+                .catch((err: Error) => {
+                    this.context.commit('auth_error', err);
+                    reject(err);
+                });
+        });
+    }
+
+    @Action
     private user_login(user: UserInterface) {
         return new Promise((resolve, reject) => {
             axios({
