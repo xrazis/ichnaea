@@ -24,9 +24,10 @@ To better understand how all this correlates to each other, take a look at the f
 _At this moment the influx cluster has not been implemented_
 
 There are three databases, each for its distinct purpose. Redis is used for caching and pub-sub, MongoDB is the user
-store and lastly the bulk of data produced from the athletes are stored in a cluster of Influxdb's with a Grafana
-instance attached. The backend is handled by a Node.js server, being responsible for data and user storage, client socket connection and exposing an API. The frontend is build with Vue and deployment is handled by Docker with
-docker-compose. The test client that is now being deployed is nothing more than a fake generator of data for testing. 
+store and lastly, the bulk of data produced from the athletes is stored in a cluster of Influxdb's with a Grafana
+instance attached. The backend is handled by a Node.js server, being responsible for data and user storage, client
+socket connection, and exposing an API. The frontend is built with Vue and deployment is handled by Docker with
+docker-compose. The test client is nothing more than a fake generator of data for testing.
 
 # Server endpoints
 
@@ -86,7 +87,7 @@ Returns all data in the specified time range.
 
 Returns all data for a given user _id, in the specified time range.
 
-# Installation
+# Run
 
 Clone the project:
 
@@ -97,3 +98,5 @@ _First make sure you have the docker service and docker-compose installed, then:
     docker-compose up --detach
 
 In a few moments Ichnaea will be running! Visit localhost:8080 to view the web dashboard.
+
+**If you want to use or build on this project and have any questions at all, don't hesitate to contact me.** 
