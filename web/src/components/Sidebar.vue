@@ -125,7 +125,6 @@ aside {
   aside {
     display: block;
     opacity: 0;
-    position: absolute;
     left: 0;
     top: 5vh;
     width: 0;
@@ -133,14 +132,12 @@ aside {
     overflow-x: hidden;
     z-index: 1031;
     transition: all .4s ease-in-out;
-    pointer-events: none;
   }
 
   .expand-sidebar {
     opacity: 1;
     transition: all .4s ease-in-out;
     transform: none;
-    pointer-events: none;
     width: 250px;
   }
 }
