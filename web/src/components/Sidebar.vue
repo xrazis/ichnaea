@@ -1,5 +1,5 @@
 <template>
-  <aside class="menu has-background-black">
+  <aside id="aside" class="menu has-background-black">
     <div class="container mx-5 my-4">
       <p class="menu-label">
         General
@@ -16,7 +16,7 @@
           <span class="icon">
                <i class="fas fa-digital-tachograph"/>
             </span>
-          <span>&nbsp;Dashboard</span>
+          <span class="label-text">&nbsp;Dashboard</span>
           </span>
             </a>
           </router-link>
@@ -30,7 +30,7 @@
             <span class="icon">
                <i class="fas fa-user"/>
             </span>
-              <span>&nbsp;Profile</span>
+              <span class="label-text">&nbsp;Profile</span>
           </span>
             </a>
           </router-link>
@@ -45,7 +45,7 @@
             <span class="icon">
                <i class="fas fa-users"/>
             </span>
-              <span>&nbsp;Athletes</span>
+              <span class="label-text">&nbsp;Athletes</span>
           </span>
             </a>
           </router-link>
@@ -64,7 +64,7 @@
             <span class="icon">
                <i class="fas fa-question-circle"/>
             </span>
-              <span>&nbsp;Guide</span>
+              <span class="label-text">&nbsp;Guide</span>
           </span>
             </a>
           </router-link>
@@ -78,7 +78,7 @@
             <span class="icon">
                <i class="fas fa-hands-helping"/>
             </span>
-              <span>&nbsp;Ticket</span>
+              <span class="label-text">&nbsp;Ticket</span>
           </span>
             </a>
           </router-link>
@@ -92,7 +92,7 @@
           <span class="icon mr-1">
                         <i class="fas fa-book"></i>
                     </span>
-          <span>Docs</span>
+          <span class="label-text">Docs</span>
             </span>
             </a>
           </router-link>
@@ -111,21 +111,37 @@ export default class Sidebar extends Vue {
 </script>
 
 <style scoped>
+aside {
+  position: fixed;
+  top: 5vh;
+  left: 0;
+  width: 250px;
+  height: calc(100% - 5vh);
+  overflow-x: hidden;
+  z-index: 1031;
+}
 
 @media (max-width: 572px) {
   aside {
-    position: relative;
+    display: block;
+    opacity: 0;
+    position: absolute;
+    left: 0;
     top: 5vh;
-    min-width: 100%;
+    width: 0;
+    height: calc(100% - 5vh);
+    overflow-x: hidden;
+    z-index: 1031;
+    transition: all .4s ease-in-out;
+    pointer-events: none;
   }
-}
 
-@media (min-width: 572px) {
-  aside {
-    position: fixed;
-    height: 95vh;
-    width: 15rem;
-    top: 5vh;
+  .expand-sidebar {
+    opacity: 1;
+    transition: all .4s ease-in-out;
+    transform: none;
+    pointer-events: none;
+    width: 250px;
   }
 }
 </style>
