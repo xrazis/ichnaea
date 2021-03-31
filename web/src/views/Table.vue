@@ -1,11 +1,16 @@
 <template>
   <h1 class="title is-2">/athletes/{{ athlete.name }}/table</h1>
+
+  <div class="notification is-link is-light">
+    All data for "{{ athlete.name }}" will appear here, as streamed by the server.
+  </div>
+
   <div class="table-container">
     <table class="table is-narrow is-striped">
 
       <thead>
       <tr>
-        <th v-for="(key) in mData[0]">
+        <th v-for="(data, key) in mData[0]">
           {{ key }}
         </th>
       </tr>
