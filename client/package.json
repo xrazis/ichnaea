@@ -1,14 +1,14 @@
 {
   "name": "client",
   "version": "1.0.0",
-  "description": "Client for ichaea",
+  "description": "Client for Ichnaea",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "author": "Haris Razis",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
     "getmac": "^5.17.0",

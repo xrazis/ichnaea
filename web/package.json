@@ -1,11 +1,14 @@
 {
   "name": "web",
-  "version": "0.1.0",
+  "description": "Web SPA for Ichnaea",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
+  "author": "Haris Razis",
+  "license": "MIT",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@types/socket.io-client": "^1.4.34",

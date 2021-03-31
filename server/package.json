@@ -1,14 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for Ichnaea",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "author": "Haris Razis",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.9.0",
     "bcrypt": "^5.0.0",
