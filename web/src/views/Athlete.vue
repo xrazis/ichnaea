@@ -152,13 +152,14 @@ export default class Athlete extends Vue {
   }
 
   private athlete_adopt() {
-    if (this.clientID != '' && this.clientID != this.athlete.id) {
+    if (this.clientID != this.athlete.id) {
       this.msgError = 'Athlete ID does not match with current athlete!';
       return;
+    } else {
+      console.log('added')
+      this.$store.commit('athlete_addTrainer', this.$store.getters.user_current._id);
+      this.athlete_update();
     }
-
-    this.$store.commit('athlete_addTrainer', this.$store.getters.user_current._id);
-    this.athlete_update();
   }
 
   private athlete_update() {
