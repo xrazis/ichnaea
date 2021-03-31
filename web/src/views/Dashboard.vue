@@ -3,8 +3,8 @@
   <Sidebar/>
   <div class="content">
     <router-view></router-view>
+    <Footer class="mt-5 has-background-white"/>
   </div>
-  <Footer/>
 </template>
 
 <!--suppress JSUnusedGlobalSymbols -->
