@@ -3,20 +3,26 @@ services:
   redis:
     image: redis:latest
     container_name: "redis"
+    restart: always
     networks:
       - backend
   influx:
     image: influxdb:latest
     container_name: "influx"
+    restart: always
     environment:
       - INFLUXDB_DB=db0
       - INFLUXDB_HTTP_FLUX_ENABLED
+    volumes:
+      - ./database/influx:/var/lib/influxdb2
+      - ./database/influx:/etc/influxdb2
     networks:
       - backend
       - monitor
   grafana:
     image: grafana/grafana:latest
     container_name: "grafana"
+    restart: always
     ports:
       - "3000:3000"
     networks:
@@ -26,8 +32,17 @@ services:
   mongo:
     image: mongo:latest
     container_name: "mongo"
+    restart: always
+    ports:
+      - "49153:27017"
+    volumes:
+      - ./database/mongo:/data/db
+      - ./database/mongo:/data/configdb
     networks:
       - backend
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
   backend:
     build: ./server
     container_name: "backend"
@@ -69,3 +84,6 @@ networks:
   backend:
   frontend:
   monitor:
+volumes:
+  mongodb:
+  influx:

@@ -103,10 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
+# Jetbrains stuff
 .idea/workspace.xml
-
 .DS_Store
 
+# Vue and Typescript build files
 /dist
 
-mongo_example_swarmlab.js
+# Database stuff
+/database
