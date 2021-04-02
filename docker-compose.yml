@@ -33,8 +33,6 @@ services:
     image: mongo:latest
     container_name: "mongo"
     restart: always
-    ports:
-      - "49153:27017"
     volumes:
       - ./database/mongo:/data/db
       - ./database/mongo:/data/configdb

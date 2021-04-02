@@ -4,5 +4,5 @@ module.exports = {
     influx_org: 'xrazis',
     influx_bucket: 'db0',
     redis_uri: 'redis://redis:6379',
-    mongo_uri: 'mongodb://mongo:27017/user'
+    mongo_uri: 'mongodb://root:password@mongo:27017/ichnaea?authSource=admin'
 }
