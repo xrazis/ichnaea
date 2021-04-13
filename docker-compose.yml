@@ -11,7 +11,13 @@ services:
     container_name: "influx"
     restart: always
     environment:
-      - INFLUXDB_DB=db0
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=xrazis
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=razis
+      - DOCKER_INFLUXDB_INIT_BUCKET=ichnaea
+      - DOCKER_INFLUXDB_INIT_RETENTION=1w
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
       - INFLUXDB_HTTP_FLUX_ENABLED
     volumes:
       - ./database/influx:/var/lib/influxdb2
