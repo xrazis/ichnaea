@@ -86,7 +86,7 @@
         <li>
           <router-link :class="{
             'has-background-white':
-           $route.name==='Docs' }" :to="{ name: 'Docs'}">
+           $route.name==='Documentation.vue' }" :to="{ name: 'Docs'}">
             <a href="" target="_blank">
           <span class="icon-text">
           <span class="icon mr-1">

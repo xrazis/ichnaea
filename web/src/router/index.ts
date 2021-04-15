@@ -70,7 +70,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'docs',
                 name: 'Docs',
-                component: () => import('../views/DashboardHome.vue')
+                component: () => import('../views/Documentation.vue')
             },
         ],
         meta: {

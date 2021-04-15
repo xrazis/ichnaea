@@ -29,6 +29,20 @@ export default createStore({
                         reject(err);
                     });
             });
+        },
+        readme({commit}) {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'GET',
+                    url: 'https://raw.githubusercontent.com/xrazis/ichnaea/main/README.md'
+                })
+                    .then((resp: AxiosResponse) => {
+                        resolve(resp);
+                    })
+                    .catch((err: Error) => {
+                        reject(err);
+                    })
+            });
         }
     },
     plugins: [createPersistedState()]
