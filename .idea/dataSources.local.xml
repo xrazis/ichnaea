@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal">
-    <data-source name="Mongo container" uuid="f68df3b2-7b30-4390-bcec-2dc8c08da724">
+  <component name="dataSourceStorageLocal" created-in="WS-211.7142.46">
+    <data-source name="@MongoContainer" uuid="18bb1232-8725-49a1-9a69-a213f6603a6f">
       <database-info product="Mongo DB" version="4.4.4" jdbc-version="4.2" driver-name="MongoDB JDBC Driver" driver-version="1.11" dbms="MONGO" exact-version="4.4.4" exact-driver-version="1.11" />
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="schema" negative="1" />
+          <node kind="schema">
+            <name qname="ichnaea" />
+            <name qname="local" />
+          </node>
         </introspection-scope>
       </schema-mapping>
-      <load-sources>user_and_system_sources</load-sources>
     </data-source>
   </component>
 </project>
