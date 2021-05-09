@@ -35,5 +35,5 @@ socket.on('closeConn', () => {
 });
 
 setInterval(() => {
-    socket.emit('data', {measurement: Date.now(), mac, pointName: 'test-measure'});
+    socket.emit('data', {measurement: Math.round(100 * Math.random()), mac, pointName: 'test-measure'});
 }, 3 * 1000);
