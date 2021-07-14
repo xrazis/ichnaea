@@ -1,7 +1,7 @@
 const {Point} = require('@influxdata/influxdb-client');
-const chalk = require('chalk')
+const chalk = require('chalk');
 
-const {writeApi, queryApi} = require('../connections/influx_conn')
+const {writeApi, queryApi} = require('../connections/influx_conn');
 
 iWrite = (pointName, uuid, measurement) => {
     const point = new Point(pointName)
@@ -35,4 +35,4 @@ iQuery = (query) => {
         });
 }
 
-module.exports = {iWrite, closeWrite, iQuery}
+module.exports = {iWrite, closeWrite, iQuery};

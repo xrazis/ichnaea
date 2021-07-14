@@ -1,13 +1,13 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const {celebrate} = require('celebrate');
 
 const {requireAuth} = require('../middlewares/middleware');
 const Athlete = mongoose.model('Athlete');
-const {influx_bucket} = require('../config/keys')
-const {iQuery} = require('../actions/influx_actions')
-const {guid} = require('../schemas/joi')
+const {influx_bucket} = require('../config/keys');
+const {iQuery} = require('../actions/influx_actions');
+const {guid} = require('../schemas/joi');
 
 router.get('/api/data',
     requireAuth,
@@ -27,7 +27,7 @@ router.get('/api/data/:id',
         const query = `from(bucket: "${influx_bucket}") |> range(start: -1h) |> filter(fn: (r) => r.client == "${athlete.id}")`;
         const data = await iQuery(query);
 
-        res.send(data)
+        res.send(data);
     });
 
 

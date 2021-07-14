@@ -20,12 +20,12 @@ export default class Docs extends Vue {
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
         .replace(/^- (.*$)/gim, '<li>$1</li>')
         .replace(/`(.*?)`/g, '<code>$1</code>')
-        .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
         .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
         .replace(/_(.*)_/gim, '<em>$1</em>')
         .replace(/\*(.*)\*/gim, '<i>$1</i>')
-        .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
-        .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2'>$1</a>")
+        .replace(/!\[(.*?)]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+        .replace(/\[(.*?)]\((.*?)\)/gim, "<a href='$2'>$1</a>")
         .replace(/\n$/gim, '<br />').trim();
   }
 

@@ -2,7 +2,7 @@ const {Joi} = require('celebrate');
 
 const guid = {
     params: {
-        userId: Joi.string().guid().required()
+        userId: Joi.string().guid().required(),
     }
 };
 
@@ -45,4 +45,4 @@ const athleteUpdateSchema = {
     }
 };
 
-module.exports = {guid, userRegSchema, userAuthSchema, userUpdateSchema, athleteUpdateSchema}
+module.exports = {guid, userRegSchema, userAuthSchema, userUpdateSchema, athleteUpdateSchema};

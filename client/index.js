@@ -1,3 +1,3 @@
-require('./services/socket')
+require('./services/socket');
 
-console.log('Client running...')
+console.log('Client running...');

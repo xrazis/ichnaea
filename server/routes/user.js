@@ -1,11 +1,11 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const {celebrate} = require('celebrate');
 
 const {requireAuth} = require('../middlewares/middleware');
-const User = mongoose.model('User')
+const User = mongoose.model('User');
 const {userUpdateSchema, guid} = require('../schemas/joi');
 
 router.get('/api/user/:id',

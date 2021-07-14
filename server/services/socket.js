@@ -3,12 +3,12 @@ const redisAdapter = require('socket.io-redis');
 const mongoose = require('mongoose');
 const chalk = require('chalk');
 
-const {saveAthlete} = require('../actions/mongo_actions')
-const {iWrite} = require('../actions/influx_actions')
+const {saveAthlete} = require('../actions/mongo_actions');
+const {iWrite} = require('../actions/influx_actions');
 const Athlete = mongoose.model('Athlete');
 
 module.exports = (server) => {
-    const io = socket(server)
+    const io = socket(server);
     io.adapter(redisAdapter({host: 'redis', port: 6379}));
 
     io.on('connection', socket => {
@@ -18,8 +18,8 @@ module.exports = (server) => {
             console.log(chalk.red('Client disconnected!'));
         });
 
-        socket.on('subscribe', async (room) => {
-            const {subscribe, mac} = JSON.parse(room)
+        socket.on('subscribe', async room => {
+            const {subscribe, mac} = JSON.parse(room);
 
             socket.join(room);
             console.log(chalk.magenta(`Client with id: ${socket.id} joined room "${subscribe}"`));
@@ -28,19 +28,19 @@ module.exports = (server) => {
                 const socketID = socket.id.toString();
 
                 if (await Athlete.findOne({id: mac})) {
-                    await Athlete.findOneAndUpdate({id: mac}, {socketID})
+                    await Athlete.findOneAndUpdate({id: mac}, {socketID});
                     return;
                 }
 
-                await saveAthlete(mac, socketID)
+                await saveAthlete(mac, socketID);
             }
         });
 
-        socket.on('data', (data) => {
+        socket.on('data', data => {
             const {measurement, pointName, mac} = data;
 
-            io.emit('console', {measurement, pointName})
-            iWrite(pointName, mac, measurement)
+            io.emit('console', {measurement, pointName});
+            iWrite(pointName, mac, measurement);
         });
 
     });

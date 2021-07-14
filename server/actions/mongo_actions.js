@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const faker = require('faker')
+const faker = require('faker');
 const Athlete = mongoose.model('Athlete');
 
 saveAthlete = async (mac, socketID) => {
     const newAthlete = new Athlete({
         id: mac,
         socketID: socketID,
-        name: faker.name.findName()
+        name: faker.name.findName(),
     })
 
     try {
@@ -16,4 +16,4 @@ saveAthlete = async (mac, socketID) => {
     }
 }
 
-module.exports = {saveAthlete}
+module.exports = {saveAthlete};

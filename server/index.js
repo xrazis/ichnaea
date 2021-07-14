@@ -1,17 +1,17 @@
-const app = require('express')()
+const app = require('express')();
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
-const chalk = require('chalk')
-const cors = require('cors')
+const chalk = require('chalk');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
 require('./connections/mongo_conn');
 require('./services/socket')(server);
 
-const dataRoute = require('./routes/data')
-const authRoute = require('./routes/auth')
-const userRoute = require('./routes/user')
-const athletesRoute = require('./routes/athletes')
+const dataRoute = require('./routes/data');
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/user');
+const athletesRoute = require('./routes/athletes');
 
 const passport = require('./services/passport');
 const {session_secret} = require('./config/keys');
@@ -42,10 +42,10 @@ app.use(
 app.use(passport.initialize(undefined));
 app.use(passport.session(undefined));
 
-app.use(dataRoute)
-app.use(authRoute)
-app.use(userRoute)
-app.use(athletesRoute)
+app.use(dataRoute);
+app.use(authRoute);
+app.use(userRoute);
+app.use(athletesRoute);
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => console.log(chalk.green.bold(`Server listening on port ${PORT}!`)));

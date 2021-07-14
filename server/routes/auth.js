@@ -1,5 +1,5 @@
 const express = require('express');
-const passport = require('passport')
+const passport = require('passport');
 const router = express.Router();
 const {celebrate} = require('celebrate');
 
@@ -30,8 +30,7 @@ router.post('/auth/logout',
 
 router.get('/auth/current_user',
     (req, res) => {
-        if (!req.user)
-            return res.status(404).json({errors: 'No current user!'})
+        if (!req.user) return res.status(404).json({errors: 'No current user!'});
 
         res.send(req.user);
     });

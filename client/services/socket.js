@@ -1,7 +1,7 @@
 const io = require('socket.io-client');
-const chalk = require('chalk')
+const chalk = require('chalk');
 const {server_url} = require('../config/keys');
-const getMAC = require('getmac').default
+const getMAC = require('getmac').default;
 
 const socket = io(server_url);
 const mac = getMAC();

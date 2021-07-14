@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const {celebrate} = require('celebrate');
@@ -29,8 +29,7 @@ router.put('/api/athletes/:id',
         const {name, _trainer} = req.body;
 
         await Athlete.findByIdAndUpdate(req.params.id, {name, _trainer}, {new: true}, (err, athlete) => {
-            if (err)
-                return res.status(400).json({errors: 'Something went wrong!'});
+            if (err) return res.status(400).json({errors: 'Something went wrong!'});
 
             res.send(athlete);
         });
