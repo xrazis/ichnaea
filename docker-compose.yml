@@ -44,6 +44,7 @@ services:
     container_name: "backend"
     ports:
       - "8000:8000"
+      - "9229:9229"
     volumes:
       - ./server:/usr/src/app/server
       - /usr/src/app/server/node_modules
