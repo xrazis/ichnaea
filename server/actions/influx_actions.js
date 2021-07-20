@@ -1,5 +1,4 @@
 const {Point} = require('@influxdata/influxdb-client');
-const chalk = require('chalk');
 
 const {writeApi, queryApi} = require('../connections/influx_conn');
 
@@ -16,11 +15,11 @@ closeWrite = () => {
     writeApi
         .close()
         .then(() => {
-            console.log(chalk.magenta('Write finished'));
+            console.log('Write finished');
         })
         .catch((e) => {
             console.error(e);
-            console.log(chalk.red('Write ERROR'));
+            console.log('Write ERROR');
         });
 }
 

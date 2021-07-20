@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const chalk = require('chalk')
 const {mongo_uri} = require('../config/keys');
 
 require('../models/User');
@@ -11,5 +10,5 @@ mongoose.connect(mongo_uri, {
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true
-}).then(() => console.log(chalk.greenBright.bold('Connected to mongo!')));
+}).then(() => console.log('Connected to mongo!'));
 

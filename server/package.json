@@ -14,7 +14,6 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "celebrate": "^13.0.4",
-    "chalk": "^4.1.0",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "debug": "^2.6.9",

@@ -1,7 +1,6 @@
 const app = require('express')();
 const server = require('http').createServer(app);
 const bodyParser = require('body-parser');
-const chalk = require('chalk');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
@@ -48,4 +47,4 @@ app.use(userRoute);
 app.use(athletesRoute);
 
 const PORT = process.env.PORT || 8000;
-server.listen(PORT, () => console.log(chalk.green.bold(`Server listening on port ${PORT}!`)));
+server.listen(PORT, () => console.log(`Server listening on port ${PORT}!`));
