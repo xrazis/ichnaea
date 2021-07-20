@@ -6,7 +6,8 @@ const userSchema = new Schema({
     email: String,
     password: String,
     registered: Date,
-    lastLogin: Date
+    lastLogin: Date,
+    socketID: String,
 });
 
 mongoose.model('User', userSchema);

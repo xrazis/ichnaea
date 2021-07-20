@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const faker = require('faker');
 const Athlete = mongoose.model('Athlete');
 
-saveAthlete = async (mac, socketID) => {
+saveAthlete = async (id, socketID) => {
     const newAthlete = new Athlete({
-        id: mac,
+        id: id,
         socketID: socketID,
         name: faker.name.findName(),
     })

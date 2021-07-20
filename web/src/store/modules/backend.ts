@@ -44,7 +44,7 @@ export default class Backend extends VuexModule {
         this.context.commit('server_queueData', data);
         if (this.liveAthData.length > 15)
             this.context.commit('server_dequeueData');
-    }   //Too "expensive" of an action? To be refactored.
+    }   //Too "expensive" of an action?
 
     @Action
     private server_getAll() {

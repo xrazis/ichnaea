@@ -14,7 +14,7 @@ console.log(chalk.green(`
 socket.on('connect', () => {
     console.log(chalk.green('Connected to server!'));
 
-    socket.emit('subscribe', JSON.stringify({subscribe: 'clients', mac}));
+    socket.emit('subscribe', JSON.stringify({subscribe: 'clients', id: mac}));
 });
 
 socket.on('disconnect', (reason) => {

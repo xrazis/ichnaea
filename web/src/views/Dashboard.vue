@@ -39,7 +39,10 @@ export default class Dashboard extends Vue {
     this.socket = io('/');
 
     this.socket.on('connect', () => {
+      const {_id} = this.$store.getters.user_current;
+
       this.$store.commit("socket_connection", true);
+      this.socket.emit('subscribe', JSON.stringify({subscribe: 'dashboard', _id}));
     });
 
     this.socket.on('disconnect', (reason: string) => {
