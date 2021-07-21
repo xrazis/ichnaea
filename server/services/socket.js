@@ -27,27 +27,31 @@ module.exports = (server) => {
             socket.join(room);
             console.log(`Client with id: ${socket.id} joined room "${subscribe}"`);
 
-            if (subscribe === 'clients') {
-                client = await Athlete.findOne({id});
-                client.trainer = await User.findOne({_id: client._trainer});
+            try {
+                if (subscribe === 'clients') {
+                    client = await Athlete.findOne({id});
+                    client.trainer = await User.findOne({_id: client._trainer});
 
-                if (client) {
-                    await Athlete.findOneAndUpdate({id}, {socketID});
-                    return;
+                    if (client) {
+                        await Athlete.findOneAndUpdate({id}, {socketID});
+                        return;
+                    }
+
+                    await saveAthlete(id, socketID);
+
+                } else if (subscribe === 'dashboard') {
+                    client = await User.findOne({id});
+                    await User.findOneAndUpdate({id}, {socketID});
                 }
-
-                await saveAthlete(id, socketID);
-
-            } else if (subscribe === 'dashboard') {
-                client = await User.findOne({id});
-                await User.findOneAndUpdate({id}, {socketID});
+            } catch (e) {
+                console.log(`Client not found in database! => ${e}`);
             }
         });
 
         socket.on('data', async data => {
             const {measurement, pointName, id} = data;
 
-            if (client?.trainer) {
+            if (client?._trainer) {
                 // TODO Ack is not supported in broadcast mode, so we check for the right socketID everytime.
                 client.trainer = await User.findOne({_id: client._trainer});
                 io.volatile.to(client.trainer.socketID).emit('console', {measurement, pointName});
