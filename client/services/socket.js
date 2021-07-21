@@ -1,19 +1,21 @@
+const {createHash} = require('crypto');
 const io = require('socket.io-client');
 const {server_url} = require('../config/keys');
 const getMAC = require('getmac').default;
 
 const socket = io(server_url);
 const mac = getMAC();
+const id = createHash('md5').update(mac).digest('hex');
 
 console.log(`
-    ID: ${mac}
+    ID: ${id}
     Use this ID, to adopt the athlete on the user dashboard.
 `);
 
 socket.on('connect', () => {
     console.log('Connected to server!');
 
-    socket.emit('subscribe', JSON.stringify({subscribe: 'clients', id: mac}));
+    socket.emit('subscribe', JSON.stringify({subscribe: 'clients', id: id}));
 });
 
 socket.on('disconnect', (reason) => {
@@ -29,10 +31,10 @@ socket.on('disconnect', (reason) => {
     console.log('Reconnecting...');
 });
 
-socket.on('closeConn', () => {
-    closeConn();
-});
+socket.on('closeConn', () => closeConn());
 
-setInterval(() => {
-    socket.emit('data', {measurement: Math.round(100 * Math.random()), mac, pointName: 'test-measure'});
-}, 3 * 1000);
+setInterval(() => socket.emit('data', {
+    measurement: Math.round(100 * Math.random()),
+    id,
+    pointName: 'test-measure'
+}), 3 * 1000);
