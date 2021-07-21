@@ -4,7 +4,7 @@
   "description": "Client for Ichnaea",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --inspect=0.0.0.0:9230 index.js",
     "start": "node index.js"
   },
   "author": "Haris Razis",
