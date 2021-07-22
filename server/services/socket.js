@@ -54,7 +54,7 @@ module.exports = (server) => {
                     await User.findOneAndUpdate({id}, {socketID});
                 }
             } catch (e) {
-                console.log(`Client not found in database! => ${e}`);
+                console.log(e);
             }
         });
 
