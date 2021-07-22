@@ -29,8 +29,7 @@ module.exports = (server) => {
 
             try {
                 if (subscribe === 'clients') {
-                    client = await Athlete.findOne({id});
-                    client.trainer = await User.findOne({_id: client._trainer});
+                    client = await Athlete.findOne({id}).populate('_trainer');
 
                     if (client) {
                         await Athlete.findOneAndUpdate({id}, {socketID});
