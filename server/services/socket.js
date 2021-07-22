@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const {saveAthlete} = require('../actions/mongo_actions');
 const {iWrite} = require('../actions/influx_actions');
+const {pub, sub} = require('../connections/redis_conn');
 const Athlete = mongoose.model('Athlete');
 const User = mongoose.model('User');
 
@@ -31,6 +32,13 @@ module.exports = (server) => {
                 if (subscribe === 'clients') {
                     client = await Athlete.findOne({id}).populate('_trainer');
 
+                    sub.on('message', async (channel, msg) => {
+                        if (String(client._trainer._id) === JSON.parse(msg))
+                            client._trainer = await User.findOne({_id: client._trainer});
+                    });
+
+                    sub.subscribe('updateSocketID');
+
                     if (client) {
                         await Athlete.findOneAndUpdate({id}, {socketID});
                         return;
@@ -40,6 +48,9 @@ module.exports = (server) => {
 
                 } else if (subscribe === 'dashboard') {
                     client = await User.findOne({id});
+
+                    pub.publish('updateSocketID', JSON.stringify(client._id));
+
                     await User.findOneAndUpdate({id}, {socketID});
                 }
             } catch (e) {
@@ -51,9 +62,7 @@ module.exports = (server) => {
             const {measurement, pointName, id} = data;
 
             if (client?._trainer) {
-                // TODO Ack is not supported in broadcast mode, so we check for the right socketID everytime.
-                client.trainer = await User.findOne({_id: client._trainer});
-                io.volatile.to(client.trainer.socketID).emit('console', {measurement, pointName});
+                io.volatile.to(client._trainer.socketID).emit('console', {measurement, pointName});
                 iWrite(pointName, id, measurement);
             }
         });
