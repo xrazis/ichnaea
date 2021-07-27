@@ -33,7 +33,7 @@ module.exports = (server) => {
                     client = await Athlete.findOne({id}).populate('_trainer');
 
                     sub.on('message', async (channel, msg) => {
-                        if (String(client._trainer._id) === JSON.parse(msg))
+                        if (String(client?._trainer?._id) === JSON.parse(msg))
                             client._trainer = await User.findOne({_id: client._trainer});
                     });
 
