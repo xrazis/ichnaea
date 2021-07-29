@@ -69,12 +69,12 @@ services:
       - frontend
     depends_on:
       - backend
-  test_client:
-    build: ./client
-    container_name: "test_client"
+  client_fake:
+    build: ./client_fake
+    container_name: "client_fake"
     volumes:
-      - ./client:/usr/src/app/client
-      - /usr/src/app/client/node_modules
+      - ./client_fake:/usr/src/app/client_fake
+      - /usr/src/app/client_fake/node_modules
     networks:
       - backend
     depends_on:
