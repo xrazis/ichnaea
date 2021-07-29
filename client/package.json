@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "getmac": "^5.17.0",
+    "johnny-five": "^2.1.0",
     "nodemon": "^2.0.12",
     "socket.io-client": "^3.0.4"
   }
