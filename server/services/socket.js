@@ -59,11 +59,9 @@ module.exports = (server) => {
         });
 
         socket.on('data', async data => {
-            const {measurement, pointName, id} = data;
-
             if (client?._trainer) {
-                io.volatile.to(client._trainer.socketID).emit('console', {measurement, pointName});
-                iWrite(pointName, id, measurement);
+                io.volatile.to(client._trainer.socketID).emit('console', data);
+                iWrite(data);
             }
         });
     });
