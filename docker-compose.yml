@@ -69,16 +69,6 @@ services:
       - frontend
     depends_on:
       - backend
-  client_fake:
-    build: ./client_fake
-    container_name: "client_fake"
-    volumes:
-      - ./client_fake:/usr/src/app/client_fake
-      - /usr/src/app/client_fake/node_modules
-    networks:
-      - backend
-    depends_on:
-      - backend
 networks:
   backend:
   frontend:
