@@ -69,6 +69,17 @@ services:
       - frontend
     depends_on:
       - backend
+  client:
+    build: ./client
+    container_name: "client"
+    volumes:
+      - ./client:/usr/src/app/client
+      - /usr/src/app/client/node_modules
+      - /run/udev:/run/udev:ro
+      - /dev:/dev
+    network_mode: "host"
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0"
 networks:
   backend:
   frontend:
