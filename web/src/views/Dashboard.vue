@@ -62,7 +62,7 @@ export default class Dashboard extends Vue {
 @media (min-width: 572px) {
   .content {
     position: relative;
-    margin-top: 7vh;
+    margin-top: 7rem;
     margin-left: 17rem;
     margin-right: 2rem;
   }

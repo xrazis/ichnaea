@@ -69,7 +69,7 @@ export default class Navbar extends Vue {
 
 <style scoped>
 .navbar {
-  height: 5vh;
+  height: 5rem;
 }
 
 .sidebar-icon {

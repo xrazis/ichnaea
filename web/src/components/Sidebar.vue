@@ -113,7 +113,7 @@ export default class Sidebar extends Vue {
 <style scoped>
 aside {
   position: fixed;
-  top: 5vh;
+  top: 5rem;
   left: 0;
   width: 250px;
   height: calc(100% - 5vh);
@@ -126,7 +126,7 @@ aside {
     display: block;
     opacity: 0;
     left: 0;
-    top: 5vh;
+    top: 5rem;
     width: 0;
     height: calc(100% - 5vh);
     overflow-x: hidden;
