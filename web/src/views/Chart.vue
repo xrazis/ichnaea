@@ -11,7 +11,8 @@ export default class Chart extends Vue {
   private athlete = <AthleteInterface>{}
 
   mounted() {
-    this.athlete = this.$store.getters.athlete_current
+    this.$store.dispatch('athlete_getOne', this.$route.params.id)
+        .then((res: any) => this.athlete = res.data);
   }
 }
 </script>

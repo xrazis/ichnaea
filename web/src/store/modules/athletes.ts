@@ -15,17 +15,8 @@ export default class Athletes extends VuexModule {
     private athletes = [<AthleteInterface>{}];
     private err = <Error>{};
 
-    get athlete_current() {
-        return this.athlete;
-    }
-
     get athlete_err() {
         return this.err;
-    }
-
-    @Mutation
-    private api_athlete(athlete: AthleteInterface) {
-        this.athlete = athlete;
     }
 
     @Mutation
@@ -45,13 +36,24 @@ export default class Athletes extends VuexModule {
     }
 
     @Mutation
-    private athlete_addTrainer(trainerId: string) {
-        this.athlete._trainer = trainerId;
-    }
-
-    @Mutation
     private athlete_deleteTrainer() {
         delete this.athlete['_trainer'];
+    }
+
+    @Action
+    private athlete_getOne(id: string) {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'GET',
+                url: `/api/athletes/${id}`
+            })
+                .then((resp: AxiosResponse) => {
+                    resolve(resp);
+                })
+                .catch((err: Error) => {
+                    reject(err);
+                });
+        });
     }
 
     @Action
@@ -72,25 +74,19 @@ export default class Athletes extends VuexModule {
     }
 
     @Action
-    private athlete_update() {
+    private athlete_update(athlete: AthleteInterface) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
-                url: `/api/athletes/${this.athlete._id}`,
-                data: {...this.athlete}
+                url: `/api/athletes/${athlete._id}`,
+                data: {...athlete}
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('api_athlete', resp.data);
                     resolve(resp);
                 })
                 .catch((err: Error) => {
                     reject(err);
                 });
         });
-    }
-
-    @Action
-    private athlete_saveLocal(athlete: AthleteInterface) {
-        this.context.commit('api_athlete', athlete);
     }
 }

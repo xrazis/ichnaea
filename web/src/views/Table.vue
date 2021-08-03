@@ -36,10 +36,23 @@ import {AthleteData} from "@/store/modules/backend";
 export default class Table extends Vue {
   private athlete = <AthleteInterface>{};
   private mData = [<AthleteData>{}];
+  private id: string = '';
 
   mounted() {
-    this.athlete = this.$store.getters.athlete_current;
-    this.mData = this.$store.getters.server_liveData;
+    this.$store.dispatch('athlete_getOne', this.$route.params.id)
+        .then((res: any) => this.athlete = res.data);
+
+    this.$socket.client.on('console', this.displayData);
+  }
+
+  beforeUnmount() {
+    this.$socket.client.off('console', this.displayData);
+  }
+
+  displayData(params: AthleteData) {
+    if (this.mData.length > 10) this.mData.pop();
+
+    this.mData.unshift(params);
   }
 
   athlete_storedData() {

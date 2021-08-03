@@ -36,17 +36,17 @@
             <span>{{ athlete.id }}</span>
           </td>
           <td v-if="athlete.name">
-            <router-link :to="{ name: 'Table', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Table', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-table"></i>
         </span>
             </router-link>
-            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-chart-area"></i>
         </span>
             </router-link>
-            <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-warning has-text-white mr-1">
           <i class="fa fa-lg fa-user-edit"></i>
           </span>
@@ -106,7 +106,7 @@
             <span class="icon mr-1"><i class="fa fa-times"></i></span>
           </td>
           <td>
-            <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}" @click="athlete_save(athlete)">
+            <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-warning has-text-white mr-1">
           <i class="fa fa-lg fa-user-edit"></i>
         </span>
@@ -153,13 +153,11 @@ export default class Athletes extends Vue {
         .catch((err: any) => this.msg = err.response.data.errors.message || err.message || 'Something went wrong!');
   }
 
-  private athlete_save(athlete: AthleteInterface) {
-    this.$store.commit('api_athlete', athlete);
-  }
-
   private athlete_delete(index: number) {
-    this.$store.commit('athlete_deleteTrainer');
-    this.$store.dispatch('athlete_update')
+    const athlete = this.myAthletes[index];
+    delete athlete._trainer;
+
+    this.$store.dispatch('athlete_update', athlete)
         .then(() => {
           this.myAthletes.splice(index, 1);
           this.$router.go(0);

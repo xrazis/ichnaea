@@ -10,11 +10,9 @@
 <!--suppress JSUnusedGlobalSymbols -->
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {io} from 'socket.io-client'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Footer from '@/components/Footer.vue'
-import {AthleteData} from "@/store/modules/backend";
 
 @Options({
   components: {
@@ -25,35 +23,22 @@ import {AthleteData} from "@/store/modules/backend";
 })
 
 export default class Dashboard extends Vue {
-  private socket!: any;
+  connected = false;
 
-  created() {
-    this.io();
+  mounted() {
+    this.$socket.client.on('connect', this.changeConnStatus);
   }
 
   beforeUnmount() {
-    this.socket.close()
+    this.$socket.client.off('connect', this.changeConnStatus);
   }
 
-  private io() {
-    this.socket = io('/');
+  private changeConnStatus() {
+    this.connected = !this.connected;
+    const {_id} = this.$store.getters.user_current;
 
-    this.socket.on('connect', () => {
-      const {_id} = this.$store.getters.user_current;
-
-      this.$store.commit("socket_connection", true);
-      this.socket.emit('subscribe', JSON.stringify({subscribe: 'dashboard', _id}));
-    });
-
-    this.socket.on('disconnect', (reason: string) => {
-      this.$store.commit("socket_connection", false);
-
-      if (reason === 'io server disconnect') this.socket.connect();
-    });
-
-    this.socket.on('console', (data: AthleteData) => {
-      this.$store.dispatch('server_saveLiveData', data);
-    });
+    this.$store.commit("socket_connection", this.connected);
+    this.$socket.client.emit('subscribe', JSON.stringify({subscribe: 'dashboard', _id}));
   }
 }
 </script>

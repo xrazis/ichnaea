@@ -2,7 +2,7 @@ const {Joi} = require('celebrate');
 
 const guid = {
     params: {
-        userId: Joi.string().guid().required(),
+        id: Joi.string().required(),
     }
 };
 

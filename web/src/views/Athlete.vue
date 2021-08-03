@@ -134,8 +134,11 @@ export default class Athlete extends Vue {
   private clientID = '';
 
   mounted() {
-    this.athlete = this.$store.getters.athlete_current;
+    this.$store.dispatch('athlete_getOne', this.$route.params.id)
+        .then((res: any) => this.athlete = res.data).then(() => this.checkTrainer());
+  }
 
+  private checkTrainer() {
     if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.user_current._id)) {
       this.$store.dispatch('user_getOne', this.athlete._trainer)
           .then((res: any) => this.trainer = res.data)
@@ -156,21 +159,19 @@ export default class Athlete extends Vue {
       this.msgError = 'Athlete ID does not match with current athlete!';
       return;
     } else {
-      console.log('added')
-      this.$store.commit('athlete_addTrainer', this.$store.getters.user_current._id);
-      this.athlete_update();
+      this.athlete._trainer = this.$store.getters.user_current._id;
+      this.athlete_update(this.athlete);
     }
   }
 
-  private athlete_update() {
-    this.$store.dispatch('athlete_update')
+  private athlete_update(athlete: AthleteInterface) {
+    this.$store.dispatch('athlete_update', athlete)
         .then((res: any) => {
           this.msgSuccess = 'Athlete updated';
           this.athlete = res.data;
           this.$router.go(0);
         })
-        .catch(() => this.msgError = this.$store.getters.athlete_err.response.data.errors.message ||
-            'Something went wrong!');
+        .catch(() => this.msgError = 'Something went wrong!');
   }
 }
 </script>
