@@ -1,5 +1,5 @@
 <template>
-  <!--  <h1 class="title is-2">/athletes/{{ athlete.name }}/chart</h1>-->
+  <h1 v-if="athlete" class="title is-2">/athletes/{{ athlete.name }}/chart</h1>
 
   <Renderer ref="renderer" antialias :orbit-ctrl="{ enableDamping: true, target }" resize shadow>
     <Camera :position="{ x: 100, y: 200, z: 300 }"/>
@@ -15,16 +15,15 @@
         <PhongMaterial color="#999999" :props="{ depthWrite: false }"/>
       </Plane>
 
-      <FbxModel src="/img/Samba-Dancing.fbx" @load="onLoad" @error="onError"/>
+      <FbxModel src="Samba-Dancing.fbx" @load="onLoad" @error="onError"/>
     </Scene>
   </Renderer>
 
 </template>
 
-<script lang="ts">
+<!--Only for this module the language is JS instead of TS.-->
+<script lang="js">
 import {defineComponent} from 'vue'
-import {AthleteInterface} from "@/store/modules/athletes";
-import {AthleteData} from "@/store/modules/backend";
 
 import {AnimationMixer, Clock, Fog, GridHelper, Vector3} from 'three';
 import {
@@ -38,7 +37,6 @@ import {
   Plane,
   Scene,
 } from 'troisjs';
-
 
 export default defineComponent({
   components: {
@@ -55,9 +53,12 @@ export default defineComponent({
   data() {
     return {
       target: new Vector3(0, 100, 0),
+      athlete: null,
     };
   },
   mounted() {
+    this.$store.dispatch('athlete_getOne', this.$route.params.id).then((res) => this.athlete = res.data);
+
     const scene = this.$refs.scene.scene;
     scene.fog = new Fog(0xa0a0a0, 200, 1000);
     const grid = new GridHelper(2000, 20, 0x000000, 0x000000);
@@ -66,11 +67,11 @@ export default defineComponent({
     this.$refs.scene.add(grid);
   },
   methods: {
-    onLoad(object: any) {
+    onLoad(object) {
       this.mixer = new AnimationMixer(object);
       const action = this.mixer.clipAction(object.animations[0]);
       action.play();
-      object.traverse(function (child: any) {
+      object.traverse(function (child) {
         if (child.isMesh) {
           child.castShadow = true;
           child.receiveShadow = true;
@@ -82,7 +83,7 @@ export default defineComponent({
     updateMixer() {
       this.mixer.update(this.clock.getDelta());
     },
-    onError(error: any) {
+    onError(error) {
       console.log('we got an error!', error)
     }
   },
