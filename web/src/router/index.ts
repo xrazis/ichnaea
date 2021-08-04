@@ -58,6 +58,11 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/Chart.vue')
             },
             {
+                path: 'athletes/:id/model',
+                name: 'Model',
+                component: () => import('../views/Model.vue')
+            },
+            {
                 path: 'guide',
                 name: 'Guide',
                 component: () => import('../views/DashboardHome.vue')
