@@ -52,8 +52,8 @@ create the following services:
 - A **Grafana** instance is attached to the influx cluster.
 - **Backend** is being handled by a Node.js server that is responsible for data and user storage, client and SPA socket
   connection, and exposing an API.
-- The **Frontend** is a SPA built on Vue with typescript.
-- And finally, a **Test client** that is nothing more than a fake aggregator of data, for testing purposes.
+- The **Frontend** is a SPA built on Vue with Typescript.
+- And finally, a **Client** that is a Node.js app that collects and sends the data to the backend.
 
 # Server endpoints
 
@@ -61,19 +61,19 @@ The following routes are exposed by the backend.
 
 ## Authentication
 
-##### POST `/auth/login`
+###### POST `/auth/login`
 
 *If the user exists in the DB, a new session is initiated.*
 
-##### POST `/auth/register`
+###### POST `/auth/register`
 
 *Registers a user with the given params and initiates a new session.*
 
-##### POST `/auth/logout`
+###### POST `/auth/logout`
 
 *Logouts current user.*
 
-##### GET `/auth/current_user`
+###### GET `/auth/current_user`
 
 *Returns current user.*
 
@@ -81,35 +81,35 @@ The following routes are exposed by the backend.
 
 ### User
 
-##### PUT `/api/user/{user._id}`
+###### PUT `/api/user/{user._id}`
 
 *Updates a user matching the given _id.*
 
 ### Athletes
 
-##### GET `/api/athletes`
+###### GET `/api/athletes`
 
 *Returns an array of athletes objects.*
 
-##### GET `/api/athlete/{user._id}`
+###### GET `/api/athlete/{user._id}`
 
 *Returns an athlete object for a given _id.*
 
-##### PUT `/api/athlete/{user._id}`
+###### PUT `/api/athlete/{user._id}`
 
 *Updates an athlete matching the given _id.*
 
-##### DELETE `/api/athlete/{user._id}`
+###### DELETE `/api/athlete/{user._id}`
 
 *Deletes an athlete matching the given _id.*
 
 ### Data
 
-##### GET `/api/data`
+###### GET `/api/data`
 
 *Returns all data in the specified time range.*
 
-##### GET `/api/data/{user._id}`
+###### GET `/api/data/{user._id}`
 
 *Returns all data for a given user _id, in the specified time range.*
 
@@ -125,16 +125,17 @@ _First, make sure you have the docker service and docker-compose installed, then
 
 In a few moments, Ichnaea will be up and running! Visit `localhost:8080` to view the web dashboard.
 
+I develop on Jetbrains products, so the run scripts should be available once you launch Webstorm.
+
 # Notes
 
 - Upon running the `docker-compose` file, and observing the backend output you will notice that a connection cannot be
-  established with influxdb. That is due to the `depends_on` option, as described in
+  established with influxdb. Don't confuse that with the `depends_on` option, as described in
   the [docker docs](‘https://docs.docker.com/compose/startup-order/‘) :
   `However, for startup Compose does not wait until a container is “ready” (whatever that means for your particular application) - only until it’s running.`
-  So in sort, waiting a few seconds for all services to become available will solve this, and data will be written to
-  influx.
-  
-  
-- Upon installing the `/web` packages, you will get a warning (and quite possibly an error) with some dependency's 
-  version mismatch. It stems from the package `vuex-class`, and it can be safely ignored. I really do hope it gets 
+  TL;DR waiting a few seconds for all services to become available will solve this, and data will be written to influx.
+
+
+- Upon installing the `/web` packages, you will get a warning (and quite possibly an error) with some dependency's
+  version mismatch. It stems from the package `vuex-class`, and it can be safely ignored. I really do hope it gets
   updated in the near future, but for now ichnaea works fine.
