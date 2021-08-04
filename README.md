@@ -134,8 +134,3 @@ I develop on Jetbrains products, so the run scripts should be available once you
   the [docker docs](‘https://docs.docker.com/compose/startup-order/‘) :
   `However, for startup Compose does not wait until a container is “ready” (whatever that means for your particular application) - only until it’s running.`
   TL;DR waiting a few seconds for all services to become available will solve this, and data will be written to influx.
-
-
-- Upon installing the `/web` packages, you will get a warning (and quite possibly an error) with some dependency's
-  version mismatch. It stems from the package `vuex-class`, and it can be safely ignored. I really do hope it gets
-  updated in the near future, but for now ichnaea works fine.
