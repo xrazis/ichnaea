@@ -29,39 +29,31 @@
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 import {AthleteInterface} from "@/store/modules/athletes";
 import {AthleteData} from "@/store/modules/backend";
 
-export default class Table extends Vue {
-  private athlete = <AthleteInterface>{};
-  private mData = [<AthleteData>{}];
-  private id: string = '';
-
+export default defineComponent({
+  data() {
+    return {
+      athlete: <AthleteInterface>{},
+      mData: [<AthleteData>{}],
+      id: String,
+    }
+  },
   mounted() {
-    this.$store.dispatch('athlete_getOne', this.$route.params.id)
-        .then((res: any) => this.athlete = res.data);
-
+    this.$store.dispatch('athlete_getOne', this.$route.params.id).then((res: any) => this.athlete = res.data);
     this.$socket.client.on('console', this.displayData);
-  }
-
+  },
   beforeUnmount() {
     this.$socket.client.off('console', this.displayData);
-  }
+  },
+  methods: {
+    displayData(params: AthleteData) {
+      if (this.mData.length > 10) this.mData.pop();
 
-  displayData(params: AthleteData) {
-    if (this.mData.length > 10) this.mData.pop();
-
-    this.mData.unshift(params);
+      this.mData.unshift(params);
+    },
   }
-
-  athlete_storedData() {
-    this.$store.dispatch('server_getOne', this.athlete._id)
-        .then((res: any) => console.log(res));
-  }
-}
+});
 </script>
-
-<style scoped>
-
-</style>

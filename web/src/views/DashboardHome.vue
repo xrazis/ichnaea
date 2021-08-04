@@ -76,17 +76,19 @@
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 import {UserInterface} from "@/store/modules/user";
 
-export default class DashboardHome extends Vue {
-  private user = <UserInterface>{};
-  private date: string = '';
-
+export default defineComponent({
+  data() {
+    return {
+      user: <UserInterface>{},
+      date: '',
+    }
+  },
   created() {
     this.user = this.$store.getters.user_current;
     this.date = new Date(this.user.lastLogin).toLocaleString();
-  }
-
-}
+  },
+});
 </script>

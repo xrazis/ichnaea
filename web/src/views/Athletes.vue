@@ -125,26 +125,20 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {defineComponent} from 'vue'
 import {AthleteInterface} from "@/store/modules/athletes";
 import {UserInterface} from "@/store/modules/user";
 
-export default class Athletes extends Vue {
-  private myAthletes = [<AthleteInterface>{}];
-  private athletes: Array<AthleteInterface> = [];
-  private user = <UserInterface>{};
-  private searchTerm = '';
-  private msg = '';
-
-  private get filteredAthletes(): Array<AthleteInterface> {
-    const fAthletes = [];
-    for (const athlete of this.athletes) {
-      if (athlete.name.toLowerCase().includes(this.searchTerm)) fAthletes.push(athlete)
+export default defineComponent({
+  data() {
+    return {
+      myAthletes: [<AthleteInterface>{}],
+      athletes: [<AthleteInterface>{}],
+      user: <UserInterface>{},
+      searchTerm: '',
+      msg: '',
     }
-
-    return fAthletes;
-  }
-
+  },
   mounted() {
     this.$store.dispatch('athlete_getAll')
         .then((res: any) => {
@@ -156,22 +150,32 @@ export default class Athletes extends Vue {
           }
         })
         .catch((err: any) => this.msg = err.response.data.errors.message || err.message || 'Something went wrong!');
+  },
+  computed: {
+    filteredAthletes(): Array<AthleteInterface> {
+      const fAthletes = [];
+
+      if (this.athletes.length) {
+        return this.athletes
+      }
+      for (const athlete of this.athletes) {
+        if (athlete.name.toLowerCase().includes(this.searchTerm)) fAthletes.push(athlete)
+      }
+
+      return fAthletes;
+    },
+  },
+  methods: {
+    athlete_delete(index: number) {
+      const athlete = this.myAthletes[index];
+      delete athlete._trainer;
+
+      this.$store.dispatch('athlete_update', athlete)
+          .then(() => {
+            this.myAthletes.splice(index, 1);
+            this.$router.go(0);
+          });
+    },
   }
-
-  private athlete_delete(index: number) {
-    const athlete = this.myAthletes[index];
-    delete athlete._trainer;
-
-    this.$store.dispatch('athlete_update', athlete)
-        .then(() => {
-          this.myAthletes.splice(index, 1);
-          this.$router.go(0);
-        });
-  }
-
-}
+});
 </script>
-
-<style scoped>
-
-</style>

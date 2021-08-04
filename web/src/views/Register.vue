@@ -74,36 +74,39 @@
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {defineComponent} from "vue";
 
-export default class Register extends Vue {
-  private msg = '';
-  private username = '';
-  private email = '';
-  private password = '';
-  private passwordRepeat = '';
-
+export default defineComponent({
+  data() {
+    return {
+      msg: '',
+      username: '',
+      email: '',
+      password: '',
+      passwordRepeat: '',
+    }
+  },
   mounted() {
     this.currentSession();
-  }
-
-  private currentSession() {
-    this.$store.dispatch('user_currentSession')
-        .then((res: any) => this.$router.push({name: 'DashboardHome', params: {username: res.data.username}}))
-        .catch(() => {
-        });
-  }
-
-  private user_register() {
-    if (this.password === this.passwordRepeat) {
-      this.$store.dispatch('user_register', {username: this.username, email: this.email, password: this.password})
-          .then(() => this.$router.push({name: 'DashboardHome', params: {username: this.username}}))
+  },
+  methods: {
+    currentSession() {
+      this.$store.dispatch('user_currentSession')
+          .then((res: any) => this.$router.push({name: 'DashboardHome', params: {username: res.data.username}}))
           .catch(() => {
-            this.msg = this.$store.getters.user_err.response.data.errors.message || 'Something went wrong!'
           });
-    } else {
-      this.msg = 'Passwords do not match!'
+    },
+    user_register() {
+      if (this.password === this.passwordRepeat) {
+        this.$store.dispatch('user_register', {username: this.username, email: this.email, password: this.password})
+            .then(() => this.$router.push({name: 'DashboardHome', params: {username: this.username}}))
+            .catch(() => {
+              this.msg = this.$store.getters.user_err.response.data.errors.message || 'Something went wrong!'
+            });
+      } else {
+        this.msg = 'Passwords do not match!'
+      }
     }
   }
-}
+});
 </script>

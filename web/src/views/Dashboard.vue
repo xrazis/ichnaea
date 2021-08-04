@@ -9,38 +9,38 @@
 
 <!--suppress JSUnusedGlobalSymbols -->
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Footer from '@/components/Footer.vue'
 
-@Options({
+export default defineComponent({
   components: {
     Navbar,
     Sidebar,
     Footer
-  }
-})
-
-export default class Dashboard extends Vue {
-  connected = false;
-
+  },
+  data() {
+    return {
+      connected: false,
+    }
+  },
   mounted() {
     this.$socket.client.on('connect', this.changeConnStatus);
-  }
-
+  },
   beforeUnmount() {
     this.$socket.client.off('connect', this.changeConnStatus);
-  }
+  },
+  methods: {
+    changeConnStatus() {
+      this.connected = !this.connected;
+      const {_id} = this.$store.getters.user_current;
 
-  private changeConnStatus() {
-    this.connected = !this.connected;
-    const {_id} = this.$store.getters.user_current;
-
-    this.$store.commit("socket_connection", this.connected);
-    this.$socket.client.emit('subscribe', JSON.stringify({subscribe: 'dashboard', _id}));
+      this.$store.commit("socket_connection", this.connected);
+      this.$socket.client.emit('subscribe', JSON.stringify({subscribe: 'dashboard', _id}));
+    },
   }
-}
+});
 </script>
 
 <style scoped>

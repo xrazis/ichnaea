@@ -49,22 +49,26 @@
   </nav>
 </template>
 <script lang="ts">
-import {Vue} from "vue-class-component";
 import {UserInterface} from "@/store/modules/user";
+import {defineComponent} from "vue";
 
-export default class Navbar extends Vue {
-  private user = <UserInterface>{};
-
+export default defineComponent({
+  data() {
+    return {
+      user: <UserInterface>{},
+    }
+  },
   created() {
     this.user = this.$store.getters.user_current
-  }
-
-  private logout() {
-    this.$store.dispatch('logout')
-        .then(() => this.$router.push('/'))
-        .catch(() => this.$router.push('/'));
-  }
-}
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+          .then(() => this.$router.push('/'))
+          .catch(() => this.$router.push('/'));
+    }
+  },
+});
 </script>
 
 <style scoped>

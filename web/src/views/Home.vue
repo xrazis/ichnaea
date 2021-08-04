@@ -43,15 +43,12 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 import ShapeDividerTop from '@/components/ShapeDividerTop.vue';
 
-@Options({
+export default defineComponent({
   components: {
     ShapeDividerTop
   }
-})
-
-export default class Home extends Vue {
-}
+});
 </script>

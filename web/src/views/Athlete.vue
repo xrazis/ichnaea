@@ -120,62 +120,61 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {defineComponent} from 'vue'
 import {AthleteInterface} from "@/store/modules/athletes";
 import {UserInterface} from "@/store/modules/user";
 
-export default class Athlete extends Vue {
-  private athlete = <AthleteInterface>{};
-  private trainer = <UserInterface>{};
-  private userIsTrainer = false;
-  private trainerLogin = '';
-  private msgError = '';
-  private msgSuccess = '';
-  private clientID = '';
-
+export default defineComponent({
+  data() {
+    return {
+      athlete: <AthleteInterface>{},
+      trainer: <UserInterface>{},
+      userIsTrainer: false,
+      trainerLogin: '',
+      msgError: '',
+      msgSuccess: '',
+      clientID: '',
+    }
+  },
   mounted() {
     this.$store.dispatch('athlete_getOne', this.$route.params.id)
-        .then((res: any) => this.athlete = res.data).then(() => this.checkTrainer());
-  }
+        .then((res: any) => this.athlete = res.data)
+        .then(() => this.checkTrainer());
+  },
+  methods: {
+    checkTrainer() {
+      if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.user_current._id)) {
+        this.$store.dispatch('user_getOne', this.athlete._trainer)
+            .then((res: any) => this.trainer = res.data)
+            .catch((err: any) => this.msgError = err.response.data.errors.message || err.message ||
+                'Something went wrong!');
+      } else if (this.athlete._trainer === this.$store.getters.user_current._id) {
+        this.trainer = this.$store.getters.user_current;
+        this.userIsTrainer = true;
+      }
 
-  private checkTrainer() {
-    if (this.athlete._trainer && (this.athlete._trainer != this.$store.getters.user_current._id)) {
-      this.$store.dispatch('user_getOne', this.athlete._trainer)
-          .then((res: any) => this.trainer = res.data)
-          .catch((err: any) => this.msgError = err.response.data.errors.message || err.message ||
-              'Something went wrong!');
-    } else if (this.athlete._trainer === this.$store.getters.user_current._id) {
-      this.trainer = this.$store.getters.user_current;
-      this.userIsTrainer = true;
-    }
-
-    if (this.trainer) {
-      this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString();
-    }
+      if (this.trainer) {
+        this.trainerLogin = new Date(this.trainer.lastLogin).toLocaleString();
+      }
+    },
+    athlete_adopt() {
+      if (this.clientID != this.athlete.id) {
+        this.msgError = 'Athlete ID does not match with current athlete!';
+        return;
+      } else {
+        this.athlete._trainer = this.$store.getters.user_current._id;
+        this.athlete_update(this.athlete);
+      }
+    },
+    athlete_update(athlete: AthleteInterface) {
+      this.$store.dispatch('athlete_update', athlete)
+          .then((res: any) => {
+            this.msgSuccess = 'Athlete updated';
+            this.athlete = res.data;
+            this.$router.go(0);
+          })
+          .catch(() => this.msgError = 'Something went wrong!');
+    },
   }
-
-  private athlete_adopt() {
-    if (this.clientID != this.athlete.id) {
-      this.msgError = 'Athlete ID does not match with current athlete!';
-      return;
-    } else {
-      this.athlete._trainer = this.$store.getters.user_current._id;
-      this.athlete_update(this.athlete);
-    }
-  }
-
-  private athlete_update(athlete: AthleteInterface) {
-    this.$store.dispatch('athlete_update', athlete)
-        .then((res: any) => {
-          this.msgSuccess = 'Athlete updated';
-          this.athlete = res.data;
-          this.$router.go(0);
-        })
-        .catch(() => this.msgError = 'Something went wrong!');
-  }
-}
+});
 </script>
-
-<style scoped>
-
-</style>

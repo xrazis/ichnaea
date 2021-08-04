@@ -83,38 +83,38 @@
 </template>
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
+import {defineComponent} from 'vue'
 import {UserInterface} from "@/store/modules/user";
 
-export default class Profile extends Vue {
-  private user = <UserInterface>{};
-  private date = '';
-  private msgSuccess = '';
-  private msgError = '';
-
+export default defineComponent({
+  data() {
+    return {
+      user: <UserInterface>{},
+      date: '',
+      msgSuccess: '',
+      msgError: '',
+    }
+  },
   mounted() {
     this.user = this.$store.getters.user_current;
     this.date = new Date(this.user.registered).toLocaleString();
-  }
+  },
+  methods: {
+    user_update() {
+      if (this.user.newPassword != this.user.repeatNewPassword) {
+        this.msgError = 'Passwords do not match!';
+        return;
+      }
 
-  private user_update() {
-    if (this.user.newPassword != this.user.repeatNewPassword) {
-      this.msgError = 'Passwords do not match!';
-      return;
+      this.$store.dispatch('user_update')
+          .then(() => {
+            this.msgError = '';
+            this.msgSuccess = 'User updated!';
+          })
+          .catch(() => this.msgError = this.$store.getters.user_err.response.data.errors.message ||
+              'Something went wrong!');
     }
-
-    this.$store.dispatch('user_update')
-        .then(() => {
-          this.msgError = '';
-          this.msgSuccess = 'User updated!';
-        })
-        .catch(() => this.msgError = this.$store.getters.user_err.response.data.errors.message ||
-            'Something went wrong!');
   }
-}
+});
 
 </script>
-
-<style scoped>
-
-</style>

@@ -54,30 +54,33 @@
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 
-export default class Login extends Vue {
-  private msg = '';
-  private username = '';
-  private password = '';
-
+export default defineComponent({
+  data() {
+    return {
+      msg: '',
+      username: '',
+      password: '',
+    }
+  },
   mounted() {
     this.currentSession();
+  },
+  methods: {
+    currentSession() {
+      this.$store.dispatch('user_currentSession')
+          .then((res: any) => this.$router.push({name: 'DashboardHome', params: {username: res.data.username}}))
+          .catch(() => {
+          });
+    },
+    user_login() {
+      this.$store.dispatch('user_login', {username: this.username, password: this.password})
+          .then(() => this.$router.push({name: 'DashboardHome', params: {username: this.username}}))
+          .catch(() => {
+            this.msg = this.$store.getters.user_err.response.data.errors.message || 'Something went wrong!'
+          });
+    }
   }
-
-  private currentSession() {
-    this.$store.dispatch('user_currentSession')
-        .then((res: any) => this.$router.push({name: 'DashboardHome', params: {username: res.data.username}}))
-        .catch(() => {
-        });
-  }
-
-  private user_login() {
-    this.$store.dispatch('user_login', {username: this.username, password: this.password})
-        .then(() => this.$router.push({name: 'DashboardHome', params: {username: this.username}}))
-        .catch(() => {
-          this.msg = this.$store.getters.user_err.response.data.errors.message || 'Something went wrong!'
-        });
-  }
-}
+});
 </script>

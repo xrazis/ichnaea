@@ -4,19 +4,18 @@
 </template>
 
 <script lang="ts">
-import {Vue} from 'vue-class-component';
+import {defineComponent} from 'vue'
 import {AthleteInterface} from "@/store/modules/athletes";
 
-export default class Chart extends Vue {
-  private athlete = <AthleteInterface>{}
-
+export default defineComponent({
+  data() {
+    return {
+      athlete: <AthleteInterface>{},
+    }
+  },
   mounted() {
     this.$store.dispatch('athlete_getOne', this.$route.params.id)
         .then((res: any) => this.athlete = res.data);
   }
-}
+});
 </script>
-
-<style scoped>
-
-</style>
