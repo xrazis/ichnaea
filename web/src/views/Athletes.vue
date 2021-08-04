@@ -46,6 +46,11 @@
           <i class="fa fa-lg fa-chart-area"></i>
         </span>
             </router-link>
+            <router-link :to="{ name: 'Model', params: { id: athlete._id }}">
+          <span class="icon is-medium has-background-primary has-text-white mr-1">
+          <i class="fa fa-lg fa-male"></i>
+        </span>
+            </router-link>
             <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}">
           <span class="icon is-medium has-background-warning has-text-white mr-1">
           <i class="fa fa-lg fa-user-edit"></i>
