@@ -7,6 +7,7 @@ iWrite = (data) => {
 
     const tempPoint = new Point(pointName)
         .tag('client', uuid)
+        .tag('sensor', 'thermometer')
         .floatField('temperature', temperature);
 
     const accPoint = new Point(pointName)
