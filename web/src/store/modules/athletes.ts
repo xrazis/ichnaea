@@ -1,5 +1,6 @@
-import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import axios, {AxiosResponse} from "axios";
+import {ActionTree} from "vuex";
+import {rootState} from "@/store";
 
 export interface AthleteInterface {
     _id: string,
@@ -9,39 +10,42 @@ export interface AthleteInterface {
     _trainer: string | undefined
 }
 
-@Module
-export default class Athletes extends VuexModule {
-    private athlete = <AthleteInterface>{};
-    private athletes = [<AthleteInterface>{}];
-    private err = <Error>{};
+export interface athleteState {
+    athlete: AthleteInterface,
+    athletes: [AthleteInterface],
+    err: Error,
+}
 
-    get athlete_err() {
-        return this.err;
+const state = () => ({
+    athlete: <AthleteInterface>{},
+    athletes: [<AthleteInterface>{}],
+    err: <Error>{},
+});
+
+const getters = {
+    athlete_err: (state: athleteState) => {
+        return state.err;
+    },
+}
+
+const mutations = {
+    api_athletes(state: athleteState, athletes: [AthleteInterface]) {
+        state.athletes = athletes;
+    },
+    athletes_logout(state: athleteState) {
+        state.athlete = <AthleteInterface>{};
+        state.athletes = [<AthleteInterface>{}];
+    },
+    update_err(state: athleteState, err: Error) {
+        state.err = err;
+    },
+    athlete_deleteTrainer(state: athleteState) {
+        delete state.athlete['_trainer'];
     }
+}
 
-    @Mutation
-    private api_athletes(athletes: [AthleteInterface]) {
-        this.athletes = athletes;
-    }
-
-    @Mutation
-    private athletes_logout() {
-        this.athlete = <AthleteInterface>{};
-        this.athletes = [<AthleteInterface>{}];
-    }
-
-    @Mutation
-    private update_err(err: Error) {
-        this.err = err;
-    }
-
-    @Mutation
-    private athlete_deleteTrainer() {
-        delete this.athlete['_trainer'];
-    }
-
-    @Action
-    private athlete_getOne(id: string) {
+const actions: ActionTree<athleteState, rootState> = {
+    athlete_getOne({}, id: string) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
@@ -54,27 +58,23 @@ export default class Athletes extends VuexModule {
                     reject(err);
                 });
         });
-    }
-
-    @Action
-    private athlete_getAll() {
+    },
+    athlete_getAll({commit}) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
                 url: '/api/athletes'
             })
                 .then((resp: AxiosResponse) => {
-                    this.context.commit('api_athletes', resp.data);
+                    commit('api_athletes', resp.data);
                     resolve(resp);
                 })
                 .catch((err: Error) => {
                     reject(err);
                 });
         });
-    }
-
-    @Action
-    private athlete_update(athlete: AthleteInterface) {
+    },
+    athlete_update({}, athlete: AthleteInterface) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'PUT',
@@ -88,5 +88,12 @@ export default class Athletes extends VuexModule {
                     reject(err);
                 });
         });
-    }
+    },
+}
+
+export default {
+    state,
+    getters,
+    actions,
+    mutations,
 }

@@ -1,26 +1,34 @@
-import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import axios, {AxiosResponse} from "axios";
+import {ActionTree} from "vuex";
+import {rootState} from "@/store";
 
 export interface AthleteData {
     measurement: Date,
     pointName: string,
 }
 
-@Module
-export default class Backend extends VuexModule {
-    private serverStatus = false;
+export interface backendState {
+    serverStatus: boolean,
+}
 
-    get server_status() {
-        return this.serverStatus;
+const state = () => ({
+    serverStatus: false,
+});
+
+const getters = {
+    server_status(state: backendState) {
+        return state.serverStatus;
     }
+}
 
-    @Mutation
-    private socket_connection(status: boolean) {
-        this.serverStatus = status;
+const mutations = {
+    socket_connection(state: backendState, status: boolean) {
+        state.serverStatus = status;
     }
+}
 
-    @Action
-    private server_getAll() {
+const actions: ActionTree<backendState, rootState> = {
+    server_getAll() {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
@@ -33,10 +41,8 @@ export default class Backend extends VuexModule {
                     reject(err);
                 });
         });
-    }
-
-    @Action
-    private server_getOne(id: string) {
+    },
+    server_getOne({}, id: string) {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
@@ -50,5 +56,11 @@ export default class Backend extends VuexModule {
                 });
         });
     }
+}
 
+export default {
+    state,
+    getters,
+    actions,
+    mutations,
 }

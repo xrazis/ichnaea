@@ -1,10 +1,14 @@
-import {createStore} from 'vuex'
+import {createStore} from 'vuex';
+import axios, {AxiosResponse} from "axios";
 import createPersistedState from "vuex-persistedstate";
 
 import user from './modules/user'
 import backend from './modules/backend'
-import athletes from './modules/athletes'
-import axios, {AxiosResponse} from "axios";
+import athletes, {athleteState} from './modules/athletes'
+
+export interface rootState {
+    athleteState: athleteState,
+}
 
 export default createStore({
     modules: {
