@@ -48,10 +48,11 @@ board.on('ready', () => {
         freq: 100
     });
 
-    // IMU Composition
+    // IMU  MPU6050 Composition
+
+    // Accelerator
 
     /*
-     Accelerator
      id	            A user definable id value. Defaults to a generated uid.
      zeroV	        The current zeroV value (or values). May be different from initial values if auto-calibrated.
      pins	        The pins defined for X, Y, and Z.
@@ -65,8 +66,9 @@ board.on('ready', () => {
      orientation	The orientation of the device (-3, -2, -1, 1, 2, 3).
     */
 
+    // GYRO
+
     /*
-     GYRO
      id	            A user definable id value. Defaults to a generated uid.
      pins	        The pins defined for X, Y, and Z.
      isCalibrated	The calibration state of the device.
@@ -78,7 +80,6 @@ board.on('ready', () => {
      y	            Value of y axis.
      z	            Value of z axis.
     */
-
 
     imu.on('change', () => {
         socket.volatile.emit('data', {
