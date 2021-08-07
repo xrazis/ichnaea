@@ -15,6 +15,7 @@
         - [User](#user)
         - [Athletes](#athletes)
         - [Data](#data)
+- [Client](#client)
 - [Run](#run)
 - [Notes](#notes)
 
@@ -41,19 +42,19 @@ to keep building on it as I explore my interests on the web front.
 
 # Architecture
 
-To begin, deployment is handled by docker and docker-compose. Abstracting the configuration to a handy `.yaml` file,
-while keeping the dev environment the same across machines makes the deployment a breeze. Running the project will
+To begin with, deployment is handled by docker and docker-compose. Abstracting the configuration to a handy `.yaml`
+file, while keeping the dev environment the same across machines makes deployment a breeze. Running the project will
 create the following services:
 
-- There are three **Databases**, each for its distinct purpose:
-    - **Redis** is used for caching and pub-sub.
-    - **Influxdb** stores the bulk of data produced from the client devices (athletes).
-    - **MongoDB** is the user store.
-- A **Grafana** instance is attached to the influx cluster.
-- **Backend** is being handled by a Node.js server that is responsible for data and user storage, client and SPA socket
-  connection, and exposing an API.
-- The **Frontend** is a SPA built on Vue with Typescript.
-- And finally, a **Client** that is a Node.js app that collects and sends the data to the backend.
+- Three Databases, each for its distinct purpose:
+    - **Redis**, used for caching and pub-sub.
+    - **Influxdb**, used to store the bulk of data produced from the client devices (athletes).
+        - A **Grafana** instance, attached to the influx cluster.
+    - **MongoDB**, used as the user store.
+- **Backend**, a Node.js server that is responsible for data and user storage, client and SPA socket connection, and
+  exposing an API.
+- **Frontend**, an SPA built on Vue with Typescript.
+- **Client**, a Node.js app that collects and sends the data to the backend.
 
 # Server endpoints
 
@@ -112,6 +113,22 @@ The following routes are exposed by the backend.
 ###### GET `/api/data/{user._id}`
 
 *Returns all data for a given user _id, in the specified time range.*
+
+# Client
+
+The client can either run on the host machine or on a _Raspberry Pi_ that acts like a getaway for the
+_Arduino_. You can use an _IMU_ connected to any compatible microcontroller with
+[Johnny-five](http://johnny-five.io/platform-support/), see [here](http://johnny-five.io/api/imu/) on how to connect it.
+
+The client does some basic calculations in the Johnny-five library, like pitch, roll, and yaw. The data is then streamed
+to the server and subsequently to the frontend. The frontend does the final calculations that are needed for the model
+visualization. This way we avoid making any 'heavy' computations on the client device, thus allowing for small and power
+efficient getaways like a _Pi Zero_. Implementation specific details can be found in the thesis itself.
+
+During the development process I used my host machine as a getaway, and an _Arduino UNO_ with an _Invesense MPU6050_.
+Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid soldering.
+Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the getaway, maybe a
+future improvement!
 
 # Run
 
