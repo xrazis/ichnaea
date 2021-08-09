@@ -56,11 +56,11 @@ board.on('ready', () => {
      id	            A user definable id value. Defaults to a generated uid.
      zeroV	        The current zeroV value (or values). May be different from initial values if auto-calibrated.
      pins	        The pins defined for X, Y, and Z.
-     pitch	        The pitch angle in degrees.
-     roll	        The roll angle in degrees.
-     x	            Value of x axis in G forces.
-     y	            Value of y axis in G forces.
-     z	            Value of z axis in G forces.
+     pitch	        The pitch angle (Y axis) in degrees.
+     roll	        The roll angle (X axis) in degrees.
+     x	            Value of x axis in G forces (m/s^2).
+     y	            Value of y axis in G forces (m/s^2).
+     z	            Value of z axis in G forces (m/s^2).
      acceleration	The magnitude of the acceleration in G forces.
      inclination	The incline of the device in degrees.
      orientation	The orientation of the device (-3, -2, -1, 1, 2, 3).
@@ -72,10 +72,10 @@ board.on('ready', () => {
      id	            A user definable id value. Defaults to a generated uid.
      pins	        The pins defined for X, Y, and Z.
      isCalibrated	The calibration state of the device.
-     pitch	        An object containing values for the pitch rate and angle.
-     roll	        An object containing values for the roll rate and angle.
-     yaw	        An object containing values for the yaw rate and angle.
-     rate	        And object containing the rate values of X, Y, and Z.
+     pitch	        An object containing values for the pitch rate and angle (Y axis).
+     roll	        An object containing values for the roll rate and angle (X axis).
+     yaw	        An object containing values for the yaw rate and angle (Z axis).
+     rate	        And object containing the rate values of X, Y, and Z (degrees/s).
      x	            Value of x axis.
      y	            Value of y axis.
      z	            Value of z axis.
