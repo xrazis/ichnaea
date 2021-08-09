@@ -83,7 +83,7 @@ export default defineComponent({
       fractionAccuracy: 2,
       samplingInterval: 0.1,
       gyroSens: 131,
-      orderOfMag: (Math.PI / 180),
+      orderOfMag: Math.PI / 180,
       previousPitch: 0,
       previousRoll: 0,
       accelerometer: {},
@@ -106,24 +106,42 @@ export default defineComponent({
       this.temperature = temperature;
 
       // Get pitch, roll from gyro
-      let compPitch = gyroscope.pitch.angle;
-      let compRoll = gyroscope.roll.angle;
+      let compPitch = gyroscope.pitch.angle * this.orderOfMag;
+      let compRoll = gyroscope.roll.angle * this.orderOfMag;
+      let yaw = gyroscope.yaw.angle * this.orderOfMag;
+
+      // // Store previous values for next gyro calculations
+      // this.previousPitch = compPitch;
+      // this.previousRoll = compRoll;
 
       // Only use accelerometer when forces are ~1g
       if (accelerometer.acceleration > 0.9 && accelerometer.acceleration < 1.1) {
-        compPitch = -compPitch * 0.95 + accelerometer.pitch * 0.05;
-        compRoll = compRoll * 0.95 + accelerometer.roll * 0.05;
+        // We cannot use johnny-five pitch & roll, as they are in degrees and we need rads
+        compPitch =
+            compPitch * 0.95 +
+            Math.atan2(accelerometer.x, Math.hypot(accelerometer.y, accelerometer.z)) * 0.05;
+
+        compRoll =
+            compRoll * 0.95 +
+            Math.atan2(accelerometer.y, Math.hypot(accelerometer.x, accelerometer.z)) * 0.05;
       }
 
-      console.log(`
-      pitch: ${compPitch}
-      inclination: ${accelerometer.inclination}
-      roll: ${compRoll}
-      `)
+      // Filter out noise (a small tremor appears with too many fraction digits)
+      compPitch = compPitch.toFixed(this.fractionAccuracy);
+      compRoll = compRoll.toFixed(this.fractionAccuracy);
+      yaw = yaw.toFixed(this.fractionAccuracy);
 
-      // this.$refs.box.mesh.rotation.x = compRoll;
-      // this.$refs.box.mesh.rotation.y = compPitch;
+      if (this.loadedModel) {
+        this.leftForeArm.rotation.x = compRoll;
+        this.leftForeArm.rotation.y = -compPitch;
+        this.leftForeArm.rotation.z = yaw;
+      }
 
+      // console.log(`
+      // pitch: ${compPitch}
+      // roll: ${compRoll}
+      // yaw: ${yaw}
+      // `);
     },
     initScene() {
       const scene = this.$refs.scene.scene;
