@@ -5,8 +5,10 @@
     This is a realtime animation for "{{ athlete.name }}"!
   </div>
 
-  <div class="box">
+  <div id="three-wrapper" class="box">
     <Renderer ref="renderer" :orbit-ctrl="{ enableDamping: true, target }" antialias resize shadow>
+
+      <span id="temp" class="tag is-primary has-text-weight-bold is-family-code">{{ this.temperature }}°C</span>
 
       <Camera :position="{ x: 100, y: 200, z: 300 }"/>
 
@@ -169,5 +171,15 @@ canvas {
   display: block;
   width: 100%;
   height: 70vh;
+}
+
+#three-wrapper {
+  position: relative;
+}
+
+#temp {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
 }
 </style>
