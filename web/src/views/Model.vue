@@ -19,22 +19,10 @@
         />
 
         <Plane :height="2000" :rotation="{ x: -Math.PI / 2 }" :width="2000" receive-shadow>
-
           <PhongMaterial :props="{ depthWrite: false }" color="#999999"/>
         </Plane>
 
-        <Box ref="box"
-             :position="{ x: 0, y: 50, z: 0 }"
-             :rotation="{ x: 0, y: 0, z: 0 }"
-             :scale="{ x: 100, y: 100, z: 100 }"
-             :cast-shadow="false"
-             :receive-shadow="false"
-        >
-          <BasicMaterial/>
-        </Box>
-
-
-        <!--        <FbxModel src="animation-model.fbx" @error="onError" @load="onLoad"/>-->
+        <FbxModel ref="model" src="animation-model.fbx" @error="onError" @load="onLoad"/>
       </Scene>
 
     </Renderer>
@@ -44,8 +32,7 @@
 <!--Only for this module the language is JS instead of TS.-->
 <script lang="js">
 import {defineComponent} from 'vue'
-
-import {AnimationMixer, Clock, Fog, GridHelper, Vector3} from 'three';
+import {Fog, GridHelper, SkeletonHelper, Vector3} from 'three';
 import {
   AmbientLight,
   BasicMaterial,
@@ -78,12 +65,25 @@ export default defineComponent({
   },
   data() {
     return {
+      loadedModel: false,
       target: new Vector3(0, 100, 0),
+      leftArm: null,
+      rightArm: null,
+      leftForeArm: null,
+      rightForeArm: null,
+      leftLeg: null,
+      rightLeg: null,
+      leftUpLeg: null,
+      rightUpLeg: null,
       athlete: null,
       temperature: 0,
       gravitationalAcceleration: 9.82,
       fractionAccuracy: 2,
-      samplingInterval: 1,
+      samplingInterval: 0.1,
+      gyroSens: 131,
+      orderOfMag: (Math.PI / 180),
+      previousPitch: 0,
+      previousRoll: 0,
       accelerometer: {},
       gyroscope: {},
     };
@@ -128,15 +128,25 @@ export default defineComponent({
       scene.fog = new Fog(0xa0a0a0, 200, 1000);
 
       const grid = new GridHelper(2000, 20, 0x000000, 0x000000);
-      grid.material.opacity = 0.5;
+      grid.material.opacity = 0.2;
       grid.material.transparent = true;
       this.$refs.scene.add(grid);
     },
     onLoad(object) {
-      this.mixer = new AnimationMixer(object);
+      // Add the skeleton to the scene
+      const skeleton = new SkeletonHelper(object);
+      skeleton.visible = true;
+      this.$refs.scene.add(skeleton);
 
-      const action = this.mixer.clipAction(object.animations[0]);
-      action.play();
+      // Get all the necessary body parts for the animation
+      this.leftArm = object.getObjectByName('mixamorig1LeftArm');
+      this.rightArm = object.getObjectByName('mixamorig1RightArm');
+      this.leftForeArm = object.getObjectByName('mixamorig1LeftForeArm');
+      this.rightForeArm = object.getObjectByName('mixamorig1RightForeArm');
+      this.leftLeg = object.getObjectByName('mixamorig1RightLeg');
+      this.rightLeg = object.getObjectByName('mixamorig1LeftLeg');
+      this.leftUpLeg = object.getObjectByName('mixamorig1RightUpLeg');
+      this.rightUpLeg = object.getObjectByName('mixamorig1LeftUpLeg');
 
       object.traverse(child => {
         if (child.isMesh) {
@@ -145,14 +155,7 @@ export default defineComponent({
         }
       });
 
-      this.clock = new Clock();
-      this.$refs.renderer.onBeforeRender(this.updateMixer);
-    },
-    updateMixer() {
-      this.mixer.update(this.clock.getDelta());
-    },
-    animate() {
-
+      this.loadedModel = true;
     },
     onError(error) {
       console.log(error);
