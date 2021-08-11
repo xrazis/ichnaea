@@ -13,9 +13,9 @@ const gravitationalAcceleration = 9.82;
 const samplingInterval = 0.1;
 const gyroSens = 131;
 
-let pitch = 0;
-let roll = 0;
-let yaw = 0;
+let pitch = 0,
+    roll = 0,
+    yaw = 0;
 
 try {
     board = new Board({port: '/dev/ttyACM0', repl: false, debug: false});
@@ -66,25 +66,26 @@ board.on('close', () => {
 function parseData(imu) {
     const {temperature, accelerometer, gyro} = imu;
 
+    // console.log(accelerometer.orientation)
+
     // Get pitch, roll, yaw from gyro
     pitch += (gyro.rate.x / gyroSens) * samplingInterval;
     roll -= (gyro.rate.y / gyroSens) * samplingInterval;
     yaw += (gyro.rate.z / gyroSens) * samplingInterval;
 
     // Only use accelerometer when forces are ~1g
-    if (accelerometer.acceleration > 0.9 && accelerometer.acceleration < 1.1) {
-        // Dont use johnny-five's pitch, roll, yaw
+    if (accelerometer.acceleration > -1 && accelerometer.acceleration < 2) {
         pitch =
             0.98 * pitch +
-            0.02 * Math.atan2(accelerometer.y, Math.hypot(accelerometer.x, accelerometer.z));
+            0.02 * accelerometer.pitch;
 
         roll =
             0.98 * roll +
-            0.02 * Math.atan2(-accelerometer.x, Math.hypot(accelerometer.y, accelerometer.z));
-        // Not sure if this makes sense?
+            0.02 * accelerometer.roll;
+        // Not sure if this makes sense
         yaw =
             0.98 * yaw +
-            0.02 * Math.atan2(accelerometer.z, Math.hypot(accelerometer.x, accelerometer.z));
+            0.02 * Math.atan2(accelerometer.z, Math.hypot(accelerometer.y, accelerometer.z));
     }
 
     // Filter out noise (a small tremor appears with too many fraction digits)

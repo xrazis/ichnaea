@@ -34,7 +34,7 @@
 <!--Only for this module the language is JS instead of TS.-->
 <script lang="js">
 import {defineComponent} from 'vue'
-import {Fog, GridHelper, SkeletonHelper, Vector3} from 'three';
+import {Euler, Fog, GridHelper, SkeletonHelper, Vector3} from 'three';
 import {
   AmbientLight,
   BasicMaterial,
@@ -72,6 +72,7 @@ export default defineComponent({
       pitch: 0,
       roll: 0,
       yaw: 0,
+      toRads: Math.PI / 180,
       loadedModel: false,
       target: new Vector3(0, 100, 0),
       // Model body parts
@@ -99,30 +100,21 @@ export default defineComponent({
       const {temperature, pitch, roll, yaw} = data;
 
       this.temperature = temperature;
-      this.pitch = pitch;
-      this.roll = roll;
-      this.yaw = yaw;
 
-      // Euler -> Quaternion conversion
-      const cy = Math.cos(this.yaw * 0.5);
-      const sy = Math.sin(this.yaw * 0.5);
-      const cp = Math.cos(this.pitch * 0.5);
-      const sp = Math.sin(this.pitch * 0.5);
-      const cr = Math.cos(this.roll * 0.5);
-      const sr = Math.sin(this.roll * 0.5);
+      // Euler angles in three.js are in rads
+      this.pitch = pitch * this.toRads;
+      this.roll = roll * this.toRads;
+      this.yaw = yaw * this.toRads;
 
       if (this.loadedModel) {
-        this.leftArm.quaternion.w = cr * cp * cy + sr * sp * sy;
-        this.leftArm.quaternion.x = sr * cp * cy - cr * sp * sy;
-        this.leftArm.quaternion.y = cr * sp * cy + sr * cp * sy;
-        this.leftArm.quaternion.z = cr * cp * sy - sr * sp * cy;
+        this.leftArm.quaternion.setFromEuler(new Euler(this.roll, this.pitch, this.yaw));
       }
 
-      console.log(`
-      pitch: ${this.pitch}
-      roll: ${this.roll}
-      yaw: ${this.yaw}
-      `);
+      // console.log(`
+      // pitch: ${this.pitch}
+      // roll: ${this.roll}
+      // yaw: ${this.yaw}
+      // `);
     },
     initScene() {
       const scene = this.$refs.scene.scene;
