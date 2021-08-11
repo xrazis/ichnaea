@@ -60,8 +60,8 @@ module.exports = (server) => {
 
         socket.on('data', async data => {
             if (client?._trainer) {
-                io.volatile.to(client._trainer.socketID).emit('console', data);
                 iWrite(data);
+                io.volatile.to(client._trainer.socketID).emit('console', data);
             }
         });
     });

@@ -67,12 +67,11 @@ export default defineComponent({
   },
   data() {
     return {
-      // Constants
-      gravitationalAcceleration: 9.82,
-      fractionAccuracy: 2,
-      samplingInterval: 0.1,
-      gyroSens: 131,
-      orderOfMag: Math.PI / 180,
+      athlete: null,
+      temperature: 0,
+      pitch: 0,
+      roll: 0,
+      yaw: 0,
       loadedModel: false,
       target: new Vector3(0, 100, 0),
       // Model body parts
@@ -84,15 +83,6 @@ export default defineComponent({
       rightLeg: null,
       leftUpLeg: null,
       rightUpLeg: null,
-      athlete: null,
-      // Local calculations
-      pitch: 0,
-      roll: 0,
-      yaw: 0,
-      // IMU data as streamed by the server
-      temperature: 0,
-      accelerometer: {},
-      gyroscope: {},
     };
   },
   mounted() {
@@ -106,35 +96,12 @@ export default defineComponent({
   },
   methods: {
     parseData(data) {
-      const {temperature, accelerometer, gyroscope} = data;
+      const {temperature, pitch, roll, yaw} = data;
 
       this.temperature = temperature;
-
-      // Get pitch, roll from gyro
-      this.pitch += (gyroscope.rate.x / this.gyroSens) * this.samplingInterval;
-      this.roll -= (gyroscope.rate.y / this.gyroSens) * this.samplingInterval;
-      this.yaw = (gyroscope.rate.z / this.gyroSens) * this.samplingInterval;
-
-      // Only use accelerometer when forces are ~1g
-      if (accelerometer.acceleration > 0.9 && accelerometer.acceleration < 1.1) {
-        // Dont use johnny-five's pitch, roll, yaw
-        this.pitch =
-            this.pitch * 0.95 +
-            Math.atan2(accelerometer.y, Math.hypot(accelerometer.x, accelerometer.z)) * 0.05;
-
-        this.roll =
-            this.roll * 0.95 +
-            Math.atan2(-accelerometer.x, Math.hypot(accelerometer.y, accelerometer.z)) * 0.05;
-
-        this.yaw =
-            this.yaw * 0.95 +
-            Math.atan2(accelerometer.z, Math.hypot(accelerometer.x, accelerometer.z)) * 0.05;
-      }
-
-      // Filter out noise (a small tremor appears with too many fraction digits)
-      this.pitch = this.toFixed(this.pitch);
-      this.roll = this.toFixed(this.roll);
-      this.yaw = this.toFixed(this.yaw);
+      this.pitch = pitch;
+      this.roll = roll;
+      this.yaw = yaw;
 
       // Euler -> Quaternion conversion
       const cy = Math.cos(this.yaw * 0.5);
@@ -195,9 +162,6 @@ export default defineComponent({
     onError(error) {
       console.log(error);
     },
-    toFixed(arg) {
-      return +arg.toFixed(this.fractionAccuracy);
-    }
   },
 });
 </script>

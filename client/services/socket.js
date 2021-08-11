@@ -9,6 +9,14 @@ const mac = getMAC();
 const id = createHash('md5').update(mac).digest('hex');
 let board;
 
+const gravitationalAcceleration = 9.82;
+const samplingInterval = 0.1;
+const gyroSens = 131;
+
+let pitch = 0;
+let roll = 0;
+let yaw = 0;
+
 try {
     board = new Board({port: '/dev/ttyACM0', repl: false, debug: false});
 } catch (e) {
@@ -48,68 +56,55 @@ board.on('ready', () => {
         freq: 100
     });
 
-    // IMU  MPU6050 Composition
-
-    // Accelerator
-
-    /*
-     id	            A user definable id value. Defaults to a generated uid.
-     zeroV	        The current zeroV value (or values). May be different from initial values if auto-calibrated.
-     pins	        The pins defined for X, Y, and Z.
-     pitch	        The pitch angle (Y axis) in degrees.
-     roll	        The roll angle (X axis) in degrees.
-     x	            Value of x axis in G forces (m/s^2).
-     y	            Value of y axis in G forces (m/s^2).
-     z	            Value of z axis in G forces (m/s^2).
-     acceleration	The magnitude of the acceleration in G forces.
-     inclination	The incline of the device in degrees.
-     orientation	The orientation of the device (-3, -2, -1, 1, 2, 3).
-    */
-
-    // GYRO
-
-    /*
-     id	            A user definable id value. Defaults to a generated uid.
-     pins	        The pins defined for X, Y, and Z.
-     isCalibrated	The calibration state of the device.
-     pitch	        An object containing values for the pitch rate and angle (Y axis).
-     roll	        An object containing values for the roll rate and angle (X axis).
-     yaw	        An object containing values for the yaw rate and angle (Z axis).
-     rate	        And object containing the rate values of X, Y, and Z (degrees/s).
-     x	            Value of x axis.
-     y	            Value of y axis.
-     z	            Value of z axis.
-    */
-
-    imu.on('change', () => {
-        socket.volatile.emit('data', {
-            pointName: 'IMU',
-            uuid: id,
-            temperature: imu.temperature.celsius,
-            accelerometer: {
-                x: imu.accelerometer.x,
-                y: imu.accelerometer.y,
-                z: imu.accelerometer.z,
-                pitch: imu.accelerometer.pitch,
-                roll: imu.accelerometer.roll,
-                acceleration: imu.accelerometer.acceleration,
-                inclination: imu.accelerometer.inclination,
-                orientation: imu.accelerometer.orientation,
-            },
-            gyroscope: {
-                x: imu.gyro.x,
-                y: imu.gyro.y,
-                z: imu.gyro.z,
-                pitch: imu.gyro.pitch,
-                roll: imu.gyro.roll,
-                yaw: imu.gyro.yaw,
-                rate: imu.gyro.rate,
-                isCalibrated: imu.gyro.isCalibrated,
-            }
-        });
-    });
+    imu.on('change', () => socket.volatile.emit('data', parseData(imu)));
 });
 
 board.on('close', () => {
     console.log('Board has been disconnected!');
 });
+
+function parseData(imu) {
+    const {temperature, accelerometer, gyro} = imu;
+
+    // Get pitch, roll, yaw from gyro
+    pitch += (gyro.rate.x / gyroSens) * samplingInterval;
+    roll -= (gyro.rate.y / gyroSens) * samplingInterval;
+    yaw += (gyro.rate.z / gyroSens) * samplingInterval;
+
+    // Only use accelerometer when forces are ~1g
+    if (accelerometer.acceleration > 0.9 && accelerometer.acceleration < 1.1) {
+        // Dont use johnny-five's pitch, roll, yaw
+        pitch =
+            0.98 * pitch +
+            0.02 * Math.atan2(accelerometer.y, Math.hypot(accelerometer.x, accelerometer.z));
+
+        roll =
+            0.98 * roll +
+            0.02 * Math.atan2(-accelerometer.x, Math.hypot(accelerometer.y, accelerometer.z));
+        // Not sure if this makes sense?
+        yaw =
+            0.98 * yaw +
+            0.02 * Math.atan2(accelerometer.z, Math.hypot(accelerometer.x, accelerometer.z));
+    }
+
+    // Filter out noise (a small tremor appears with too many fraction digits)
+    pitch = toFixed(pitch);
+    roll = toFixed(roll);
+    yaw = toFixed(yaw);
+
+    return {
+        pointName: 'IMU',
+        uuid: id,
+        temperature: temperature.celsius,
+        pitch,
+        roll,
+        yaw,
+        acceleration: imu.accelerometer.acceleration,
+        inclination: imu.accelerometer.inclination,
+        orientation: imu.accelerometer.orientation,
+    }
+}
+
+function toFixed(arg) {
+    return +arg.toFixed(2);
+}
