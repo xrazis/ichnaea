@@ -17,6 +17,7 @@
         - [Data](#data)
 - [Client](#client)
 - [Run](#run)
+- [Exposed Ports](#exposed-ports)
 - [Notes](#notes)
 
 # Thesis
@@ -120,15 +121,16 @@ The client can either run on the host machine or on a _Raspberry Pi_ that acts l
 _Arduino_. You can use an _IMU_ connected to any compatible microcontroller with
 [Johnny-five](http://johnny-five.io/platform-support/), see [here](http://johnny-five.io/api/imu/) on how to connect it.
 
-The client does some basic calculations in the Johnny-five library, like pitch, roll, and yaw. The data is then streamed
-to the server and subsequently to the frontend. The frontend does the final calculations that are needed for the model
-visualization. This way we avoid making any 'heavy' computations on the client device, thus allowing for small and power
-efficient getaways like a _Pi Zero_. Implementation specific details can be found in the thesis itself.
+The client does some basic calculations with the help of `Johnny-five`, then the data is then streamed to the server and
+subsequently to the frontend. The frontend does the final calculations that are needed for the model visualization. This
+way we avoid making any 'heavy' computations on the client device, thus allowing for small and power efficient getaways
+like a _Pi Zero_ with multiple microcontrollers attached on it. Implementation specific details can be found in the
+thesis itself.
 
-During the development process I used my host machine as a getaway, and an _Arduino UNO_ with an _Invesense MPU6050_.
-Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid soldering.
-Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the getaway, maybe a
-future improvement!
+During the development process I used my host machine as a getaway, and an _Arduino UNO_ with an _Invesense MPU6050_
+on a HAT. Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid
+soldering. Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the
+getaway, maybe a future improvement!
 
 # Run
 
@@ -143,6 +145,18 @@ _First, make sure you have the docker service and docker-compose installed, then
 In a few moments, Ichnaea will be up and running! Visit `localhost:8080` to view the web dashboard.
 
 I develop on Jetbrains products, so the run scripts should be available once you launch Webstorm.
+
+# Exposed Ports
+
+The following services and respective ports are exposed:
+
+|Service |Port
+--- | --- 
+|Influxdb|{ip}:8086
+|Grafana|{ip}:3000
+|MongoDB|{ip}:27017
+|Backend|{ip}:8000 \ {ip}:9229
+|Frontend|{ip}:8080
 
 # Notes
 
