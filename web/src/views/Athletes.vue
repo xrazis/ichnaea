@@ -111,7 +111,7 @@
             <span class="icon mr-1"><i class="fa fa-times"></i></span>
           </td>
           <td>
-            <router-link :to="{ name: 'Athlete', params: { id: athlete._id }}">
+            <router-link :to="{ name: 'Athlete', params: { id: athlete._id || 0 }}">
           <span class="icon is-medium has-background-warning has-text-white mr-1">
           <i class="fa fa-lg fa-user-edit"></i>
         </span>
