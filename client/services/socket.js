@@ -1,21 +1,10 @@
-const {createHash} = require('crypto');
 const {Board, IMU} = require('johnny-five');
 const io = require('socket.io-client');
-const {server_url} = require('../config/keys');
-const getMAC = require('getmac').default;
+const {server_url, id} = require('../config/keys');
+const {parseData} = require('../actions/imu_actions');
 
 const socket = io(server_url);
-const mac = getMAC();
-const id = createHash('md5').update(mac).digest('hex');
 let board;
-
-const gravitationalAcceleration = 9.82;
-const samplingInterval = 0.1;
-const gyroSens = 131;
-
-let pitch = 0,
-    roll = 0,
-    yaw = 0;
 
 try {
     board = new Board({port: '/dev/ttyACM0', repl: false, debug: false});
@@ -62,50 +51,3 @@ board.on('ready', () => {
 board.on('close', () => {
     console.log('Board has been disconnected!');
 });
-
-function parseData(imu) {
-    const {temperature, accelerometer, gyro} = imu;
-
-    // console.log(accelerometer.orientation)
-
-    // Get pitch, roll, yaw from gyro
-    pitch += (gyro.rate.x / gyroSens) * samplingInterval;
-    roll -= (gyro.rate.y / gyroSens) * samplingInterval;
-    yaw += (gyro.rate.z / gyroSens) * samplingInterval;
-
-    // Only use accelerometer when forces are ~1g
-    if (accelerometer.acceleration > -1 && accelerometer.acceleration < 2) {
-        pitch =
-            0.98 * pitch +
-            0.02 * accelerometer.pitch;
-
-        roll =
-            0.98 * roll +
-            0.02 * accelerometer.roll;
-        // Not sure if this makes sense
-        yaw =
-            0.98 * yaw +
-            0.02 * Math.atan2(accelerometer.z, Math.hypot(accelerometer.y, accelerometer.z));
-    }
-
-    // Filter out noise (a small tremor appears with too many fraction digits)
-    pitch = toFixed(pitch);
-    roll = toFixed(roll);
-    yaw = toFixed(yaw);
-
-    return {
-        pointName: 'IMU',
-        uuid: id,
-        temperature: temperature.celsius,
-        pitch,
-        roll,
-        yaw,
-        acceleration: imu.accelerometer.acceleration,
-        inclination: imu.accelerometer.inclination,
-        orientation: imu.accelerometer.orientation,
-    }
-}
-
-function toFixed(arg) {
-    return +arg.toFixed(2);
-}
