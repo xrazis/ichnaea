@@ -19,6 +19,7 @@
 - [Run](#run)
 - [Exposed Ports](#exposed-ports)
 - [Notes](#notes)
+- [Resources](#resources)
 
 # Thesis
 
@@ -146,6 +147,12 @@ In a few moments, Ichnaea will be up and running! Visit `localhost:8080` to view
 
 I develop on Jetbrains products, so the run scripts should be available once you launch Webstorm.
 
+### Arduino
+
+If you use your host machine for a getaway just connect the _Arduino_ to any USB port, and deploy the docker-compose
+file. Alternatively, install docker to a _Raspberry_, connect the _Arduino_, and run the client container standalone. Be
+sure to enter the correct IP in the client config so a socket connection can be established with the server.
+
 # Exposed Ports
 
 The following services and respective ports are exposed:
@@ -165,3 +172,11 @@ The following services and respective ports are exposed:
   the [docker docs](‘https://docs.docker.com/compose/startup-order/‘) :
   `However, for startup Compose does not wait until a container is “ready” (whatever that means for your particular application) - only until it’s running.`
   TL;DR waiting a few seconds for all services to become available will solve this, and data will be written to influx.
+
+# Resources
+
+### IMU
+
+- [Euler angles on wiki](https://en.wikipedia.org/wiki/Euler_angles)
+- [Quaternion on wiki](https://en.wikipedia.org/wiki/Quaternion)
+- [Visualizing quaternions](https://eater.net/quaternions)
