@@ -76,6 +76,7 @@ export default defineComponent({
       loadedModel: false,
       target: new Vector3(0, 100, 0),
       // Model body parts
+      head: null,
       leftArm: null,
       rightArm: null,
       leftForeArm: null,
@@ -107,7 +108,7 @@ export default defineComponent({
       this.yaw = yaw * this.toRads;
 
       if (this.loadedModel) {
-        this.leftArm.quaternion.setFromEuler(new Euler(this.roll, this.pitch, this.yaw));
+        this.head.quaternion.setFromEuler(new Euler(this.roll, this.pitch, this.yaw));
       }
 
       // console.log(`
@@ -132,6 +133,7 @@ export default defineComponent({
       this.$refs.scene.add(skeleton);
 
       // Get all the necessary body parts for the animation
+      this.head = object.getObjectByName('mixamorig1Head');
       this.leftArm = object.getObjectByName('mixamorig1LeftArm');
       this.rightArm = object.getObjectByName('mixamorig1RightArm');
       this.leftForeArm = object.getObjectByName('mixamorig1LeftForeArm');
