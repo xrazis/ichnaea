@@ -157,21 +157,28 @@ sure to enter the correct IP in the client config so a socket connection can be 
 
 The following services and respective ports are exposed:
 
-|Service |Port
---- | --- 
-|Influxdb|{ip}:8086
-|Grafana|{ip}:3000
-|MongoDB|{ip}:27017
-|Backend|{ip}:8000 \ {ip}:9229
-|Frontend|{ip}:8080
+|Service |Port |Usage
+--- | --- | ---
+|Influxdb|`{ip}:8086`|Web UI
+|Grafana|`{ip}:3000`|Web UI
+|MongoDB|`{ip}:27017`|Shell
+|Backend|`{ip}:8000`|Socket and API
+|Backend|`{ip}:9229`|Debugger
+|Frontend|`{ip}:8080`|Web UI
+
+The {ip} should be localhost if running locally, or the ip of the server you are running the services on (obv).
 
 # Notes
 
-- Upon running the `docker-compose` file, and observing the backend output you will notice that a connection cannot be
-  established with influxdb. Don't confuse that with the `depends_on` option, as described in
-  the [docker docs](‘https://docs.docker.com/compose/startup-order/‘) :
-  `However, for startup Compose does not wait until a container is “ready” (whatever that means for your particular application) - only until it’s running.`
-  TL;DR waiting a few seconds for all services to become available will solve this, and data will be written to influx.
+1. When the docker-compose is up and running, and you observe the backend container output you will notice that a
+   connection cannot be established with influxdb. That's because the influx container is not ready yet. Don't confuse
+   that with the `depends_on` option. As described in
+   the [docker docs](‘https://docs.docker.com/compose/startup-order/‘) :
+
+   > However, for startup Compose does not wait until a container is “ready” (whatever that means for your particular
+   > application) - only until it’s running.
+
+   TL;DR waiting a few seconds for all services to become available will solve this, and data will be written to influx.
 
 # Resources
 
@@ -180,3 +187,4 @@ The following services and respective ports are exposed:
 - [Euler angles on wiki](https://en.wikipedia.org/wiki/Euler_angles)
 - [Quaternion on wiki](https://en.wikipedia.org/wiki/Quaternion)
 - [Visualizing quaternions](https://eater.net/quaternions)
+- [Johnny-five IMU API](http://johnny-five.io/api/imu/)
