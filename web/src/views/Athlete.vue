@@ -10,12 +10,12 @@
         </div>
         <div class="level-right">
           <div class="level-item has-text-centered">
-            <router-link :to="{ name: 'Table', params: { id: athlete._id }}">
+            <router-link :to="{ name: 'Table', params: { id: athlete._id || 0}}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-table"></i>
         </span>
             </router-link>
-            <router-link :to="{ name: 'Chart', params: { id: athlete._id }}">
+            <router-link :to="{ name: 'Chart', params: { id: athlete._id || 0 }}">
           <span class="icon is-medium has-background-primary has-text-white mr-1">
           <i class="fa fa-lg fa-chart-area"></i>
         </span>
