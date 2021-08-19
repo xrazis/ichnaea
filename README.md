@@ -8,7 +8,9 @@
 
 - [Thesis](#thesis)
 - [About](#about)
+- [Run](#run)
 - [Architecture](#architecture)
+- [Exposed Ports](#exposed-ports)
 - [Server Endpoints](#server-endpoints)
     - [Authentication](#authentication)
     - [API](#api)
@@ -16,8 +18,6 @@
         - [Athletes](#athletes)
         - [Data](#data)
 - [Client](#client)
-- [Run](#run)
-- [Exposed Ports](#exposed-ports)
 - [Notes](#notes)
 - [Resources](#resources)
 
@@ -42,6 +42,26 @@ Ichnaea is an IoT solution that collects and analyzes body position data from an
 “e-sport” application described in the [thesis](#thesis) section. Although the specifications of the app are set, I plan
 to keep building on it as I explore my interests on the web front.
 
+# Run
+
+Clone the project:
+
+    git clone git@github.com:xrazis/ichnaea.git
+
+_First, make sure you have the docker service and docker-compose installed, then:_
+
+    docker-compose -f ./docker-compose.yml up –d –build 
+
+In a few moments, Ichnaea will be up and running! Visit `localhost:8080` to view the web dashboard.
+
+I develop on Jetbrains products, so the run scripts should be available once you launch Webstorm.
+
+### Arduino
+
+If you use your host machine for a getaway just connect the _Arduino_ to any USB port, and deploy the docker-compose
+file. Alternatively, install docker to a _Raspberry_, connect the _Arduino_, and run the client container standalone. Be
+sure to enter the correct IP in the client config so a socket connection can be established with the server.
+
 # Architecture
 
 To begin with, deployment is handled by docker and docker-compose. Abstracting the configuration to a handy `.yaml`
@@ -57,6 +77,21 @@ create the following services:
   exposing an API.
 - **Frontend**, an SPA built on Vue with Typescript.
 - **Client**, a Node.js app that collects and sends the data to the backend.
+
+# Exposed Ports
+
+The following services and respective ports are exposed:
+
+|Service |Port |Usage
+--- | --- | ---
+|Influxdb|`{ip}:8086`|Web UI
+|Grafana|`{ip}:3000`|Web UI
+|MongoDB|`{ip}:27017`|Shell
+|Backend|`{ip}:8000`|Socket and API
+|Backend|`{ip}:9229`|Debugger
+|Frontend|`{ip}:8080`|Web UI
+
+The {ip} should be localhost if running locally, or the ip of the server you are running the services on (obv).
 
 # Server endpoints
 
@@ -132,41 +167,6 @@ During the development process I used my host machine as a getaway, and an _Ardu
 on a HAT. Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid
 soldering. Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the
 getaway, maybe a future improvement!
-
-# Run
-
-Clone the project:
-
-    git clone git@github.com:xrazis/ichnaea.git
-
-_First, make sure you have the docker service and docker-compose installed, then:_
-
-    docker-compose up --detach
-
-In a few moments, Ichnaea will be up and running! Visit `localhost:8080` to view the web dashboard.
-
-I develop on Jetbrains products, so the run scripts should be available once you launch Webstorm.
-
-### Arduino
-
-If you use your host machine for a getaway just connect the _Arduino_ to any USB port, and deploy the docker-compose
-file. Alternatively, install docker to a _Raspberry_, connect the _Arduino_, and run the client container standalone. Be
-sure to enter the correct IP in the client config so a socket connection can be established with the server.
-
-# Exposed Ports
-
-The following services and respective ports are exposed:
-
-|Service |Port |Usage
---- | --- | ---
-|Influxdb|`{ip}:8086`|Web UI
-|Grafana|`{ip}:3000`|Web UI
-|MongoDB|`{ip}:27017`|Shell
-|Backend|`{ip}:8000`|Socket and API
-|Backend|`{ip}:9229`|Debugger
-|Frontend|`{ip}:8080`|Web UI
-
-The {ip} should be localhost if running locally, or the ip of the server you are running the services on (obv).
 
 # Notes
 
