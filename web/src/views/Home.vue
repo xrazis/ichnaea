@@ -30,12 +30,10 @@
     </div>
 
     <div class="hero-foot">
-      <footer class="footer">
+      <footer class="footer has-background-white">
         <div class="content has-text-centered">
           <p>Ichnaea is an IoT solution that collects and analyzes body position data from athletes in real-time.</p>
-          <p>Source code can be found on <a href="https://github.com/xrazis/ichnaea" target="_blank">github</a> and <a
-              href="https://git.swarmlab.io:3000/xrazis/ichnaea" target="_blank">swarmlab</a>.</p>
-          <p>The thesis document can be found on <a href="" target="_blank">google docs</a>.</p>
+          <p>Source code can be found on <a href="https://github.com/xrazis/ichnaea" target="_blank">github</a>.</p>
         </div>
       </footer>
     </div>
