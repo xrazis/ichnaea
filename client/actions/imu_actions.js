@@ -12,7 +12,7 @@ function parseData(imu) {
     // Get pitch, roll, yaw from gyro
     pitch += (gyro.rate.x / gyroSens) * samplingInterval;
     roll -= (gyro.rate.y / gyroSens) * samplingInterval;
-    yaw += (gyro.rate.z / gyroSens) * samplingInterval;
+    yaw = (gyro.yaw.angle);
 
     // Only use accelerometer when forces are ~1g
     if (accelerometer.acceleration > -1 && accelerometer.acceleration < 2) {
