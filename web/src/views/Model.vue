@@ -108,7 +108,8 @@ export default defineComponent({
       this.yaw = yaw * this.toRads;
 
       if (this.loadedModel) {
-        this.head.quaternion.setFromEuler(new Euler(this.roll, this.pitch, this.yaw));
+        // this.head.quaternion.setFromEuler(new Euler(this.roll, this.yaw, this.pitch));
+        this.leftArm.quaternion.setFromEuler(new Euler(this.roll, this.pitch, this.yaw));
       }
 
       // console.log(`
