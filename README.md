@@ -9,6 +9,7 @@
 - [Thesis](#thesis)
 - [About](#about)
 - [Run](#run)
+- [Client](#client)
 - [Architecture](#architecture)
 - [Exposed Ports](#exposed-ports)
 - [Server Endpoints](#server-endpoints)
@@ -17,7 +18,6 @@
         - [User](#user)
         - [Athletes](#athletes)
         - [Data](#data)
-- [Client](#client)
 - [Notes](#notes)
 - [Resources](#resources)
 
@@ -60,7 +60,25 @@ I develop on Jetbrains products, so the run scripts should be available once you
 
 If you use your host machine for a getaway just connect the _Arduino_ to any USB port, and deploy the docker-compose
 file. Alternatively, install docker to a _Raspberry_, connect the _Arduino_, and run the client container standalone. Be
-sure to enter the correct IP in the client config so a socket connection can be established with the server.
+sure to enter the correct IP in the client config so a socket connection can be established with the server. Find out
+more about the arduino setup down bellow, at the client section.
+
+# Client
+
+The client can either run on the host machine or on a _Raspberry Pi_ that acts like a getaway for the
+_Arduino_. You can use an _IMU_ connected to any compatible microcontroller with
+[Johnny-five](http://johnny-five.io/platform-support/), see [here](http://johnny-five.io/api/imu/) on how to connect it.
+
+The client does some basic calculations with the help of `Johnny-five`, then the data is then streamed to the server and
+subsequently to the frontend. The frontend does the final calculations that are needed for the model visualization. This
+way we avoid making any 'heavy' computations on the client device, thus allowing for small and power efficient getaways
+like a _Pi Zero_ with multiple microcontrollers attached on it. Implementation specific details can be found in the
+thesis itself.
+
+During the development process I used my host machine as a getaway, and an _Arduino UNO_ with an _Invesense MPU6050_
+on a HAT. Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid
+soldering. Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the
+getaway, maybe a future improvement!
 
 # Architecture
 
@@ -151,23 +169,6 @@ The following routes are exposed by the backend.
 
 *Returns all data for a given user _id, in the specified time range.*
 
-# Client
-
-The client can either run on the host machine or on a _Raspberry Pi_ that acts like a getaway for the
-_Arduino_. You can use an _IMU_ connected to any compatible microcontroller with
-[Johnny-five](http://johnny-five.io/platform-support/), see [here](http://johnny-five.io/api/imu/) on how to connect it.
-
-The client does some basic calculations with the help of `Johnny-five`, then the data is then streamed to the server and
-subsequently to the frontend. The frontend does the final calculations that are needed for the model visualization. This
-way we avoid making any 'heavy' computations on the client device, thus allowing for small and power efficient getaways
-like a _Pi Zero_ with multiple microcontrollers attached on it. Implementation specific details can be found in the
-thesis itself.
-
-During the development process I used my host machine as a getaway, and an _Arduino UNO_ with an _Invesense MPU6050_
-on a HAT. Although this is a cumbersome solution, it proved a quick way to bootstrap a working solution and avoid
-soldering. Ideally I would use an _Arduino Nano_ with a LoRa adapter in order to have a wireless connection to the
-getaway, maybe a future improvement!
-
 # Notes
 
 1. When the docker-compose is up and running, and you observe the backend container output you will notice that a
@@ -184,7 +185,12 @@ getaway, maybe a future improvement!
 
 ### IMU
 
-- [Euler angles on wiki](https://en.wikipedia.org/wiki/Euler_angles)
-- [Quaternion on wiki](https://en.wikipedia.org/wiki/Quaternion)
-- [Visualizing quaternions](https://eater.net/quaternions)
-- [Johnny-five IMU API](http://johnny-five.io/api/imu/)
+- Euler angles on [Wiki](https://en.wikipedia.org/wiki/Euler_angles)
+  / [Mathworld](https://mathworld.wolfram.com/EulerAngles.html)
+- Gimbal-lock on [Wiki](https://en.wikipedia.org/wiki/Gimbal_lock)
+- Quaternion on [Wiki](https://en.wikipedia.org/wiki/Quaternion)
+  / [Mathworld](https://mathworld.wolfram.com/Quaternion.html)
+- Interactive video to [visualize quaternions](https://eater.net/quaternions)
+- Really nice explanation from
+  Stanford's [virtual reality class](https://stanford.edu/class/ee267/notes/ee267_notes_imu.pdf)
+- What is a [complementary filter](https://pieter-jan.com/node/11)
